@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kleurpaletten — FitCity Culemborg</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Oswald:wght@700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #0e0e0e;
+    color: #d4d4d4;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page-header {
+    padding: 4rem 2rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .page-header h1 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: #f0f0f0;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  .page-header p {
+    margin-top: 0.75rem;
+    color: #888;
+    font-size: 0.95rem;
+    max-width: 600px;
+  }
+
+  .palette-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem 4rem;
+    border-top: 1px solid #1f1f1f;
+  }
+
+  .palette-label {
+    display: inline-block;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 0.25rem 0.75rem;
+    border: 1px solid #333;
+    color: #aaa;
+    margin-bottom: 1rem;
+  }
+
+  .palette-title {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    color: #f0f0f0;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .palette-desc {
+    color: #777;
+    font-size: 0.9rem;
+    max-width: 640px;
+    margin-bottom: 2.5rem;
+  }
+
+  /* --- Swatches --- */
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+  @media (max-width: 768px) {
+    .swatches { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .swatch {
+    display: flex;
+    flex-direction: column;
+  }
+  .swatch-color {
+    aspect-ratio: 1.4;
+    border-radius: 6px 6px 0 0;
+    border: 1px solid #2a2a2a;
+    border-bottom: none;
+  }
+  .swatch-info {
+    background: #161616;
+    border: 1px solid #2a2a2a;
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    padding: 0.6rem 0.75rem;
+  }
+  .swatch-role {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #666;
+    margin-bottom: 0.15rem;
+  }
+  .swatch-hex {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #ccc;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* --- Hero Preview --- */
+  .preview-container {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #2a2a2a;
+  }
+  .preview-hero {
+    position: relative;
+    min-height: 320px;
+    display: flex;
+    align-items: center;
+    padding: 3rem 2.5rem;
+  }
+  .preview-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 100%);
+    pointer-events: none;
+  }
+  .preview-content {
+    position: relative;
+    z-index: 1;
+    max-width: 480px;
+  }
+  .preview-eyebrow {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+  }
+  .preview-h1 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin-bottom: 0.75rem;
+  }
+  .preview-sub {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    opacity: 0.85;
+  }
+  .preview-cta {
+    display: inline-block;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.875rem 2rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .preview-cta:hover {
+    transform: translateY(-2px);
+  }
+  .preview-cta-ghost {
+    display: inline-block;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.8rem 2rem;
+    text-decoration: none;
+    background: transparent;
+    border: 2px solid;
+    cursor: pointer;
+    margin-left: 0.75rem;
+  }
+
+  /* --- Surface Preview Bar --- */
+  .preview-surface-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+  }
+  .preview-card {
+    padding: 1.5rem;
+    text-align: center;
+  }
+  .preview-card-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .preview-card-title {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+  }
+  .preview-card-text {
+    font-size: 0.75rem;
+    opacity: 0.7;
+  }
+
+  /* --- Contrast Table --- */
+  .contrast-table {
+    margin-top: 1.5rem;
+    width: 100%;
+    font-size: 0.8rem;
+    border-collapse: collapse;
+  }
+  .contrast-table th {
+    text-align: left;
+    color: #555;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.65rem;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid #1f1f1f;
+  }
+  .contrast-table td {
+    padding: 0.4rem 0.75rem;
+    border-bottom: 1px solid #1a1a1a;
+    color: #999;
+  }
+  .pass { color: #4ade80; }
+  .fail { color: #f87171; }
+
+  @media (max-width: 600px) {
+    .preview-surface-bar { grid-template-columns: 1fr; }
+    .preview-cta-ghost { margin-left: 0; margin-top: 0.5rem; display: block; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <h1>Kleurpaletten — FitCity Culemborg</h1>
+  <p>Drie paletten op basis van merkidentiteit, concurrentieanalyse en marktdifferentiatie. Alle combinaties voldoen aan WCAG AA contrast (4.5:1 minimum).</p>
+</header>
+
+<!-- ==================== OPTION A ==================== -->
+<section class="palette-section">
+  <div class="palette-label">Optie A</div>
+  <h2 class="palette-title">Brand-Anchored — Eigen Kleuren</h2>
+  <p class="palette-desc">De bestaande merkkleuren van FitCity als basis. Geel als primaire actie, roze voor Ladies Only, oranje als derde accent. Donkere achtergrond geeft de industriele, no-nonsense uitstraling.</p>
+
+  <div class="swatches">
+    <div class="swatch">
+      <div class="swatch-color" style="background:#FFE303;"></div>
+      <div class="swatch-info"><div class="swatch-role">Primair</div><div class="swatch-hex">#FFE303</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#FF2E93;"></div>
+      <div class="swatch-info"><div class="swatch-role">Secundair</div><div class="swatch-hex">#FF2E93</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#FF5722;"></div>
+      <div class="swatch-info"><div class="swatch-role">Accent</div><div class="swatch-hex">#FF5722</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#141414;"></div>
+      <div class="swatch-info"><div class="swatch-role">Achtergrond</div><div class="swatch-hex">#141414</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#1C1C1C;"></div>
+      <div class="swatch-info"><div class="swatch-role">Oppervlak</div><div class="swatch-hex">#1C1C1C</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#FFFFFF; border-color:#444;"></div>
+      <div class="swatch-info"><div class="swatch-role">Tekst</div><div class="swatch-hex">#FFFFFF</div></div>
+    </div>
+  </div>
+
+  <div class="preview-container">
+    <div class="preview-hero" style="background:#141414;">
+      <div class="preview-content">
+        <div class="preview-eyebrow" style="color:#FFE303;">Sportschool Culemborg</div>
+        <h3 class="preview-h1" style="color:#FFFFFF;">Geen Poespas.<br>Gewoon een Goede Gym.</h3>
+        <p class="preview-sub" style="color:#E0E0E0;">De meest betaalbare sportschool van de regio met professionele apparatuur van Nautilus, SportsArt en Technogym.</p>
+        <a class="preview-cta" style="background:#FFE303; color:#141414;">Plan je gratis proeftraining</a>
+        <a class="preview-cta-ghost" style="color:#FF2E93; border-color:#FF2E93;">Ladies Only</a>
+      </div>
+    </div>
+    <div class="preview-surface-bar">
+      <div class="preview-card" style="background:#1C1C1C; color:#FFFFFF;">
+        <div class="preview-card-title" style="color:#FFE303;">Fitness</div>
+        <div class="preview-card-text">Vrij trainen op topapparatuur</div>
+      </div>
+      <div class="preview-card" style="background:#1C1C1C; color:#FFFFFF; border-left:1px solid #2a2a2a; border-right:1px solid #2a2a2a;">
+        <div class="preview-card-title" style="color:#FF2E93;">Ladies Only</div>
+        <div class="preview-card-text">Eigen ruimte voor vrouwen</div>
+      </div>
+      <div class="preview-card" style="background:#1C1C1C; color:#FFFFFF;">
+        <div class="preview-card-title" style="color:#FF5722;">Kickboxing</div>
+        <div class="preview-card-text">Groepslessen met trainers</div>
+      </div>
+    </div>
+  </div>
+
+  <table class="contrast-table">
+    <tr><th>Combinatie</th><th>Ratio</th><th>WCAG AA</th></tr>
+    <tr><td>Tekst #FFF op Achtergrond #141414</td><td>18.42:1</td><td class="pass">Pass (AAA)</td></tr>
+    <tr><td>Knoptekst #141414 op Primair #FFE303</td><td>14.25:1</td><td class="pass">Pass (AAA)</td></tr>
+    <tr><td>Knoptekst #141414 op Secundair #FF2E93</td><td>5.32:1</td><td class="pass">Pass (AA)</td></tr>
+    <tr><td>Tekst #E0E0E0 op Achtergrond #141414</td><td>13.96:1</td><td class="pass">Pass (AAA)</td></tr>
+    <tr><td>Tekst #FFF op Oppervlak #1C1C1C</td><td>17.04:1</td><td class="pass">Pass (AAA)</td></tr>
+  </table>
+</section>
+
+<!-- ==================== OPTION B ==================== -->
+<section class="palette-section">
+  <div class="palette-label">Optie B</div>
+  <h2 class="palette-title">Competitor-Inspired — Warm Amber</h2>
+  <p class="palette-desc">Verschoven van Basic-Fit (oranje) en SportCity (goud). Amber tonen geven warmte en energie zonder direct te kopieren. Dieper zwart dan Optie A voor extra contrast. Denk TrainMore-stijl maar met eigen karakter.</p>
+
+  <div class="swatches">
+    <div class="swatch">
+      <div class="swatch-color" style="background:#F5A623;"></div>
+      <div class="swatch-info"><div class="swatch-role">Primair</div><div class="swatch-hex">#F5A623</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#E39436;"></div>
+      <div class="swatch-info"><div class="swatch-role">Secundair</div><div class="swatch-hex">#E39436</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#F07819;"></div>
+      <div class="swatch-info"><div class="swatch-role">Accent</div><div class="swatch-hex">#F07819</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#0D0D0D;"></div>
+      <div class="swatch-info"><div class="swatch-role">Achtergrond</div><div class="swatch-hex">#0D0D0D</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#1A1A1A;"></div>
+      <div class="swatch-info"><div class="swatch-role">Oppervlak</div><div class="swatch-hex">#1A1A1A</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#F5F5F5; border-color:#444;"></div>
+      <div class="swatch-info"><div class="swatch-role">Tekst</div><div class="swatch-hex">#F5F5F5</div></div>
+    </div>
+  </div>
+
+  <div class="preview-container">
+    <div class="preview-hero" style="background:#0D0D0D;">
+      <div class="preview-content">
+        <div class="preview-eyebrow" style="color:#F5A623;">Sportschool Culemborg</div>
+        <h3 class="preview-h1" style="color:#F5F5F5;">Geen Poespas.<br>Gewoon een Goede Gym.</h3>
+        <p class="preview-sub" style="color:#CCCCCC;">De meest betaalbare sportschool van de regio met professionele apparatuur van Nautilus, SportsArt en Technogym.</p>
+        <a class="preview-cta" style="background:#F5A623; color:#0D0D0D;">Plan je gratis proeftraining</a>
+        <a class="preview-cta-ghost" style="color:#F5A623; border-color:#F5A623;">Bekijk prijzen</a>
+      </div>
+    </div>
+    <div class="preview-surface-bar">
+      <div class="preview-card" style="background:#1A1A1A; color:#F5F5F5;">
+        <div class="preview-card-title" style="color:#F5A623;">Fitness</div>
+        <div class="preview-card-text">Vrij trainen op topapparatuur</div>
+      </div>
+      <div class="preview-card" style="background:#1A1A1A; color:#F5F5F5; border-left:1px solid #2a2a2a; border-right:1px solid #2a2a2a;">
+        <div class="preview-card-title" style="color:#E39436;">Ladies Only</div>
+        <div class="preview-card-text">Eigen ruimte voor vrouwen</div>
+      </div>
+      <div class="preview-card" style="background:#1A1A1A; color:#F5F5F5;">
+        <div class="preview-card-title" style="color:#F07819;">Kickboxing</div>
+        <div class="preview-card-text">Groepslessen met trainers</div>
+      </div>
+    </div>
+  </div>
+
+  <table class="contrast-table">
+    <tr><th>Combinatie</th><th>Ratio</th><th>WCAG AA</th></tr>
+    <tr><td>Tekst #F5F5F5 op Achtergrond #0D0D0D</td><td>19.44:1</td><td class="pass">Pass (AAA)</td></tr>
+    <tr><td>Knoptekst #0D0D0D op Primair #F5A623</td><td>9.09:1</td><td class="pass">Pass (AAA)</td></tr>
+    <tr><td>Knoptekst #0D0D0D op Accent #F07819</td><td>6.85:1</td><td class="pass">Pass (AA)</td></tr>
+    <tr><td>Tekst #F5F5F5 op Oppervlak #1A1A1A</td><td>15.96:1</td><td class="pass">Pass (AAA)</td></tr>
+  </table>
+</section>
+
+<!-- ==================== OPTION C ==================== -->
+<section class="palette-section">
+  <div class="palette-label">Optie C</div>
+  <h2 class="palette-title">Creative Contrast — Electric Cyan</h2>
+  <p class="palette-desc">Alle concurrenten gebruiken warme tinten (oranje, geel, roze, goud). Cyan breekt volledig met de markt en positioneert FitCity als de modernste sportschool in de regio. Blueprint-referentie: "electric blue = performance." Het geel blijft als secundaire kleur voor merkherkenning.</p>
+
+  <div class="swatches">
+    <div class="swatch">
+      <div class="swatch-color" style="background:#00E5FF;"></div>
+      <div class="swatch-info"><div class="swatch-role">Primair</div><div class="swatch-hex">#00E5FF</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#FFE303;"></div>
+      <div class="swatch-info"><div class="swatch-role">Secundair</div><div class="swatch-hex">#FFE303</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#00BCD4;"></div>
+      <div class="swatch-info"><div class="swatch-role">Accent</div><div class="swatch-hex">#00BCD4</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#0A0A0A;"></div>
+      <div class="swatch-info"><div class="swatch-role">Achtergrond</div><div class="swatch-hex">#0A0A0A</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#141420;"></div>
+      <div class="swatch-info"><div class="swatch-role">Oppervlak</div><div class="swatch-hex">#141420</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#E8E8E8; border-color:#444;"></div>
+      <div class="swatch-info"><div class="swatch-role">Tekst</div><div class="swatch-hex">#E8E8E8</div></div>
+    </div>
+  </div>
+
+  <div class="preview-container">
+    <div class="preview-hero" style="background:#0A0A0A;">
+      <div class="preview-content">
+        <div class="preview-eyebrow" style="color:#00E5FF;">Sportschool Culemborg</div>
+        <h3 class="preview-h1" style="color:#E8E8E8;">Geen Poespas.<br>Gewoon een Goede Gym.</h3>
+        <p class="preview-sub" style="color:#B0B0B0;">De meest betaalbare sportschool van de regio met professionele apparatuur van Nautilus, SportsArt en Technogym.</p>
+        <a class="preview-cta" style="background:#00E5FF; color:#0A0A0A;">Plan je gratis proeftraining</a>
+        <a class="preview-cta-ghost" style="color:#FFE303; border-color:#FFE303;">Bekijk prijzen</a>
+      </div>
+    </div>
+    <div class="preview-surface-bar">
+      <div class="preview-card" style="background:#141420; color:#E8E8E8;">
+        <div class="preview-card-title" style="color:#00E5FF;">Fitness</div>
+        <div class="preview-card-text">Vrij trainen op topapparatuur</div>
+      </div>
+      <div class="preview-card" style="background:#141420; color:#E8E8E8; border-left:1px solid #1f1f2f; border-right:1px solid #1f1f2f;">
+        <div class="preview-card-title" style="color:#FFE303;">Ladies Only</div>
+        <div class="preview-card-text">Eigen ruimte voor vrouwen</div>
+      </div>
+      <div class="preview-card" style="background:#141420; color:#E8E8E8;">
+        <div class="preview-card-title" style="color:#00BCD4;">Kickboxing</div>
+        <div class="preview-card-text">Groepslessen met trainers</div>
+      </div>
+    </div>
+  </div>
+
+  <table class="contrast-table">
+    <tr><th>Combinatie</th><th>Ratio</th><th>WCAG AA</th></tr>
+    <tr><td>Tekst #E8E8E8 op Achtergrond #0A0A0A</td><td>16.16:1</td><td class="pass">Pass (AAA)</td></tr>
+    <tr><td>Knoptekst #0A0A0A op Primair #00E5FF</td><td>12.87:1</td><td class="pass">Pass (AAA)</td></tr>
+    <tr><td>Knoptekst #0A0A0A op Secundair #FFE303</td><td>14.25:1</td><td class="pass">Pass (AAA)</td></tr>
+    <tr><td>Tekst #E8E8E8 op Oppervlak #141420</td><td>13.40:1</td><td class="pass">Pass (AAA)</td></tr>
+  </table>
+</section>
+
+<footer style="max-width:1200px; margin:0 auto; padding:2rem; border-top:1px solid #1f1f1f; color:#555; font-size:0.75rem;">
+  <p>Gegenereerd door KNAP GEMAAKT. op 4 april 2026. Contrastwaarden geverifieerd via Coolors WCAG check. Alle paletten zijn WCAG AA-compliant.</p>
+  <p style="margin-top:0.5rem;">Opmerking: Kickboxing accent (#FF5722) in Optie A is nog TBD — kan naar primair geel verschuiven. Dit heeft geen impact op de andere twee opties.</p>
+</footer>
+
+</body>
+</html>

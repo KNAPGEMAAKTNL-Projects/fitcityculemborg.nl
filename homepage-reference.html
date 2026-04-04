@@ -1,0 +1,2089 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FitCity Culemborg — De meest betaalbare sportschool</title>
+  <meta name="description" content="FitCity Culemborg: fitness, ladies only en kickboxing. De meest betaalbare sportschool van Culemborg. Vanaf €20,50 per maand.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Oswald:wght@700&display=swap" rel="stylesheet">
+  <style>
+    /* =========================================
+       CSS CUSTOM PROPERTIES
+       ========================================= */
+    :root {
+      --color-primary: #FFE303;
+      --color-secondary: #FF2E93;
+      --color-bg: #141414;
+      --color-surface: #1C1C1C;
+      --color-surface-alt: #181818;
+      --color-text: #FFFFFF;
+      --color-text-muted: #999999;
+      --color-text-body: #CCCCCC;
+      --color-border: #2A2A2A;
+      --font-heading: 'Oswald', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    /* =========================================
+       RESET & BASE (Mobile-First)
+       ========================================= */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 80px;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-weight: 400;
+      color: var(--color-text);
+      background: var(--color-bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* =========================================
+       UTILITY
+       ========================================= */
+    .heading {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    /* =========================================
+       1. STICKY HEADER
+       ========================================= */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 0 1.5rem;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .site-header.scrolled {
+      background: rgba(20, 20, 20, 0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    .header-logo {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--color-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .header-nav {
+      display: none;
+      gap: 2rem;
+    }
+
+    .header-nav a {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      transition: color 0.2s;
+    }
+
+    .header-nav a:hover {
+      color: var(--color-text);
+    }
+
+    .header-cta {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      background: var(--color-primary);
+      color: var(--color-bg);
+      padding: 0.6rem 1.5rem;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+      transition: opacity 0.2s;
+    }
+
+    .header-cta:hover {
+      opacity: 0.9;
+    }
+
+    .header-hamburger {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    .header-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--color-text);
+    }
+
+    @media (min-width: 768px) {
+      .site-header {
+        padding: 0 2.5rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .site-header {
+        padding: 0 3rem;
+      }
+
+      .header-nav {
+        display: flex;
+      }
+
+      .header-hamburger {
+        display: none;
+      }
+    }
+
+    /* =========================================
+       2. HERO
+       ========================================= */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      background: var(--color-bg);
+      overflow: hidden;
+    }
+
+    /* Video placeholder background layer */
+    .hero-video-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at center, rgba(255,227,3,0.05) 0%, transparent 60%),
+        var(--color-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-video-bg span {
+      color: rgba(255,255,255,0.15);
+      font-size: 0.875rem;
+      font-family: var(--font-body);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* Dark overlay for text contrast */
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    <!-- Visual Craft: CSS Blur Blob -->
+    .hero-blur-blob {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: var(--color-primary);
+      opacity: 0.04;
+      filter: blur(100px);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      grid-column: 2;
+      padding: 0 2rem;
+      max-width: 560px;
+      text-align: center;
+      justify-self: center;
+    }
+    @media (max-width: 768px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+      .hero-content {
+        grid-column: 1;
+        margin: 0 auto;
+        text-align: center;
+      }
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.75rem;
+      color: var(--color-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      line-height: 1.0;
+      color: var(--color-text);
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 1.1rem;
+      color: var(--color-text-body);
+      margin-bottom: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .hero-subtitle {
+        font-size: 1.25rem;
+      }
+
+      .hero-blur-blob {
+        width: 400px;
+        height: 400px;
+      }
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .hero-buttons {
+        flex-direction: row;
+        justify-content: center;
+      }
+    }
+
+    .btn-primary {
+      display: inline-block;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      background: var(--color-primary);
+      color: var(--color-bg);
+      padding: 1rem 2.5rem;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      min-height: 44px;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+    }
+
+    .btn-ghost {
+      display: inline-block;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      background: transparent;
+      color: var(--color-text);
+      padding: 1rem 2.5rem;
+      border: 2px solid rgba(255,255,255,0.3);
+      cursor: pointer;
+      transition: border-color 0.2s;
+      min-height: 44px;
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(255,255,255,0.6);
+    }
+
+    /* Glass pill reviews */
+    .hero-reviews {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 0.625rem 1.25rem;
+      border-radius: 9999px;
+    }
+
+    .hero-reviews-stars {
+      display: flex;
+      gap: 2px;
+    }
+
+    .hero-reviews-stars svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .hero-reviews-rating {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--color-text);
+    }
+
+    .hero-reviews-sep {
+      color: #666;
+    }
+
+    .hero-reviews-count {
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+    }
+
+    /* Scroll indicator */
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      animation: bounce 2s infinite;
+    }
+
+    .hero-scroll svg {
+      width: 28px;
+      height: 28px;
+      color: var(--color-primary);
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+      40% { transform: translateX(-50%) translateY(-10px); }
+      60% { transform: translateX(-50%) translateY(-5px); }
+    }
+
+    /* =========================================
+       Visual Craft: Gentle Wave Divider
+       ========================================= */
+    .wave-divider {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin-top: -1px;
+    }
+
+    /* =========================================
+       3. EQUIPMENT BRANDS STRIP
+       ========================================= */
+    .brands-strip {
+      background: #0e0e0e;
+      padding: 1.25rem 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .brands-strip-inner {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .brands-label {
+      display: none;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.7rem;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+      padding-left: 2rem;
+      flex-shrink: 0;
+    }
+
+    @media (min-width: 768px) {
+      .brands-label {
+        display: block;
+      }
+    }
+
+    /* Visual Craft: CSS Marquee with Fade Mask -->
+    .brands-marquee-wrapper {
+      flex: 1;
+      overflow: hidden;
+      mask-image: linear-gradient(90deg, transparent, black 15%, black 85%, transparent);
+      -webkit-mask-image: linear-gradient(90deg, transparent, black 15%, black 85%, transparent);
+    }
+
+    .brands-marquee {
+      display: flex;
+      gap: 3rem;
+      animation: marquee 20s linear infinite;
+      width: max-content;
+    }
+
+    .brands-marquee span {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--color-text);
+      opacity: 0.4;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      white-space: nowrap;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* =========================================
+       4. SERVICE CARDS — ONS AANBOD
+       ========================================= */
+    .services {
+      background: var(--color-bg);
+      padding: 3rem 0;
+    }
+
+    @media (min-width: 768px) {
+      .services {
+        padding: 6rem 0;
+      }
+    }
+
+    .services-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .services-container {
+        padding: 0 2rem;
+      }
+    }
+
+    .section-heading {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 2rem;
+      color: var(--color-text);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-heading::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: var(--color-primary);
+      margin-top: 0.75rem;
+    }
+
+    .section-subtitle {
+      color: var(--color-text-muted);
+      font-size: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .section-subtitle {
+        margin-bottom: 3rem;
+      }
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .services-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+      }
+    }
+
+    .service-card {
+      background: var(--color-surface);
+      border-radius: 0.5rem;
+      overflow: hidden;
+      transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .service-card--fitness {
+      border-top: 3px solid var(--color-primary);
+    }
+
+    @media (min-width: 768px) {
+      .service-card--fitness {
+        grid-row: 1 / 3;
+        grid-column: 1;
+      }
+    }
+
+    .service-card--ladies {
+      border-top: 3px solid var(--color-secondary);
+    }
+
+    .service-card--kickboxing {
+      border-top: 3px solid var(--color-primary);
+    }
+
+    .service-card-image {
+      aspect-ratio: 16/9;
+      background: #252525;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #555;
+      font-size: 0.8rem;
+      font-family: var(--font-body);
+    }
+
+    @media (min-width: 768px) {
+      .service-card--fitness .service-card-image {
+        aspect-ratio: 16/10;
+      }
+    }
+
+    .service-card-body {
+      padding: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .service-card--fitness .service-card-body {
+        padding: 2rem;
+      }
+    }
+
+    .service-card-title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.25rem;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .service-card--fitness .service-card-title,
+    .service-card--kickboxing .service-card-title {
+      color: var(--color-primary);
+    }
+
+    .service-card--ladies .service-card-title {
+      color: var(--color-secondary);
+    }
+
+    .service-card-desc {
+      color: var(--color-text-muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    .service-card-link {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.875rem;
+      transition: opacity 0.2s;
+    }
+
+    .service-card--fitness .service-card-link,
+    .service-card--kickboxing .service-card-link {
+      color: var(--color-primary);
+    }
+
+    .service-card--ladies .service-card-link {
+      color: var(--color-secondary);
+    }
+
+    .service-card-link:hover {
+      opacity: 0.8;
+    }
+
+    /* =========================================
+       5. VIBE SECTION — DE VIBE
+       ========================================= */
+    .vibe {
+      background: var(--color-surface-alt);
+      padding: 3rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (min-width: 768px) {
+      .vibe {
+        padding: 5rem 0;
+      }
+    }
+
+    /* Visual Craft: SVG feTurbulence Grain Overlay */
+    .vibe-grain {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.25;
+    }
+
+    .vibe-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (min-width: 768px) {
+      .vibe-container {
+        padding: 0 2rem;
+      }
+    }
+
+    .vibe-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .vibe-grid {
+        grid-template-columns: 7fr 5fr;
+        gap: 3rem;
+        align-items: center;
+      }
+    }
+
+    .vibe-heading {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.75rem;
+      text-transform: uppercase;
+      color: var(--color-primary);
+      margin-bottom: 1.5rem;
+    }
+
+    .vibe-text p {
+      color: var(--color-text-body);
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .vibe-checklist {
+      margin-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+
+    .vibe-checklist li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--color-text-body);
+      font-size: 0.95rem;
+    }
+
+    .vibe-checklist svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      color: var(--color-primary);
+    }
+
+    .vibe-image {
+      aspect-ratio: 4/5;
+      background: #252525;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #555;
+      font-size: 0.8rem;
+      font-family: var(--font-body);
+    }
+
+    /* =========================================
+       6. PRICING — PRIJZEN
+       ========================================= */
+    .pricing {
+      background: var(--color-bg);
+      padding: 3rem 0;
+    }
+
+    @media (min-width: 768px) {
+      .pricing {
+        padding: 6rem 0;
+      }
+    }
+
+    .pricing-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      text-align: center;
+    }
+
+    @media (min-width: 768px) {
+      .pricing-container {
+        padding: 0 2rem;
+      }
+    }
+
+    .pricing .section-heading {
+      display: inline-block;
+    }
+
+    .pricing .section-heading::after {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .pricing .section-subtitle {
+      margin-bottom: 2rem;
+    }
+
+    /* Duration toggle */
+    .pricing-toggle {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 1px solid var(--color-border);
+      border-radius: 9999px;
+      padding: 4px;
+      margin-bottom: 3rem;
+    }
+
+    .pricing-toggle-btn {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: 0.5rem 1.5rem;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+
+    .pricing-toggle-btn--active {
+      background: var(--color-primary);
+      color: var(--color-bg);
+    }
+
+    .pricing-toggle-btn--inactive {
+      background: transparent;
+      color: var(--color-text-muted);
+    }
+
+    /* Pricing cards */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      text-align: left;
+      margin-bottom: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .pricing-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .pricing-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 0.5rem;
+      padding: 2rem 1.5rem;
+      position: relative;
+    }
+
+    @media (min-width: 768px) {
+      .pricing-card {
+        padding: 2rem 2.5rem;
+      }
+    }
+
+    .pricing-card-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: var(--color-primary);
+      color: var(--color-bg);
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.3rem 0.75rem;
+      border-radius: 0.25rem;
+    }
+
+    .pricing-card-name {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1rem;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    .pricing-card-price {
+      display: flex;
+      align-items: baseline;
+      gap: 0.25rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .pricing-card-amount {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 3rem;
+      color: var(--color-primary);
+      line-height: 1;
+    }
+
+    .pricing-card--ladies .pricing-card-amount {
+      color: var(--color-secondary);
+    }
+
+    .pricing-card-period {
+      font-size: 1rem;
+      color: var(--color-text-muted);
+    }
+
+    .pricing-card-signup {
+      font-size: 0.8rem;
+      color: #666;
+      margin-bottom: 1.5rem;
+    }
+
+    .pricing-card-features {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .pricing-card-features li {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      color: var(--color-text-body);
+      font-size: 0.9rem;
+    }
+
+    .pricing-card-features svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      color: var(--color-primary);
+    }
+
+    .pricing-card--ladies .pricing-card-features svg {
+      color: var(--color-secondary);
+    }
+
+    .pricing-card-cta {
+      display: block;
+      width: 100%;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-align: center;
+      padding: 0.875rem 1.5rem;
+      border: none;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      min-height: 44px;
+      background: var(--color-primary);
+      color: var(--color-bg);
+    }
+
+    .pricing-card--ladies .pricing-card-cta {
+      background: var(--color-secondary);
+      color: var(--color-text);
+    }
+
+    .pricing-card-cta:hover {
+      opacity: 0.9;
+    }
+
+    .pricing-footer {
+      text-align: center;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    /* =========================================
+       7. KICKBOXING GALLERY
+       ========================================= */
+    .kickboxing {
+      background: #0e0e0e;
+      padding: 3rem 0;
+    }
+
+    @media (min-width: 768px) {
+      .kickboxing {
+        padding: 5rem 0;
+      }
+    }
+
+    .kickboxing-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .kickboxing-container {
+        padding: 0 2rem;
+      }
+    }
+
+    .kickboxing-gallery {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .kickboxing-gallery {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+      }
+    }
+
+    .kickboxing-gallery-item {
+      background: #252525;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #555;
+      font-size: 0.75rem;
+      font-family: var(--font-body);
+      aspect-ratio: 4/3;
+      overflow: hidden;
+    }
+
+    .kickboxing-gallery-item:first-child {
+      grid-column: 1 / -1;
+      aspect-ratio: 16/9;
+    }
+
+    @media (min-width: 768px) {
+      .kickboxing-gallery-item:first-child {
+        grid-column: 1;
+        grid-row: 1 / 3;
+        aspect-ratio: auto;
+      }
+    }
+
+    .kickboxing-schedule {
+      text-align: center;
+      color: var(--color-text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+
+    .kickboxing-cta {
+      text-align: center;
+    }
+
+    .btn-ghost-yellow {
+      display: inline-block;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-primary);
+      border: 2px solid var(--color-primary);
+      background: transparent;
+      padding: 0.875rem 2rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      min-height: 44px;
+    }
+
+    .btn-ghost-yellow:hover {
+      background: rgba(255,227,3,0.08);
+    }
+
+    /* =========================================
+       8. GOOGLE REVIEWS
+       ========================================= */
+    .reviews {
+      background: var(--color-surface-alt);
+      border-top: 1px solid rgba(255,227,3,0.15);
+      border-bottom: 1px solid rgba(255,227,3,0.15);
+      padding: 3rem 0;
+    }
+
+    @media (min-width: 768px) {
+      .reviews {
+        padding: 4rem 0;
+      }
+    }
+
+    .reviews-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .reviews-container {
+        flex-direction: row;
+        justify-content: center;
+        gap: 3rem;
+        padding: 0 2rem;
+      }
+    }
+
+    .reviews-google {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .reviews-google-label {
+      color: #666;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .reviews-score {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .reviews-stars {
+      display: flex;
+      gap: 4px;
+    }
+
+    .reviews-stars svg {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    .reviews-number {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 3rem;
+      color: var(--color-primary);
+      line-height: 1;
+    }
+
+    .reviews-count {
+      color: var(--color-text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* =========================================
+       9. FAQ
+       ========================================= */
+    .faq {
+      background: var(--color-bg);
+      padding: 3rem 0;
+    }
+
+    @media (min-width: 768px) {
+      .faq {
+        padding: 5rem 0;
+      }
+    }
+
+    .faq-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .faq-container {
+        padding: 0 2rem;
+      }
+    }
+
+    .faq .section-heading {
+      margin-bottom: 2.5rem;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .faq-item summary {
+      padding: 1.25rem 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--color-text);
+      min-height: 44px;
+    }
+
+    .faq-item summary::-webkit-details-marker,
+    .faq-item summary::marker {
+      display: none;
+      content: '';
+    }
+
+    .faq-item summary .faq-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-muted);
+      transition: transform 0.2s;
+    }
+
+    .faq-item[open] summary .faq-icon {
+      transform: rotate(45deg);
+    }
+
+    .faq-item .faq-answer {
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+      padding-bottom: 1.25rem;
+    }
+
+    /* =========================================
+       10. CONTACT CTA
+       ========================================= */
+    .contact-cta {
+      background: var(--color-primary);
+      padding: 3rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (min-width: 768px) {
+      .contact-cta {
+        padding: 5rem 0;
+      }
+    }
+
+    /* Visual Craft: CSS Dot Grid Background -->
+    .contact-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(20,20,20,0.08) 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+    }
+
+    .contact-cta-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (min-width: 768px) {
+      .contact-cta-container {
+        padding: 0 2rem;
+      }
+    }
+
+    .contact-cta-heading {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 2rem;
+      text-transform: uppercase;
+      color: var(--color-bg);
+      margin-bottom: 0.75rem;
+    }
+
+    @media (min-width: 768px) {
+      .contact-cta-heading {
+        font-size: 2.5rem;
+      }
+    }
+
+    .contact-cta-sub {
+      font-size: 1rem;
+      color: var(--color-bg);
+      margin-bottom: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .contact-cta-sub {
+        font-size: 1.1rem;
+      }
+    }
+
+    .contact-cta-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .contact-cta-buttons {
+        flex-direction: row;
+        justify-content: center;
+      }
+    }
+
+    .btn-dark {
+      display: inline-block;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: var(--color-bg);
+      color: var(--color-primary);
+      padding: 1rem 2.5rem;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      min-height: 44px;
+    }
+
+    .btn-dark:hover {
+      opacity: 0.9;
+    }
+
+    .btn-outline-dark {
+      display: inline-block;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: transparent;
+      color: var(--color-bg);
+      padding: 1rem 2.5rem;
+      border: 2px solid var(--color-bg);
+      cursor: pointer;
+      transition: background 0.2s;
+      min-height: 44px;
+    }
+
+    .btn-outline-dark:hover {
+      background: rgba(20,20,20,0.08);
+    }
+
+    .contact-cta-hours {
+      color: rgba(20,20,20,0.6);
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-cta-address {
+      color: rgba(20,20,20,0.6);
+      font-size: 0.875rem;
+    }
+
+    /* =========================================
+       11. FOOTER
+       ========================================= */
+    .site-footer {
+      background: #0e0e0e;
+      padding: 3rem 0 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .site-footer {
+        padding: 4rem 0 2rem;
+      }
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .footer-container {
+        padding: 0 2rem;
+      }
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      margin-bottom: 3rem;
+    }
+
+    @media (min-width: 768px) {
+      .footer-grid {
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 2rem;
+      }
+    }
+
+    .footer-brand {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--color-primary);
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-tagline {
+      color: #666;
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+
+    .footer-col-title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--color-text);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.625rem;
+    }
+
+    .footer-links a {
+      color: var(--color-text-muted);
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--color-text);
+    }
+
+    .footer-info p {
+      color: var(--color-text-muted);
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--color-border);
+      padding-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .footer-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+
+    .footer-copyright {
+      color: #555;
+      font-size: 0.8rem;
+    }
+
+    .footer-legal {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-legal a {
+      color: #555;
+      font-size: 0.8rem;
+      transition: color 0.2s;
+    }
+
+    .footer-legal a:hover {
+      color: var(--color-text-muted);
+    }
+
+    /* =========================================
+       12. STICKY MOBILE CTA BAR
+       ========================================= */
+    .mobile-cta-bar {
+      display: flex;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      background: var(--color-bg);
+      border-top: 1px solid var(--color-border);
+      padding: 0.75rem 1rem;
+      padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    @media (min-width: 768px) {
+      .mobile-cta-bar {
+        display: none;
+      }
+    }
+
+    .mobile-cta-whatsapp {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      flex-shrink: 0;
+      color: #25D366;
+    }
+
+    .mobile-cta-whatsapp svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .mobile-cta-button {
+      flex: 1;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-align: center;
+      background: var(--color-primary);
+      color: var(--color-bg);
+      padding: 0.75rem 1rem;
+      border: none;
+      cursor: pointer;
+      min-height: 44px;
+    }
+
+    /* Bottom padding to account for mobile CTA bar */
+    @media (max-width: 767px) {
+      .site-footer {
+        padding-bottom: calc(4rem + env(safe-area-inset-bottom, 0px));
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================
+       1. STICKY HEADER
+       ========================================== -->
+  <header class="site-header" id="site-header">
+    <a href="/" class="header-logo">FitCity</a>
+    <!-- NAV: placeholder — finalize after Session 2 sitemap -->
+    <nav class="header-nav">
+      <a href="#hero">Home</a>
+      <a href="#services">Fitness</a>
+      <a href="#services">Ladies Only</a>
+      <a href="#kickboxing">Kickboxing</a>
+      <a href="#pricing">Prijzen</a>
+      <a href="#contact-cta">Contact</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:1rem;">
+      <a href="#pricing" class="header-cta" style="display:none;">WORD LID</a>
+      <div class="header-hamburger" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================
+       2. HERO
+       ========================================== -->
+  <section class="hero" id="hero">
+    <!-- Video placeholder background -->
+    <div class="hero-video-bg">
+      <span>[VIDEO: fitcity-hero.mp4]</span>
+    </div>
+
+    <!-- Dark overlay -->
+    <div class="hero-overlay"></div>
+
+    <!-- Visual Craft: CSS Blur Blob -->
+    <div class="hero-blur-blob"></div>
+
+    <!-- Content -->
+    <div class="hero-content">
+      <p class="hero-eyebrow">Sportschool Culemborg</p>
+      <h1 class="hero-title">Elke dag fitter</h1>
+      <p class="hero-subtitle">De meest betaalbare sportschool van Culemborg</p>
+
+      <div class="hero-buttons">
+        <a href="#pricing" class="btn-primary">Word nu lid</a>
+        <a href="#pricing" class="btn-ghost">Bekijk prijzen</a>
+      </div>
+
+      <!-- Glass pill Google Reviews -->
+      <div class="hero-reviews">
+        <div class="hero-reviews-stars">
+          <!-- 4 filled stars -->
+          <svg viewBox="0 0 24 24" fill="#FFE303"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="#FFE303"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="#FFE303"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="#FFE303"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <!-- Partial star (clip to ~60%) -->
+          <svg viewBox="0 0 24 24">
+            <defs>
+              <linearGradient id="partial-star-hero">
+                <stop offset="60%" stop-color="#FFE303"/>
+                <stop offset="60%" stop-color="#555"/>
+              </linearGradient>
+            </defs>
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="url(#partial-star-hero)"/>
+          </svg>
+        </div>
+        <span class="hero-reviews-rating">4.6</span>
+        <span class="hero-reviews-sep">|</span>
+        <span class="hero-reviews-count">28 Google reviews</span>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="hero-scroll">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- Visual Craft: Gentle Wave Divider -->
+  <svg class="wave-divider" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,0 C360,60 1080,60 1440,0 L1440,60 L0,60 Z" fill="#0e0e0e"/>
+  </svg>
+
+  <!-- ==========================================
+       3. EQUIPMENT BRANDS STRIP
+       ========================================== -->
+  <section class="brands-strip">
+    <div class="brands-strip-inner">
+      <span class="brands-label">Apparatuur van</span>
+      <!-- Visual Craft: CSS Marquee with Fade Mask -->
+      <div class="brands-marquee-wrapper">
+        <div class="brands-marquee">
+          <span>Nautilus</span>
+          <span>SportsArt</span>
+          <span>Technogym</span>
+          <span>Nautilus</span>
+          <span>SportsArt</span>
+          <span>Technogym</span>
+          <span>Nautilus</span>
+          <span>SportsArt</span>
+          <span>Technogym</span>
+          <span>Nautilus</span>
+          <span>SportsArt</span>
+          <span>Technogym</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       4. SERVICE CARDS — ONS AANBOD
+       ========================================== -->
+  <section class="services" id="services">
+    <div class="services-container">
+      <h2 class="section-heading">Ons aanbod</h2>
+      <p class="section-subtitle">Fitness, Ladies Only en Kickboxing. Alles onder een dak.</p>
+
+      <div class="services-grid">
+        <!-- FITNESS — spans 2 rows on desktop -->
+        <div class="service-card service-card--fitness">
+          <div class="service-card-image">[FOTO: Fitnessruimte]</div>
+          <div class="service-card-body">
+            <h3 class="service-card-title">Fitness</h3>
+            <p class="service-card-desc">Vrij trainen op professionele apparatuur van Nautilus, SportsArt en Technogym. Altijd begeleiding aanwezig.</p>
+            <a href="#" class="service-card-link">Meer over fitness &rarr;</a>
+          </div>
+        </div>
+
+        <!-- LADIES ONLY -->
+        <div class="service-card service-card--ladies">
+          <div class="service-card-image">[FOTO: Ladies Only zone]</div>
+          <div class="service-card-body">
+            <h3 class="service-card-title">Ladies Only</h3>
+            <p class="service-card-desc">Een eigen trainingsvloer alleen voor vrouwen. Volledig uitgerust, volledige privacy.</p>
+            <a href="#" class="service-card-link">Meer over Ladies Only &rarr;</a>
+          </div>
+        </div>
+
+        <!-- KICKBOXING -->
+        <div class="service-card service-card--kickboxing">
+          <div class="service-card-image">[FOTO: Kickboxing les]</div>
+          <div class="service-card-body">
+            <h3 class="service-card-title">Kickboxing</h3>
+            <p class="service-card-desc">Groepslessen kickboxing met ervaren trainers. Dinsdag, donderdag en zondag.</p>
+            <a href="#" class="service-card-link">Meer over kickboxing &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       5. VIBE SECTION — DE VIBE
+       ========================================== -->
+  <section class="vibe" id="vibe">
+    <!-- Visual Craft: SVG feTurbulence Grain Overlay -->
+    <svg class="vibe-grain" xmlns="http://www.w3.org/2000/svg">
+      <filter id="grain-vibe">
+        <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" stitchTiles="stitch"/>
+      </filter>
+      <rect width="100%" height="100%" filter="url(#grain-vibe)"/>
+    </svg>
+
+    <div class="vibe-container">
+      <div class="vibe-grid">
+        <!-- Left column: text -->
+        <div class="vibe-text">
+          <h2 class="vibe-heading">Gebouwd om in te trainen</h2>
+          <p>Geen smoothiebar. Geen onnodige extra's. Wel degelijke apparatuur, altijd begeleiding en een sfeer waarin je aan de slag gaat.</p>
+          <p>FitCity is de sportschool in Culemborg waar resultaat voorop staat.</p>
+
+          <ul class="vibe-checklist">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Gratis begeleiding bij elk bezoek
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Professionele apparatuur
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Gratis parkeren voor de deur
+            </li>
+          </ul>
+        </div>
+
+        <!-- Right column: image placeholder -->
+        <div class="vibe-image">[FOTO: fitcity-members.webp]</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       6. PRICING — PRIJZEN
+       ========================================== -->
+  <section class="pricing" id="pricing">
+    <div class="pricing-container">
+      <h2 class="section-heading">Prijzen</h2>
+      <p class="section-subtitle">Geen verborgen kosten. Wat je ziet is wat je betaalt.</p>
+
+      <!-- Duration toggle (static — shows Jaar view) -->
+      <div class="pricing-toggle">
+        <button class="pricing-toggle-btn pricing-toggle-btn--active">Jaar</button>
+        <button class="pricing-toggle-btn pricing-toggle-btn--inactive">Halfjaar</button>
+        <button class="pricing-toggle-btn pricing-toggle-btn--inactive">Flex</button>
+      </div>
+
+      <div class="pricing-grid">
+        <!-- SMART DEAL -->
+        <div class="pricing-card">
+          <p class="pricing-card-name">Smart Deal</p>
+          <div class="pricing-card-price">
+            <span class="pricing-card-amount">&euro;24,50</span>
+            <span class="pricing-card-period">/maand</span>
+          </div>
+          <p class="pricing-card-signup">&euro;17,00 inschrijfkosten</p>
+          <ul class="pricing-card-features">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Onbeperkt fitness
+            </li>
+          </ul>
+          <button class="pricing-card-cta">Kies Smart Deal</button>
+        </div>
+
+        <!-- LADIES ONLY JAAR -->
+        <div class="pricing-card pricing-card--ladies">
+          <p class="pricing-card-name">Ladies Only Jaar</p>
+          <div class="pricing-card-price">
+            <span class="pricing-card-amount">&euro;20,50</span>
+            <span class="pricing-card-period">/maand</span>
+          </div>
+          <p class="pricing-card-signup">&euro;17,00 inschrijfkosten</p>
+          <ul class="pricing-card-features">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Ladies Only zone
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Algemene fitness
+            </li>
+          </ul>
+          <button class="pricing-card-cta">Kies Ladies Only</button>
+        </div>
+
+        <!-- ULTIMATE FIT DEAL -->
+        <div class="pricing-card">
+          <span class="pricing-card-badge">Beste deal</span>
+          <p class="pricing-card-name">Ultimate Fit Deal</p>
+          <div class="pricing-card-price">
+            <span class="pricing-card-amount">&euro;37,50</span>
+            <span class="pricing-card-period">/maand</span>
+          </div>
+          <p class="pricing-card-signup">&euro;17,00 inschrijfkosten</p>
+          <ul class="pricing-card-features">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Onbeperkt fitness
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Kickboxing inclusief
+            </li>
+          </ul>
+          <button class="pricing-card-cta">Kies Ultimate Fit</button>
+        </div>
+      </div>
+
+      <p class="pricing-footer">Dagpas: &euro;7,00 &mdash; Proefles: Gratis</p>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       7. KICKBOXING GALLERY
+       ========================================== -->
+  <section class="kickboxing" id="kickboxing">
+    <div class="kickboxing-container">
+      <h2 class="section-heading">Kickboxing</h2>
+      <p class="section-subtitle" style="margin-bottom: 2.5rem;">Groepslessen met ervaren trainers</p>
+
+      <div class="kickboxing-gallery">
+        <div class="kickboxing-gallery-item">[FOTO: kickboxen-1.webp]</div>
+        <div class="kickboxing-gallery-item">[FOTO: kickboxen-2.webp]</div>
+        <div class="kickboxing-gallery-item">[FOTO: kickboxen-3.webp]</div>
+        <div class="kickboxing-gallery-item">[FOTO: kickboxen-4.webp]</div>
+        <div class="kickboxing-gallery-item">[FOTO: kickboxen-5.webp]</div>
+        <div class="kickboxing-gallery-item">[FOTO: kickboxen-6.webp]</div>
+      </div>
+
+      <p class="kickboxing-schedule">Lesrooster: Di 19:00-20:00 | Do 19:00-20:00 | Zo 10:00-11:00</p>
+
+      <div class="kickboxing-cta">
+        <a href="#pricing" class="btn-ghost-yellow">Bekijk kickboxing prijzen</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       8. GOOGLE REVIEWS
+       ========================================== -->
+  <section class="reviews" id="reviews">
+    <div class="reviews-container">
+      <!-- Google logo + label -->
+      <div class="reviews-google">
+        <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+        </svg>
+        <span class="reviews-google-label">Google Reviews</span>
+      </div>
+
+      <!-- Stars + score -->
+      <div class="reviews-score">
+        <div class="reviews-stars">
+          <svg viewBox="0 0 24 24" fill="#FFE303"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="#FFE303"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="#FFE303"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="#FFE303"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24">
+            <defs>
+              <linearGradient id="partial-star-reviews">
+                <stop offset="60%" stop-color="#FFE303"/>
+                <stop offset="60%" stop-color="#555"/>
+              </linearGradient>
+            </defs>
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="url(#partial-star-reviews)"/>
+          </svg>
+        </div>
+        <span class="reviews-number">4.6</span>
+        <span class="reviews-count">28 reviews</span>
+      </div>
+
+      <!-- CTA -->
+      <a href="#" class="btn-ghost-yellow" style="font-size:0.8rem;padding:0.75rem 1.5rem;">Lees reviews</a>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       9. FAQ
+       ========================================== -->
+  <section class="faq" id="faq">
+    <div class="faq-container">
+      <h2 class="section-heading">Veelgestelde vragen</h2>
+
+      <details class="faq-item">
+        <summary>
+          <span>Wat is het inschrijfgeld?</span>
+          <span class="faq-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </span>
+        </summary>
+        <div class="faq-answer">Bij alle abonnementen betaal je eenmalig &euro;17,00 inschrijfgeld.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span>Kan ik op elk moment opzeggen?</span>
+          <span class="faq-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </span>
+        </summary>
+        <div class="faq-answer">Bij de Flex abonnementen kun je opzeggen met 1 kalendermaand opzegtermijn.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span>Is er altijd personeel aanwezig?</span>
+          <span class="faq-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </span>
+        </summary>
+        <div class="faq-answer">Ja, tijdens alle openingstijden is er personeel aanwezig.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span>Wat is de Ladies Only zone?</span>
+          <span class="faq-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </span>
+        </summary>
+        <div class="faq-answer">Een aparte damesvloer beneden waar alleen vrouwen mogen trainen.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span>Kan ik een proefles doen?</span>
+          <span class="faq-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </span>
+        </summary>
+        <div class="faq-answer">Zeker! Je bent altijd welkom voor een gratis proefles.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span>Wat zijn de openingstijden?</span>
+          <span class="faq-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </span>
+        </summary>
+        <div class="faq-answer">Ma-Vr: 08:30-22:00, Za: 09:00-16:00, Zo: 09:30-16:00</div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       10. CONTACT CTA
+       ========================================== -->
+  <section class="contact-cta" id="contact-cta">
+    <!-- Visual Craft: CSS Dot Grid Background (via ::before pseudo-element) -->
+    <div class="contact-cta-container">
+      <h2 class="contact-cta-heading">Klaar om te beginnen?</h2>
+      <p class="contact-cta-sub">Kom langs voor een gratis proefles of meld je direct aan.</p>
+
+      <div class="contact-cta-buttons">
+        <a href="#" class="btn-dark">Word nu lid</a>
+        <a href="#" class="btn-outline-dark">Plan proeftraining</a>
+      </div>
+
+      <p class="contact-cta-hours">Ma-Vr 08:30-22:00 &middot; Za 09:00-16:00 &middot; Zo 09:30-16:00</p>
+      <p class="contact-cta-address">Prijssestraat 19, 4101 CM Culemborg</p>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       11. FOOTER
+       ========================================== -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-grid">
+        <!-- Col 1: Brand -->
+        <div>
+          <p class="footer-brand">FitCity Culemborg</p>
+          <p class="footer-tagline">De meest betaalbare sportschool van de regio.</p>
+        </div>
+
+        <!-- Col 2: Navigation -->
+        <div>
+          <p class="footer-col-title">Navigatie</p>
+          <ul class="footer-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Fitness</a></li>
+            <li><a href="#">Ladies Only</a></li>
+            <li><a href="#">Kickboxing</a></li>
+            <li><a href="#">Prijzen</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">FAQ</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Opening hours -->
+        <div>
+          <p class="footer-col-title">Openingstijden</p>
+          <div class="footer-info">
+            <p>Ma-Vr: 08:30-22:00</p>
+            <p>Za: 09:00-16:00</p>
+            <p>Zo: 09:30-16:00</p>
+          </div>
+        </div>
+
+        <!-- Col 4: Contact -->
+        <div>
+          <p class="footer-col-title">Contact</p>
+          <div class="footer-info">
+            <p>Prijssestraat 19</p>
+            <p>4101 CM Culemborg</p>
+            <p style="margin-top:0.5rem;">06-12345678</p>
+            <p>info@fitcityculemborg.nl</p>
+            <p>WhatsApp</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="footer-bottom">
+        <span class="footer-copyright">&copy; 2026 FitCity Culemborg</span>
+        <div class="footer-legal">
+          <a href="#">Privacy</a>
+          <a href="#">Voorwaarden</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================
+       12. STICKY MOBILE CTA BAR
+       ========================================== -->
+  <div class="mobile-cta-bar">
+    <a href="#" class="mobile-cta-whatsapp" aria-label="WhatsApp">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+    </a>
+    <button class="mobile-cta-button">Word nu lid</button>
+  </div>
+
+  <!-- ==========================================
+       SCROLL JS — Header background on scroll
+       ========================================== -->
+  <script>
+    (function() {
+      var header = document.getElementById('site-header');
+      var ctaDesktop = header.querySelector('.header-cta');
+
+      // Show desktop CTA on larger screens
+      if (window.innerWidth >= 1024) {
+        ctaDesktop.style.display = 'inline-block';
+      }
+      window.addEventListener('resize', function() {
+        ctaDesktop.style.display = window.innerWidth >= 1024 ? 'inline-block' : 'none';
+      });
+
+      // Scroll listener for header background
+      var ticking = false;
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          window.requestAnimationFrame(function() {
+            if (window.scrollY > 60) {
+              header.classList.add('scrolled');
+            } else {
+              header.classList.remove('scrolled');
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>
