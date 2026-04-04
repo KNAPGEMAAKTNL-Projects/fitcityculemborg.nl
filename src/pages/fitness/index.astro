@@ -1,0 +1,139 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import Footer from '../../components/Footer.astro';
+import MobileCTA from '../../components/MobileCTA.astro';
+---
+<Layout
+  title="Fitness Culemborg · Onbeperkt vanaf €24,50 · [FitCity]"
+  description="Fitnessen bij [FitCity] Culemborg. Apparatuur van Nautilus, SportsArt en Technogym. Onbeperkt trainen vanaf €24,50/maand. Plan je gratis proeftraining."
+>
+  <Header />
+
+  <!-- Hero (40vh) -->
+  <section class="inner-hero">
+    <div class="inner-hero-inner">
+      <Breadcrumb items={[{ label: 'Fitness' }]} />
+      <h1>FITNESS IN CULEMBORG</h1>
+    </div>
+  </section>
+
+  <!-- Direct Answer -->
+  <section class="content-section scroll-fade-up" data-scroll-reveal>
+    <div class="content-narrow">
+      <p class="direct-answer-text">Bij [FitCity] in Culemborg fitness je op apparatuur van Nautilus, SportsArt en Technogym. Onbeperkt trainen kan vanaf €24,50 per maand met de Smart Deal (12 maanden). Bij elk bezoek helpen de trainers je gratis met je schema of techniek. Plan een gratis proeftraining en kijk zelf rond.</p>
+    </div>
+  </section>
+
+  <!-- Description -->
+  <section class="content-section content-section--alt scroll-fade-up" data-scroll-reveal>
+    <div class="content-wide">
+      <div class="two-col-text-image">
+        <div class="col-text">
+          <h2 class="sub-heading">WAT KUN JE VERWACHTEN</h2>
+          <p>Bij [FitCity] train je op een ruime fitnessvloer met apparatuur van drie topmerken. Of je nou wilt afvallen of gewoon lekker actief wilt zijn: je kunt hier elke dag terecht.</p>
+
+          <h2 class="sub-heading">HOE WERKT HET</h2>
+          <p>Je komt binnen wanneer het je uitkomt, pakt je spullen en gaat aan de slag. Weet je niet precies waar je moet beginnen? De trainers staan elke dag klaar om je te helpen met een schema, je techniek te verbeteren of even mee te kijken bij een oefening. Dat is inclusief bij elk abonnement. Je betaalt er écht niets extra voor.</p>
+
+          <h2 class="sub-heading">VOOR WIE</h2>
+          <p>De fitnessvloer is er voor iedereen. Van beginners die nog nooit een gewicht hebben aangeraakt tot mensen die al jaren trainen. Het maakt niet uit of je 3 of 6 keer per week komt, je abonnement is altijd onbeperkt. En mocht je ook <a href="/kickboxing/">kickboxlessen</a> willen volgen, dan kun je upgraden naar de Ultimate Fit Deal.</p>
+          <p>De apparatuur wordt goed onderhouden en regelmatig vernieuwd. We zijn 7 dagen per week open: doordeweeks van 08:30 tot 22:00, in het weekend vanaf 09:00.</p>
+        </div>
+        <div class="col-image">
+          <div class="image-placeholder">Fitness afbeelding</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section class="content-section scroll-fade-up" data-scroll-reveal>
+    <div class="content-wide">
+      <SectionHeading title="WAAROM HIER TRAINEN" />
+      <div class="benefits-grid stagger-container">
+        <div class="benefit-card hover-lift">
+          <h3>Apparatuur van topmerken</h3>
+          <p>Nautilus, SportsArt en Technogym. Dezelfde merken als bij de grote ketens, in een sportschool waar je de trainers kent.</p>
+        </div>
+        <div class="benefit-card hover-lift">
+          <h3>Gratis begeleiding bij elk bezoek</h3>
+          <p>Hulp met je schema, techniek of een nieuwe oefening? De trainers helpen je, zonder bijbetaling.</p>
+        </div>
+        <div class="benefit-card hover-lift">
+          <h3>7 dagen per week open</h3>
+          <p>Doordeweeks van 08:30 tot 22:00, zaterdag vanaf 09:00 en zondag vanaf 09:30. Je kunt dus altijd trainen wanneer het jou uitkomt.</p>
+        </div>
+        <div class="benefit-card hover-lift">
+          <h3>Laagste fitnessprijs in de regio</h3>
+          <p>De Smart Deal is €24,50 per maand. Nergens in de buurt train je voordeliger op apparatuur van dit niveau.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="content-section content-section--alt scroll-fade-up" data-scroll-reveal>
+    <div class="content-wide">
+      <SectionHeading title="PRIJZEN" />
+      <div class="pricing-table-wrap">
+        <table class="pricing-table">
+          <thead><tr><th>Abonnement</th><th>Prijs</th><th>Duur</th><th>Inclusief</th></tr></thead>
+          <tbody>
+            <tr><td>Smart Deal</td><td>€24,50/maand</td><td>12 maanden</td><td>Onbeperkt fitness</td></tr>
+            <tr><td>Fit Deal</td><td>€29,50/maand</td><td>6 maanden</td><td>Onbeperkt fitness</td></tr>
+            <tr><td>Flex</td><td>€37,00/maand</td><td>Maandelijks opzegbaar</td><td>Onbeperkt fitness</td></tr>
+            <tr><td>Quick Deal</td><td>€99,00</td><td>3 maanden</td><td>Onbeperkt fitness</td></tr>
+            <tr><td>Combi Deal</td><td>€39,50/maand</td><td>12 maanden</td><td>Onbeperkt fitness, voor 2 personen</td></tr>
+            <tr><td>Dagpas</td><td>€7,00</td><td>Eenmalig</td><td>Toegang voor 1 dag</td></tr>
+          </tbody>
+        </table>
+        <p class="pricing-note">Alle abonnementen: €17,00 eenmalige inschrijfkosten. Eerste proeftraining gratis en vrijblijvend.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="content-section scroll-fade-up" data-scroll-reveal>
+    <div class="content-narrow">
+      <SectionHeading title="VEELGESTELDE VRAGEN OVER FITNESS" />
+      <div class="faq-list">
+        <details class="faq-item"><summary class="faq-question">Wat kost fitnessen bij [FitCity]?<span class="faq-icon">+</span></summary><div class="faq-answer"><p>De Smart Deal kost €24,50 per maand bij een jaarabonnement. Liever meer flexibiliteit? Dan is de Flex €37,00 per maand, maandelijks opzegbaar. Een dagpas kost €7,00. Bij alle abonnementen betaal je eenmalig €17,00 inschrijfkosten.</p></div></details>
+        <details class="faq-item"><summary class="faq-question">Krijg ik begeleiding bij het trainen?<span class="faq-icon">+</span></summary><div class="faq-answer"><p>Ja, bij elk bezoek. De trainers helpen je met een trainingsschema, corrigeren je techniek en denken mee over je doelen. Daar betaal je niets extra voor, het zit gewoon bij je abonnement in.</p></div></details>
+        <details class="faq-item"><summary class="faq-question">Welke apparatuur hebben jullie?<span class="faq-icon">+</span></summary><div class="faq-answer"><p>We werken met apparatuur van Nautilus, SportsArt en Technogym. Dat zijn merken die je ook bij de grote ketens vindt. De apparatuur wordt regelmatig onderhouden en waar nodig vernieuwd.</p></div></details>
+        <details class="faq-item"><summary class="faq-question">Kan ik ook kickboxlessen volgen?<span class="faq-icon">+</span></summary><div class="faq-answer"><p>Ja, met de Ultimate Fit Deal (€37,50/maand) heb je onbeperkt fitness en kickboxlessen. Je kunt ook alleen kickboxen, los van fitness, vanaf €19,95 per maand. Kijk op de <a href="/kickboxing/">kickboxing pagina</a> voor alle opties.</p></div></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <CtaSection
+    title="BEGIN VANDAAG"
+    text="Je eerste proeftraining is gratis en vrijblijvend. Neem gerust even contact op om een moment te plannen."
+    primaryLabel="WORD NU LID"
+    primaryHref="/signup/"
+    secondaryLabel="PLAN PROEFTRAINING"
+    secondaryHref="/contact/"
+  />
+
+  <!-- Related -->
+  <section class="content-section">
+    <div class="content-wide">
+      <p class="related-heading">Ook interessant</p>
+      <div class="related-links">
+        <a href="/ladies-only/" class="related-link">Ladies Only <span>Fitness voor vrouwen</span></a>
+        <a href="/kickboxing/" class="related-link">Kickboxing <span>Lessen voor alle niveaus</span></a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+  <MobileCTA />
+</Layout>
+
+<style>
+  @import '../../styles/inner-pages.css';
+</style>

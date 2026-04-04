@@ -1,0 +1,119 @@
+@import "tailwindcss";
+@import "./effects.css";
+
+/* =========================================
+   DESIGN TOKENS — from DESIGN.md
+   ========================================= */
+@theme {
+  /* Colors */
+  --color-primary: #FFE303;
+  --color-secondary: #FF2E93;
+  --color-bg: #141414;
+  --color-surface: #1C1C1C;
+  --color-surface-alt: #181818;
+  --color-surface-dark: #0e0e0e;
+  --color-text: #FFFFFF;
+  --color-text-muted: #999999;
+  --color-text-body: #CCCCCC;
+  --color-border: #2A2A2A;
+  --color-separator: #666666;
+  --color-whatsapp: #25D366;
+
+  /* Typography */
+  --font-heading: 'Oswald', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* Animation keyframes */
+  --animate-fade-up: fade-up 1ms linear both;
+  --animate-scale-reveal: scale-reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-marquee: marquee 20s linear infinite;
+  --animate-bounce-scroll: bounce-scroll 2s ease-in-out infinite;
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scale-reveal {
+    from { transform: scale(0.97); opacity: 0.5; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @keyframes bounce-scroll {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
+  }
+}
+
+/* =========================================
+   BASE STYLES
+   ========================================= */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+
+  body {
+    font-family: var(--font-body);
+    font-weight: 400;
+    color: var(--color-text);
+    background: var(--color-bg);
+    line-height: 1.6;
+    overflow-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Headings — Oswald 700, uppercase */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.1;
+    color: var(--color-text);
+  }
+
+  h1 {
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    line-height: 1.0;
+  }
+
+  h2 {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+  }
+
+  h3 {
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    line-height: 1.2;
+  }
+
+  /* Interactive elements */
+  button, [role="button"] {
+    cursor: pointer;
+  }
+
+  /* Body text */
+  p {
+    color: var(--color-text-body);
+    line-height: 1.7;
+  }
+
+  /* Links */
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Images */
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+}

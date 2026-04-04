@@ -1,0 +1,89 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import Footer from '../../components/Footer.astro';
+import MobileCTA from '../../components/MobileCTA.astro';
+---
+<Layout
+  title="Veelgestelde vragen · Prijzen & meer · [FitCity] Culemborg"
+  description="Antwoorden op veelgestelde vragen over [FitCity] Culemborg. Prijzen, abonnementen, openingstijden, opzeggen en gratis proeftraining. Alles op een rij."
+>
+  <Header />
+
+  <section class="inner-hero">
+    <div class="inner-hero-inner">
+      <Breadcrumb items={[{ label: 'FAQ' }]} />
+      <h1>VEELGESTELDE VRAGEN</h1>
+    </div>
+  </section>
+
+  <!-- Jump links -->
+  <section class="content-section" style="padding-bottom: 0;">
+    <div class="content-narrow">
+      <div class="faq-jump-links">
+        <a href="#lidmaatschap" class="faq-jump-link">Lidmaatschap</a>
+        <a href="#faciliteiten" class="faq-jump-link">Faciliteiten</a>
+        <a href="#lessen" class="faq-jump-link">Lessen</a>
+        <a href="#praktisch" class="faq-jump-link">Praktisch</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section scroll-fade-up" data-scroll-reveal>
+    <div class="content-narrow">
+      <!-- LIDMAATSCHAP -->
+      <h2 class="faq-category" id="lidmaatschap">LIDMAATSCHAP</h2>
+
+      <div class="faq-list">
+        <details class="faq-item"><summary class="faq-question">Wat kost een abonnement bij [FitCity]?<span class="faq-icon">+</span></summary><div class="faq-answer"><p>Onbeperkt fitnessen kan vanaf €24,50 per maand met de Smart Deal (jaarabonnement). De Ladies Only Deal start bij €20,50 per maand. Wil je ook kickboxen? De Ultimate Fit Deal is €37,50 per maand. Een dagpas kost €7,00 en een proeftraining is gratis. Eenmalig €17,00 inschrijfkosten bij alle abonnementen. Bekijk alle <a href="/#pricing">prijzen</a> op de homepage.</p></div></details>
+
+        <details class="faq-item"><summary class="faq-question">Moet ik inschrijfgeld betalen?<span class="faq-icon">+</span></summary><div class="faq-answer"><p>Ja, er zijn eenmalig €17,00 inschrijfkosten. Die gelden voor alle abonnementen. Het inschrijfgeld betaal je bij je eerste bezoek of bij de online aanmelding. Daarna betaal je alleen je maandelijkse abonnementsprijs via automatische incasso.</p></div></details>
+
+        <details class="faq-item"><summary class="faq-question">Kan ik mijn abonnement opzeggen?<span class="faq-icon">+</span></summary><div class="faq-answer"><p>Ja. Bij Flex abonnementen (maandelijks) kun je opzeggen met 1 kalendermaand opzegtermijn. Bij jaarcontracten en halfjaarcontracten geldt na afloop van de contractperiode ook een opzegtermijn van 1 maand. Na die periode loopt je abonnement maandelijks door tot je opzegt. Opzeggen kan via e-mail of aan de balie.</p></div></details>
+
+        <details class="faq-item"><summary class="faq-question">Hoe meld ik me aan als lid?<span class="faq-icon">+</span></summary><div class="faq-answer"><p>Je kunt je aanmelden via de website of aan de balie. Online vul je je gegevens in en kies je een abonnement. De betaling gaat via automatische incasso (SEPA). Liever eerst even langskomen? Plan dan een gratis <a href="/contact/">proeftraining</a> en meld je daarna aan.</p></div></details>
+      </div>
+
+      <!-- FACILITEITEN -->
+      <h2 class="faq-category" id="faciliteiten">FACILITEITEN</h2>
+
+      <div class="faq-list">
+        <details class="faq-item"><summary class="faq-question">Welke apparatuur hebben jullie?<span class="faq-icon">+</span></summary><div class="faq-answer"><p>We werken met apparatuur van Nautilus, SportsArt en Technogym. Dat zijn merken die je ook bij de grote ketens vindt. De fitnessvloer heeft cardio- en krachtapparatuur, vrije gewichten en functionele trainingsapparatuur. Alles wordt regelmatig onderhouden en waar nodig vernieuwd.</p></div></details>
+
+        <details class="faq-item"><summary class="faq-question">Is er een eigen ruimte voor vrouwen?<span class="faq-icon">+</span></summary><div class="faq-answer"><p>Ja, we hebben een aparte <a href="/ladies-only/">Ladies Only zone</a> beneden in de sportschool. De damesvloer is volledig ingericht met eigen apparatuur en alleen toegankelijk voor vrouwen. Met een Ladies Only abonnement (vanaf €20,50/maand) heb je ook gewoon toegang tot de rest van de gym.</p></div></details>
+
+        <details class="faq-item"><summary class="faq-question">Krijg ik begeleiding bij het trainen?<span class="faq-icon">+</span></summary><div class="faq-answer"><p>Ja, bij elk bezoek. Er staat altijd personeel op de fitnessvloer dat je helpt met een trainingsschema, je techniek corrigeert of meedenkt over je doelen. Die begeleiding is écht gratis en zit bij elk abonnement in. Je hoeft het dus alleen maar te vragen.</p></div></details>
+      </div>
+
+      <!-- LESSEN -->
+      <h2 class="faq-category" id="lessen">LESSEN</h2>
+
+      <div class="faq-list">
+        <details class="faq-item"><summary class="faq-question">Kan ik kickboksen zonder ervaring?<span class="faq-icon">+</span></summary><div class="faq-answer"><p>Ja, de <a href="/kickboxing/">kickboxlessen</a> zijn geschikt voor alle niveaus. Beginners en gevorderden trainen samen in dezelfde groep. De trainer past de oefeningen en de intensiteit aan op jouw ervaring. Je hoeft dus niets te kunnen om te beginnen. Na een paar lessen zit je er al helemaal in.</p></div></details>
+
+        <details class="faq-item"><summary class="faq-question">Kan ik kickboxen combineren met fitness?<span class="faq-icon">+</span></summary><div class="faq-answer"><p>Ja, de Ultimate Fit Deal (€37,50/maand) geeft je onbeperkt fitness en kickboxlessen. Je kunt ook alleen kickboxen, los van fitness: 1x per week voor €19,95 of onbeperkt voor €26,95, allebei als jaarabonnement. De kickboxlessen zijn op dinsdag en donderdag om 19:00 en op zondag om 10:00.</p></div></details>
+      </div>
+
+      <!-- PRAKTISCH -->
+      <h2 class="faq-category" id="praktisch">PRAKTISCH</h2>
+
+      <div class="faq-list">
+        <details class="faq-item"><summary class="faq-question">Wat zijn de openingstijden?<span class="faq-icon">+</span></summary><div class="faq-answer"><p>Maandag t/m vrijdag: 08:30 tot 22:00. Zaterdag: 09:00 tot 16:00. Zondag: 09:30 tot 16:00. We zijn dus 7 dagen per week open. Tijdens feestdagen kunnen de tijden afwijken. Kijk op onze <a href="/contact/">contactpagina</a> voor de actuele openingstijden.</p></div></details>
+
+        <details class="faq-item"><summary class="faq-question">Kan ik gratis komen uitproberen?<span class="faq-icon">+</span></summary><div class="faq-answer"><p>Ja, je eerste proeftraining is gratis en vrijblijvend. Neem even <a href="/contact/">contact</a> op om een moment af te spreken dat jou uitkomt. Je kunt dan de sportschool bekijken, de apparatuur uitproberen en de sfeer proeven. We laten je alles zien en beantwoorden al je vragen.</p></div></details>
+      </div>
+    </div>
+  </section>
+
+  <CtaSection title="NIET GEVONDEN WAT JE ZOEKT?" text="Neem gerust contact met ons op. We reageren binnen 24 uur." primaryLabel="NEEM CONTACT OP" primaryHref="/contact/" />
+
+  <Footer />
+  <MobileCTA />
+</Layout>
+
+<style>
+  @import '../../styles/inner-pages.css';
+</style>

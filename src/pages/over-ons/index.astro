@@ -1,0 +1,120 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import Footer from '../../components/Footer.astro';
+import MobileCTA from '../../components/MobileCTA.astro';
+---
+<Layout
+  title="Over [FitCity] Culemborg · Gewoon een goede gym"
+  description="[FitCity] Culemborg: wie we zijn en waarom we doen wat we doen. Lokale sportschool met goede apparatuur, scherpe prijzen en trainers die je naam kennen."
+>
+  <Header />
+
+  <section class="inner-hero">
+    <div class="inner-hero-inner">
+      <Breadcrumb items={[{ label: 'Over Ons' }]} />
+      <h1>OVER [FITCITY]</h1>
+    </div>
+  </section>
+
+  <!-- Opening -->
+  <section class="content-section scroll-fade-up" data-scroll-reveal>
+    <div class="content-wide">
+      <div class="two-col-text-image" style="direction: rtl;">
+        <div class="col-text" style="direction: ltr;">
+          <h2 class="sub-heading">WIE WE ZIJN</h2>
+          <p>[FitCity] is de sportschool van Culemborg. Fitness, ladies only en kickboxing onder een dak, met apparatuur van Nautilus, SportsArt en Technogym. We zijn geen franchise en geen keten. We zijn een lokale sportschool die draait op goede apparatuur, scherpe prijzen en trainers die je naam kennen. 120+ leden trainen hier elke week, en dat is precies groot genoeg.</p>
+        </div>
+        <div class="col-image" style="direction: ltr;">
+          <div class="image-placeholder">Team op de fitnessvloer</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Story -->
+  <section class="content-section content-section--alt scroll-fade-up" data-scroll-reveal>
+    <div class="content-narrow">
+      <h2 class="sub-heading">HOE HET BEGON</h2>
+      <p>[Naam eigenaar] begon [FitCity] in [jaar] met een simpel idee: een sportschool waar je gewoon lekker kunt trainen op goede apparatuur, zonder dat je daar de hoofdprijs voor betaalt.</p>
+      <p>De sportschool groeide rustig. Eerst een fitnessvloer, toen de Ladies Only zone erbij, en later de kickboxlessen. Niet omdat het in een businessplan stond, maar omdat leden erom vroegen. Zo is [FitCity] geworden wat het nu is: een sportschool waar 120+ mensen elke week komen en waar de trainers je herkennen als je binnenloopt.</p>
+      <p>[Naam eigenaar] is er zelf nog dagelijks. Als je een vraag hebt, loop je naar de balie en dan hoor je het antwoord van iemand die het écht weet.</p>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section class="content-section scroll-fade-up" data-scroll-reveal>
+    <div class="content-wide">
+      <SectionHeading title="DE MENSEN" />
+      <div class="team-grid stagger-container">
+        <div class="team-member">
+          <div class="team-member-photo"><span>Foto eigenaar</span></div>
+          <h3 class="team-member-name">[Naam eigenaar]</h3>
+          <p class="team-member-role">Eigenaar</p>
+          <p class="team-member-detail">[Persoonlijk detail]</p>
+        </div>
+        <div class="team-member">
+          <div class="team-member-photo"><span>Foto trainer</span></div>
+          <h3 class="team-member-name">[Trainer 1]</h3>
+          <p class="team-member-role">Trainer</p>
+          <p class="team-member-detail">[Persoonlijk detail]</p>
+        </div>
+        <div class="team-member">
+          <div class="team-member-photo"><span>Foto kickboxtrainer</span></div>
+          <h3 class="team-member-name">[Trainer 2]</h3>
+          <p class="team-member-role">Kickboxtrainer</p>
+          <p class="team-member-detail">[Persoonlijk detail]</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Keurmerk -->
+  <section class="content-section content-section--alt scroll-fade-up" data-scroll-reveal>
+    <div class="content-narrow">
+      <h2 class="sub-heading">KEURMERK</h2>
+      <p><strong>NL Actief lid</strong> — Dat betekent dat onze apparatuur, hygiëne en begeleiding voldoen aan de kwaliteitsnormen van de Nederlandse fitnessbranche. Voor jou houdt dat in dat je weet dat de sportschool regelmatig wordt gecontroleerd op veiligheid en onderhoud.</p>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="content-section scroll-fade-up" data-scroll-reveal>
+    <div class="content-wide">
+      <SectionHeading title="WAT ONS ANDERS MAAKT" />
+      <div class="values-grid stagger-container">
+        <div class="value-card hover-lift">
+          <h3>Altijd iemand op de vloer</h3>
+          <p>Er staat bij ons altijd iemand op de fitnessvloer. Niet achter de balie, maar bij de apparaten. Hulp nodig met je techniek of een nieuw schema? Je hoeft niet te zoeken, want de trainers komen naar jou toe.</p>
+        </div>
+        <div class="value-card hover-lift">
+          <h3>De prijzen staan online</h3>
+          <p>Kijk op de <a href="/">homepage</a> en je weet precies wat het kost. Geen "neem contact op voor tarieven", geen verborgen kosten. Smart Deal €24,50 per maand, klaar. Dat is sowieso de laagste prijs in de buurt.</p>
+        </div>
+        <div class="value-card hover-lift">
+          <h3>Ladies Only omdat leden erom vroegen</h3>
+          <p>De damesvloer is niet als marketingidee bedacht. Vrouwen vroegen erom, dus hebben we het gebouwd. Eigen apparatuur, eigen sfeer, een <a href="/ladies-only/">eigen vloer</a> beneden in de sportschool.</p>
+        </div>
+        <div class="value-card hover-lift">
+          <h3>Kickboxen voor iedereen</h3>
+          <p>Je hoeft geen ervaring te hebben. De trainers passen de <a href="/kickboxing/">les</a> aan op jouw niveau. Van je eerste stoot tot gevorderd, in dezelfde groep. Dat werkt, want iedereen begint ergens.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaSection title="BENIEUWD?" text="Kom gerust een keer langs voor een gratis en vrijblijvende proeftraining. Of word gewoon direct lid." primaryLabel="WORD NU LID" primaryHref="/signup/" secondaryLabel="PLAN PROEFTRAINING" secondaryHref="/contact/" />
+
+  <Footer />
+  <MobileCTA />
+</Layout>
+
+<style>
+  @import '../../styles/inner-pages.css';
+
+  .col-text p {
+    margin-bottom: 1rem;
+  }
+</style>

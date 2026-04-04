@@ -1,0 +1,109 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import Footer from '../../components/Footer.astro';
+---
+<Layout
+  title="Privacybeleid · [FitCity] Culemborg"
+  description="Hoe [FitCity] Culemborg omgaat met je persoonsgegevens. Privacyverklaring conform de AVG. Geen cookies, geen tracking."
+  robots="noindex, follow"
+>
+  <Header />
+
+  <section class="inner-hero" style="min-height: 30vh;">
+    <div class="inner-hero-inner">
+      <Breadcrumb items={[{ label: 'Privacybeleid' }]} />
+      <h1>PRIVACYBELEID</h1>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="legal-content">
+      <p><em>Laatst bijgewerkt: [datum invullen bij publicatie]</em></p>
+
+      <h2>Wie zijn wij</h2>
+      <p>[FitCity] is een sportschool gevestigd in Culemborg.</p>
+      <ul>
+        <li><strong>Bedrijfsnaam:</strong> [Volledige bedrijfsnaam]</li>
+        <li><strong>Adres:</strong> [Straatnaam + nummer], [4101 XX] Culemborg</li>
+        <li><strong>KvK-nummer:</strong> [nummer]</li>
+        <li><strong>E-mail:</strong> info@fitcityculemborg.nl</li>
+      </ul>
+      <p>Wij zijn verantwoordelijk voor de verwerking van je persoonsgegevens zoals beschreven in deze privacyverklaring.</p>
+
+      <h2>Welke gegevens verzamelen wij</h2>
+
+      <h3>Contactformulier</h3>
+      <p>Als je het contactformulier op onze website invult, verzamelen wij:</p>
+      <ul>
+        <li>Je naam</li>
+        <li>Je e-mailadres</li>
+        <li>Het onderwerp van je vraag</li>
+        <li>Je bericht</li>
+      </ul>
+      <p>Wij gebruiken deze gegevens alleen om je vraag te beantwoorden. Na afhandeling bewaren we je gegevens maximaal 12 maanden, daarna worden ze verwijderd.</p>
+      <p><strong>Grondslag:</strong> gerechtvaardigd belang (artikel 6 lid 1 sub f AVG). Je hebt zelf contact met ons opgenomen en verwacht een reactie.</p>
+
+      <h3>Online aanmelding</h3>
+      <p>Als je je via de website aanmeldt als lid, verzamelen wij:</p>
+      <ul>
+        <li>Je naam en adres</li>
+        <li>Je e-mailadres en telefoonnummer</li>
+        <li>Je geboortedatum</li>
+        <li>Je betaalgegevens (IBAN voor automatische incasso)</li>
+      </ul>
+      <p>Wij gebruiken deze gegevens voor het uitvoeren van je lidmaatschapsovereenkomst. Betaalgegevens worden veilig verwerkt via onze incassoprovider.</p>
+      <p><strong>Grondslag:</strong> uitvoering van een overeenkomst (artikel 6 lid 1 sub b AVG).</p>
+      <p><strong>Bewaartermijn:</strong> gedurende je lidmaatschap plus 7 jaar daarna (wettelijke bewaarplicht voor financiele administratie).</p>
+
+      <h3>Websitebezoek</h3>
+      <p>Wij gebruiken <strong>Cloudflare Web Analytics</strong> om te zien hoeveel mensen onze website bezoeken. Dit systeem:</p>
+      <ul>
+        <li>Plaatst <strong>geen cookies</strong> op je apparaat</li>
+        <li>Verzamelt <strong>geen persoonsgegevens</strong></li>
+        <li>Slaat <strong>geen IP-adressen</strong> op</li>
+        <li>Kan je dus niet persoonlijk identificeren</li>
+      </ul>
+      <p>Wij gebruiken geen Google Analytics, geen tracking pixels en geen social media cookies.</p>
+
+      <h3>Spambeveiliging</h3>
+      <p>Ons contactformulier wordt beschermd door <strong>Cloudflare Turnstile</strong>. Dit is een onzichtbare beveiligingscontrole die voorkomt dat bots misbruik maken van het formulier. Turnstile verwerkt minimale technische gegevens en plaatst geen tracking cookies.</p>
+
+      <h2>Cookies</h2>
+      <p>Onze website plaatst <strong>geen cookies</strong>. We gebruiken geen cookiebanner omdat er niets is om toestemming voor te vragen. Je kunt onze website bezoeken zonder dat er iets op je apparaat wordt opgeslagen.</p>
+
+      <h2>Delen met derden</h2>
+      <p>Wij verkopen je gegevens nooit aan derden. Wij delen je gegevens alleen met:</p>
+      <ul>
+        <li><strong>Cloudflare:</strong> voor hosting van de website en spambeveiliging (verwerker, Amerikaans bedrijf met EU-opslag)</li>
+        <li><strong>Incassoprovider:</strong> [naam] voor verwerking van lidmaatschapsbetalingen (verwerker)</li>
+      </ul>
+      <p>Met beide partijen hebben wij verwerkersovereenkomsten afgesloten.</p>
+
+      <h2>Je rechten</h2>
+      <p>Je hebt het recht om:</p>
+      <ul>
+        <li><strong>Inzage</strong> te vragen in je persoonsgegevens</li>
+        <li><strong>Correctie</strong> te vragen van onjuiste gegevens</li>
+        <li><strong>Verwijdering</strong> te vragen van je gegevens</li>
+        <li><strong>Bezwaar</strong> te maken tegen de verwerking</li>
+        <li><strong>Gegevensoverdracht</strong> te vragen (dataportabiliteit)</li>
+        <li>Een <strong>klacht</strong> in te dienen bij de Autoriteit Persoonsgegevens (autoriteitpersoonsgegevens.nl)</li>
+      </ul>
+      <p>Stuur je verzoek naar info@fitcityculemborg.nl. We reageren binnen 30 dagen.</p>
+
+      <h2>Wijzigingen</h2>
+      <p>Als wij deze privacyverklaring wijzigen, plaatsen wij de nieuwe versie op deze pagina met een bijgewerkte datum. Bij grote wijzigingen informeren wij je via de website.</p>
+
+      <h2>Vragen</h2>
+      <p>Heb je vragen over deze privacyverklaring? Neem dan <a href="/contact/">contact</a> met ons op via info@fitcityculemborg.nl.</p>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  @import '../../styles/inner-pages.css';
+</style>

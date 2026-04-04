@@ -1,0 +1,132 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import Footer from '../../components/Footer.astro';
+import MobileCTA from '../../components/MobileCTA.astro';
+---
+<Layout
+  title="Kickboksen Culemborg · Lessen alle niveaus · [FitCity]"
+  description="Kickboxlessen bij [FitCity] Culemborg. Voor beginners en gevorderden, 3x per week. Vanaf €19,95/maand of incl. fitness €37,50. Boek een gratis proefles."
+>
+  <Header />
+
+  <section class="inner-hero">
+    <div class="inner-hero-inner">
+      <Breadcrumb items={[{ label: 'Kickboxing' }]} />
+      <h1>KICKBOKSEN IN CULEMBORG</h1>
+    </div>
+  </section>
+
+  <section class="content-section scroll-fade-up" data-scroll-reveal>
+    <div class="content-narrow">
+      <p class="direct-answer-text">Bij [FitCity] in Culemborg kun je kickboksen op drie momenten per week: dinsdag en donderdag om 19:00 en zondag om 10:00. De lessen zijn geschikt voor alle niveaus. Kickboxen kan los (vanaf €19,95/maand) of samen met onbeperkt fitness via de Ultimate Fit Deal (€37,50/maand).</p>
+    </div>
+  </section>
+
+  <section class="content-section content-section--alt scroll-fade-up" data-scroll-reveal>
+    <div class="content-wide">
+      <div class="two-col-text-image">
+        <div class="col-text">
+          <h2 class="sub-heading">WAT ZIJN DE LESSEN</h2>
+          <p>Onze kickboxlessen zijn een mix van techniek, kracht en conditie. Elke les duurt een uur en wordt gegeven door een ervaren trainer die de intensiteit aanpast aan de groep. Beginners en gevorderden trainen dus samen. De oefeningen zijn zo opgebouwd dat écht iedereen op eigen niveau meedoet, van je eerste les tot je honderdste.</p>
+
+          <h2 class="sub-heading">HOE ZIET EEN LES ERUIT</h2>
+          <p>Je begint met een warming-up van zo'n tien minuten. Daarna ga je aan de slag met technieken: combinaties van stoten en trappen. De trainer laat alles voor en loopt langs om je te corrigeren. Na het techniekblok volgt een conditiedeel waar je het geleerde in de praktijk brengt. De les sluit af met een cooling-down en stretching.</p>
+
+          <h2 class="sub-heading">WANNEER ZIJN DE LESSEN</h2>
+          <ul class="schedule-list">
+            <li>Dinsdag 19:00 tot 20:00</li>
+            <li>Donderdag 19:00 tot 20:00</li>
+            <li>Zondag 10:00 tot 11:00</li>
+          </ul>
+          <p>Je hoeft niet van tevoren te reserveren. Gewoon op tijd komen en meedoen.</p>
+
+          <h2 class="sub-heading">WAT HEB JE NODIG</h2>
+          <p>Sportkleding, een handdoek en een flesje water. Bokshandschoenen en scheenbeschermers zijn aan te raden, maar niet verplicht voor je eerste lessen. Na een paar keer weet je vanzelf of je ze wilt aanschaffen.</p>
+        </div>
+        <div class="col-image">
+          <div class="image-placeholder">Kickboxing afbeelding</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section scroll-fade-up" data-scroll-reveal>
+    <div class="content-wide">
+      <SectionHeading title="WAAROM KICKBOKSEN BIJ ONS" />
+      <div class="benefits-grid stagger-container">
+        <div class="benefit-card hover-lift"><h3>Lessen voor alle niveaus</h3><p>Van je eerste les tot gevorderd. De trainer past de intensiteit aan, dus je kunt altijd meedoen.</p></div>
+        <div class="benefit-card hover-lift"><h3>3 vaste momenten per week</h3><p>Dinsdag en donderdag om 19:00, zondag om 10:00. Reserveren is niet nodig.</p></div>
+        <div class="benefit-card hover-lift"><h3>Combineerbaar met fitness</h3><p>De Ultimate Fit Deal (€37,50/maand) geeft je onbeperkt kickboxen en fitness. Zo krijg je het meeste uit je training.</p></div>
+        <div class="benefit-card hover-lift"><h3>Ook los te volgen</h3><p>Geen zin in fitness? Kickboksen kan ook zonder fitnessabonnement, al vanaf €19,95 per maand.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section content-section--alt scroll-fade-up" data-scroll-reveal>
+    <div class="content-wide">
+      <SectionHeading title="KICKBOXING PRIJZEN" />
+      <div class="pricing-table-wrap">
+        <table class="pricing-table">
+          <thead><tr><th>Abonnement</th><th>Prijs</th><th>Duur</th><th>Inclusief</th></tr></thead>
+          <tbody>
+            <tr><td>Kickboxing 1x p/w</td><td>€19,95/maand</td><td>12 maanden</td><td>1 les per week</td></tr>
+            <tr><td>Kickboxing Unlimited</td><td>€26,95/maand</td><td>12 maanden</td><td>Onbeperkt lessen</td></tr>
+            <tr><td>Ultimate Fit Deal</td><td>€37,50/maand</td><td>12 maanden</td><td>Onbeperkt fitness + kickboxing</td></tr>
+            <tr><td>Dagpas</td><td>€7,00</td><td>Eenmalig</td><td>Toegang voor 1 dag (incl. les)</td></tr>
+          </tbody>
+        </table>
+        <p class="pricing-note">Alle abonnementen: €17,00 eenmalige inschrijfkosten. Eerste proefles gratis en vrijblijvend.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section scroll-fade-up" data-scroll-reveal>
+    <div class="content-narrow">
+      <SectionHeading title="VEELGESTELDE VRAGEN OVER KICKBOKSEN" />
+      <div class="faq-list">
+        <details class="faq-item"><summary class="faq-question">Kan ik beginnen met kickboksen zonder ervaring?<span class="faq-icon">+</span></summary><div class="faq-answer"><p>Ja, de lessen zijn geschikt voor alle niveaus. De trainer past de oefeningen aan op je ervaring. Je hoeft dus niets te kunnen om te beginnen, je leert het vanzelf.</p></div></details>
+        <details class="faq-item"><summary class="faq-question">Wat heb ik nodig voor mijn eerste kickboxles?<span class="faq-icon">+</span></summary><div class="faq-answer"><p>Sportkleding, een handdoek en water. Bokshandschoenen en scheenbeschermers zijn handig maar niet verplicht bij je eerste lessen. Na een paar keer kickboxen weet je vanzelf of je eigen materiaal wilt kopen.</p></div></details>
+        <details class="faq-item"><summary class="faq-question">Kan ik kickboxen combineren met fitness?<span class="faq-icon">+</span></summary><div class="faq-answer"><p>Ja, de Ultimate Fit Deal (€37,50/maand) geeft je onbeperkt fitness en kickboxlessen. Je kunt ook alleen kickboxen: 1x per week voor €19,95 of onbeperkt voor €26,95, allebei als jaarabonnement.</p></div></details>
+        <details class="faq-item"><summary class="faq-question">Moet ik van tevoren reserveren voor een les?<span class="faq-icon">+</span></summary><div class="faq-answer"><p>Nee, reserveren is niet nodig. Kom gewoon op tijd en je kunt meedoen. De lessen zijn op vaste tijden: dinsdag en donderdag om 19:00 en zondag om 10:00. Mocht je de eerste keer willen meekijken, dat kan ook.</p></div></details>
+      </div>
+    </div>
+  </section>
+
+  <CtaSection title="PROBEER EEN LES" text="Je eerste kickboxles is gratis en vrijblijvend. Neem gerust contact op of kom gewoon langs." primaryLabel="WORD NU LID" primaryHref="/signup/" secondaryLabel="PLAN PROEFTRAINING" secondaryHref="/contact/" />
+
+  <section class="content-section"><div class="content-wide"><p class="related-heading">Ook interessant</p><div class="related-links"><a href="/fitness/" class="related-link">Fitness <span>Onbeperkt trainen</span></a><a href="/ladies-only/" class="related-link">Ladies Only <span>Fitness voor vrouwen</span></a></div></div></section>
+
+  <Footer />
+  <MobileCTA />
+</Layout>
+
+<style>
+  @import '../../styles/inner-pages.css';
+
+  .schedule-list {
+    list-style: none;
+    margin: 0.5rem 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  .schedule-list li {
+    color: var(--color-text-body);
+    font-size: 1rem;
+    padding-left: 1.25rem;
+    position: relative;
+  }
+
+  .schedule-list li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+</style>

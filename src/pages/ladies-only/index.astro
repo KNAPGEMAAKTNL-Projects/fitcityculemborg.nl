@@ -1,0 +1,101 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import Footer from '../../components/Footer.astro';
+import MobileCTA from '../../components/MobileCTA.astro';
+---
+<Layout
+  title="Ladies Only Sportschool Culemborg · Vanaf €20,50 · [FitCity]"
+  description="Ladies only fitness bij [FitCity] Culemborg. Eigen trainingsruimte alleen voor vrouwen. Vanaf €20,50/maand incl. volledige gym. Gratis proeftraining."
+>
+  <Header />
+
+  <section class="inner-hero">
+    <div class="inner-hero-inner">
+      <Breadcrumb items={[{ label: 'Ladies Only' }]} />
+      <h1>LADIES ONLY · FITNESS VOOR VROUWEN</h1>
+    </div>
+  </section>
+
+  <section class="content-section scroll-fade-up" data-scroll-reveal>
+    <div class="content-narrow">
+      <p class="direct-answer-text">[FitCity] in Culemborg heeft een aparte ladies only zone: een eigen trainingsvloer beneden, alleen voor vrouwen. Met een Ladies Only abonnement (vanaf €20,50/maand) heb je ook toegang tot de rest van de gym. De trainers zijn aanwezig op beide vloeren en helpen je gratis bij elk bezoek.</p>
+    </div>
+  </section>
+
+  <section class="content-section content-section--alt scroll-fade-up" data-scroll-reveal>
+    <div class="content-wide">
+      <div class="two-col-text-image">
+        <div class="col-text">
+          <h2 class="sub-heading">JOUW EIGEN RUIMTE</h2>
+          <p>De Ladies Only zone zit beneden in de sportschool: een eigen trainingsvloer, alleen voor vrouwen. Volledig ingericht met cardio- en krachtapparatuur, vrije gewichten en alles wat je nodig hebt voor een goede training. De sfeer is rustig en de ruimte is van jou.</p>
+
+          <h2 class="sub-heading">HOE WERKT HET</h2>
+          <p>Met een Ladies Only abonnement heb je niet alleen toegang tot de damesvloer, maar ook tot de rest van de gym. Wil je tussendoor boven een apparaat gebruiken dat niet beneden staat? Dat kan gewoon. Je kiest zelf waar je traint en wanneer je wisselt.</p>
+
+          <h2 class="sub-heading">BEGELEIDING</h2>
+          <p>De trainers komen ook op de damesvloer. Wil je een trainingsschema of hulp bij een oefening? Vraag het even. Of je nou net begint met sporten of al jaren bezig bent: je bent hier écht welkom, hoor, en de begeleiding is bij elk bezoek gratis.</p>
+        </div>
+        <div class="col-image">
+          <div class="image-placeholder">Ladies Only afbeelding</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section scroll-fade-up" data-scroll-reveal>
+    <div class="content-wide">
+      <SectionHeading title="WAAROM LADIES ONLY BIJ ONS" />
+      <div class="benefits-grid stagger-container">
+        <div class="benefit-card hover-lift"><h3>Eigen trainingsvloer</h3><p>Volledig gescheiden van de hoofdzaal. Eigen apparatuur, eigen sfeer, alleen vrouwen.</p></div>
+        <div class="benefit-card hover-lift"><h3>Volledige gym inclusief</h3><p>Met je Ladies Only abonnement kun je ook gewoon op de hoofdzaal trainen. Je hebt dus het beste van twee ruimtes.</p></div>
+        <div class="benefit-card hover-lift"><h3>Laagste ladies only prijs</h3><p>€20,50 per maand bij een jaarabonnement. Nergens in de regio betaal je minder voor een eigen damesvloer.</p></div>
+        <div class="benefit-card hover-lift"><h3>Personeel op de damesvloer</h3><p>De trainers komen ook beneden. Hulp nodig met een schema of oefening? Dat regelen ze ter plekke.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section content-section--alt scroll-fade-up" data-scroll-reveal>
+    <div class="content-wide">
+      <SectionHeading title="LADIES ONLY PRIJZEN" />
+      <div class="pricing-table-wrap">
+        <table class="pricing-table">
+          <thead><tr><th>Abonnement</th><th>Prijs</th><th>Duur</th><th>Inclusief</th></tr></thead>
+          <tbody>
+            <tr><td>Ladies Only Jaar</td><td>€20,50/maand</td><td>12 maanden</td><td>Ladies Only zone + volledige gym</td></tr>
+            <tr><td>Ladies Halfjaar</td><td>€25,50/maand</td><td>6 maanden</td><td>Ladies Only zone + volledige gym</td></tr>
+            <tr><td>Ladies Flex</td><td>€32,00/maand</td><td>Maandelijks opzegbaar</td><td>Ladies Only zone + volledige gym</td></tr>
+            <tr><td>Dagpas</td><td>€7,00</td><td>Eenmalig</td><td>Toegang voor 1 dag</td></tr>
+          </tbody>
+        </table>
+        <p class="pricing-note">Alle abonnementen: €17,00 eenmalige inschrijfkosten. Eerste proeftraining gratis en vrijblijvend.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section scroll-fade-up" data-scroll-reveal>
+    <div class="content-narrow">
+      <SectionHeading title="VEELGESTELDE VRAGEN OVER LADIES ONLY" />
+      <div class="faq-list">
+        <details class="faq-item"><summary class="faq-question">Is de ladies only zone echt alleen voor vrouwen?<span class="faq-icon">+</span></summary><div class="faq-answer"><p>Ja, de damesvloer beneden is uitsluitend toegankelijk voor vrouwen. Mannen trainen op de hoofdzaal. De kleedkamers zijn ook gescheiden. Je traint dus in een ruimte die helemaal voor vrouwen is ingericht.</p></div></details>
+        <details class="faq-item"><summary class="faq-question">Mag ik met een Ladies Only abonnement ook boven trainen?<span class="faq-icon">+</span></summary><div class="faq-answer"><p>Ja. Je Ladies Only abonnement geeft je toegang tot de damesvloer en de volledige gym. Je kunt dus gewoon wisselen wanneer je wilt. Alle apparatuur boven is ook voor jou beschikbaar.</p></div></details>
+        <details class="faq-item"><summary class="faq-question">Wat voor apparatuur staat er op de damesvloer?<span class="faq-icon">+</span></summary><div class="faq-answer"><p>Dezelfde kwaliteit als op de hoofdzaal: cardio- en krachtapparatuur, vrije gewichten en matten. De ruimte is kleiner maar volledig uitgerust. Je kunt hier een complete training doen zonder iets te missen.</p></div></details>
+        <details class="faq-item"><summary class="faq-question">Kan ik een proeftraining doen op de damesvloer?<span class="faq-icon">+</span></summary><div class="faq-answer"><p>Ja, je eerste proeftraining is gratis en vrijblijvend. Neem even <a href="/contact/">contact</a> op om een moment af te spreken. Je kunt dan de damesvloer bekijken, de sfeer proeven en een training meedoen om te kijken of het bij je past.</p></div></details>
+      </div>
+    </div>
+  </section>
+
+  <CtaSection title="PROBEER HET ZELF" text="Je eerste proeftraining is gratis en vrijblijvend. Neem gerust contact op, of word direct lid." primaryLabel="WORD NU LID" primaryHref="/signup/" secondaryLabel="PLAN PROEFTRAINING" secondaryHref="/contact/" />
+
+  <section class="content-section"><div class="content-wide"><p class="related-heading">Ook interessant</p><div class="related-links"><a href="/fitness/" class="related-link">Fitness <span>Onbeperkt trainen</span></a><a href="/kickboxing/" class="related-link">Kickboxing <span>Lessen voor alle niveaus</span></a></div></div></section>
+
+  <Footer />
+  <MobileCTA />
+</Layout>
+
+<style>
+  @import '../../styles/inner-pages.css';
+</style>

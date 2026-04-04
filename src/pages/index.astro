@@ -1,0 +1,1394 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import CtaSection from '../components/CtaSection.astro';
+import Footer from '../components/Footer.astro';
+import MobileCTA from '../components/MobileCTA.astro';
+import { pricingPlans, pricingExtras } from '../data/pricing';
+---
+<Layout
+  title="Sportschool Culemborg · Fitness vanaf €20,50 · [FitCity]"
+  description="De sportschool van Culemborg. Fitness, ladies only en kickboxing. Apparatuur van topmerken. Vanaf €20,50/maand met gratis begeleiding. Plan een gratis proeftraining."
+>
+  <Header />
+
+  <!-- ============================================
+       SECTION 1 — HERO (100svh, grid, center-right)
+       ============================================ -->
+  <section class="hero" id="hero">
+    <!-- Video background -->
+    <video class="hero-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+      <source src="/fitcity-hero.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-overlay" aria-hidden="true"></div>
+
+    <!-- Visual Craft: CSS Blur Blob -->
+    <div class="hero-blur-blob" aria-hidden="true"></div>
+
+    <div class="hero-content hero-entrance">
+      <!-- Glass pill reviews -->
+      <div class="hero-reviews">
+        <div class="hero-reviews-stars">
+          {[1,2,3,4].map(() => (
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#FFE303" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          ))}
+          <!-- Partial star (60% fill) -->
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="none">
+            <defs>
+              <linearGradient id="star-partial">
+                <stop offset="60%" stop-color="#FFE303"/>
+                <stop offset="60%" stop-color="#555"/>
+              </linearGradient>
+            </defs>
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="url(#star-partial)"/>
+          </svg>
+        </div>
+        <span class="hero-reviews-rating">4,6</span>
+        <span class="hero-reviews-sep">·</span>
+        <span class="hero-reviews-count">28 Google Reviews</span>
+      </div>
+
+      <h1 class="hero-title">Sportschool Culemborg</h1>
+
+      <p class="hero-subtitle">Fitness, ladies only en kickboxing onder een dak. Lid worden kan al vanaf €20,50 per maand, inclusief gratis begeleiding.</p>
+
+      <div class="hero-buttons">
+        <a href="/signup/" class="btn-primary">WORD NU LID</a>
+        <a href="#pricing" class="btn-ghost">BEKIJK PRIJZEN</a>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="hero-scroll" aria-hidden="true">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECTION 2b — DIRECT ANSWER (SEO paragraph)
+       ============================================ -->
+  <section class="direct-answer">
+    <div class="direct-answer-inner">
+      <p>[FitCity] is de sportschool van Culemborg voor fitness, ladies only en kickboxing. Je traint op apparatuur van Nautilus, SportsArt en Technogym, op jouw tempo en met gratis begeleiding bij elk bezoek. Al vanaf €20,50 per maand ben je lid. Plan een gratis proeftraining en ervaar het zelf.</p>
+    </div>
+  </section>
+
+  <!-- Visual Craft: Gentle Wave Divider -->
+  <svg class="wave-divider" viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,0 C360,60 1080,60 1440,0 L1440,60 L0,60 Z" fill="var(--color-surface-dark)"/>
+  </svg>
+
+  <!-- ============================================
+       SECTION 3 — EQUIPMENT BRANDS STRIP (marquee)
+       ============================================ -->
+  <section class="brands-strip">
+    <div class="brands-strip-inner">
+      <span class="brands-label">WIJ TRAINEN OP</span>
+      <div class="brands-marquee-wrapper">
+        <div class="brands-marquee">
+          {[1,2].map(() => (
+            <>
+              <span>NAUTILUS</span>
+              <span>·</span>
+              <span>SPORTSART</span>
+              <span>·</span>
+              <span>TECHNOGYM</span>
+              <span>·</span>
+              <span>NAUTILUS</span>
+              <span>·</span>
+              <span>SPORTSART</span>
+              <span>·</span>
+              <span>TECHNOGYM</span>
+              <span>·</span>
+            </>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECTION 4 — ONS AANBOD (asymmetric services grid)
+       ============================================ -->
+  <section class="services scroll-fade-up" data-scroll-reveal>
+    <div class="services-container">
+      <SectionHeading eyebrow="ONS AANBOD" title="WAT WIL JE TRAINEN?" />
+
+      <nav class="services-grid stagger-container" aria-label="Onze diensten">
+        <!-- Card 1: Fitness (spans 2 rows on desktop) -->
+        <div class="service-card service-card--fitness hover-lift">
+          <div class="service-card-image">
+            <span>Fitness afbeelding</span>
+          </div>
+          <div class="service-card-body">
+            <h3 class="service-card-title">Fitness</h3>
+            <p class="service-card-desc">Onbeperkt trainen op apparatuur van topmerken. Gratis begeleiding bij elk bezoek, zodat je het maximale uit je training haalt.</p>
+            <a href="/fitness/" class="service-card-link">Meer info →</a>
+          </div>
+        </div>
+
+        <!-- Card 2: Ladies Only -->
+        <div class="service-card service-card--ladies hover-lift">
+          <div class="service-card-image">
+            <span>Ladies Only afbeelding</span>
+          </div>
+          <div class="service-card-body">
+            <h3 class="service-card-title">Ladies Only</h3>
+            <p class="service-card-desc">Een eigen ruimte, alleen voor vrouwen. Dezelfde professionele apparatuur, eigen sfeer. Fitness op jouw voorwaarden.</p>
+            <a href="/ladies-only/" class="service-card-link">Meer info →</a>
+          </div>
+        </div>
+
+        <!-- Card 3: Kickboxing -->
+        <div class="service-card service-card--kickboxing hover-lift">
+          <div class="service-card-image">
+            <span>Kickboxing afbeelding</span>
+          </div>
+          <div class="service-card-body">
+            <h3 class="service-card-title">Kickboxing</h3>
+            <p class="service-card-desc">Kickboxlessen voor alle niveaus. De trainers passen de intensiteit aan, dus ook als beginner stap je zo in.</p>
+            <a href="/kickboxing/" class="service-card-link">Meer info →</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECTION 5 — DE VIBE (7fr/5fr, grain texture)
+       ============================================ -->
+  <section class="vibe scroll-fade-up" data-scroll-reveal>
+    <!-- Visual Craft: SVG Grain Texture -->
+    <svg class="vibe-grain" aria-hidden="true">
+      <filter id="grain-vibe">
+        <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" stitchTiles="stitch"/>
+      </filter>
+      <rect width="100%" height="100%" filter="url(#grain-vibe)"/>
+    </svg>
+
+    <div class="vibe-container">
+      <SectionHeading eyebrow="WAAROM [FITCITY]" title="DE VIBE" />
+
+      <div class="vibe-grid">
+        <div class="vibe-text">
+          <p class="vibe-lead">Je komt binnen, gooit je tas neer en je gaat trainen. Dát is [FitCity].</p>
+          <p>We zijn geen grote keten. We zijn een lokale sportschool waar de trainers je naam kennen en 120+ leden elke week komen, gewoon omdat het hier lekker trainen is. Er staat altijd iemand klaar om je te helpen.</p>
+          <p>Zeven dagen per week open, van 's ochtends vroeg tot 's avonds laat. Kom gerust een keer kijken, dan merk je het vanzelf.</p>
+
+          <ul class="vibe-checklist">
+            {[
+              'Gratis begeleiding bij elk bezoek',
+              'Apparatuur van Nautilus, SportsArt en Technogym',
+              'Ladies Only zone',
+              'Kickboxlessen 3x per week',
+              '7 dagen per week open',
+            ].map(item => (
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="vibe-image">
+          <span>Sfeer afbeelding gym</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECTION 6 — PRIJZEN (3 cards + toggle)
+       ============================================ -->
+  <section class="pricing scroll-fade-up" data-scroll-reveal id="pricing">
+    <div class="pricing-container">
+      <SectionHeading eyebrow="LIDMAATSCHAP" title="PRIJZEN" centered />
+
+      <p class="pricing-intro">Alle abonnementen inclusief gratis begeleiding en toegang tot alle apparatuur.</p>
+
+      <!-- Duration toggle -->
+      <div class="pricing-toggle" role="tablist" aria-label="Abonnementsduur">
+        {['jaar', 'halfjaar', 'flex'].map((plan, i) => (
+          <button
+            role="tab"
+            class:list={['pricing-toggle-btn color-transition', { active: i === 0 }]}
+            data-plan={plan}
+            aria-selected={i === 0 ? 'true' : 'false'}
+            aria-controls={`pricing-${plan}`}
+          >
+            {plan.charAt(0).toUpperCase() + plan.slice(1)}
+          </button>
+        ))}
+      </div>
+
+      <!-- Pricing grids (one per duration) -->
+      {Object.entries(pricingPlans).map(([key, plans], groupIndex) => (
+        <div
+          class="pricing-grid stagger-container"
+          id={`pricing-${key}`}
+          data-pricing-group={key}
+          style={groupIndex > 0 ? 'display: none;' : ''}
+        >
+          {plans.map(plan => (
+            <div class:list={['pricing-card', `pricing-card--${plan.accent}`, { 'pricing-card--unavailable': plan.unavailable }]}>
+              {plan.badge && <span class="pricing-badge">{plan.badge}</span>}
+
+              <div class="pricing-card-header">
+                <h3 class="pricing-card-name">{plan.name}</h3>
+                {plan.price ? (
+                  <div class="pricing-card-price">
+                    <span class="pricing-amount">{plan.price}</span>
+                    <span class="pricing-period">{plan.period}</span>
+                  </div>
+                ) : null}
+                {plan.duration && <p class="pricing-card-duration">{plan.duration}</p>}
+              </div>
+
+              {plan.unavailable ? (
+                <p class="pricing-card-unavailable">{plan.unavailable}</p>
+              ) : (
+                <>
+                  <ul class="pricing-features">
+                    {plan.features.map(feature => (
+                      <li>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                  <p class="pricing-card-footnote">€17,00 inschrijfkosten</p>
+                  <a href={plan.href} class:list={['pricing-card-cta', `pricing-card-cta--${plan.accent}`]}>{plan.cta}</a>
+                </>
+              )}
+            </div>
+          ))}
+        </div>
+      ))}
+
+      <!-- Extras -->
+      <div class="pricing-extras">
+        {pricingExtras.map(extra => (
+          <div class="pricing-extra">
+            <span class="pricing-extra-name">{extra.name}</span>
+            <span class="pricing-extra-price">{extra.price}</span>
+            <span class="pricing-extra-note">
+              {extra.href ? <a href={extra.href}>{extra.note}</a> : extra.note}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      <p class="pricing-supporting">Liever eerst even kijken? Je eerste proeftraining is gratis en vrijblijvend.</p>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECTION 7 — KICKBOXING GALLERY (asymmetric grid)
+       ============================================ -->
+  <section class="kickboxing scroll-fade-up" data-scroll-reveal>
+    <div class="kickboxing-container">
+      <SectionHeading eyebrow="KICKBOXING" title="WORD STERKER" />
+
+      <p class="kickboxing-body">Van beginner tot gevorderd: kickboxlessen waar je echt sterker van wordt. Drie keer per week, onder begeleiding van ervaren trainers.</p>
+
+      <p class="kickboxing-schedule">Di 19:00 · Do 19:00 · Zo 10:00</p>
+
+      <div class="kickboxing-gallery stagger-container">
+        {[1,2,3,4,5,6].map((n) => (
+          <div class:list={['kickboxing-item hover-image-overlay hover-image-zoom', { 'kickboxing-item--large': n === 1 }]}>
+            <span>Kickboxing foto {n}</span>
+          </div>
+        ))}
+      </div>
+
+      <a href="/kickboxing/" class="btn-ghost-yellow">BEKIJK KICKBOXING PRIJZEN</a>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECTION 8 — GOOGLE REVIEWS STRIP
+       ============================================ -->
+  <section class="reviews-strip">
+    <div class="reviews-strip-inner">
+      <span class="reviews-strip-logo">[FITCITY]</span>
+
+      <div class="reviews-strip-stars">
+        {[1,2,3,4].map(() => (
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#FFE303" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        ))}
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="none">
+          <defs><linearGradient id="star-partial-2"><stop offset="60%" stop-color="#FFE303"/><stop offset="60%" stop-color="#555"/></linearGradient></defs>
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="url(#star-partial-2)"/>
+        </svg>
+      </div>
+
+      <span class="reviews-strip-rating">4,6 uit 28 reviews</span>
+
+      <span class="reviews-strip-sep">|</span>
+
+      <a href="#" class="reviews-strip-link" target="_blank" rel="noopener">Bekijk op Google</a>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECTION 9 — FAQ (details/summary accordion)
+       ============================================ -->
+  <section class="faq scroll-fade-up" data-scroll-reveal>
+    <div class="faq-container">
+      <SectionHeading eyebrow="FAQ" title="VEELGESTELDE VRAGEN" />
+
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary class="faq-question">
+            Wat kost een abonnement bij [FitCity]?
+            <span class="faq-icon">+</span>
+          </summary>
+          <div class="faq-answer">
+            <p>De Smart Deal kost €24,50 per maand (12 maanden) voor onbeperkt fitness. De Ladies Only start bij €20,50 per maand. Wil je ook kickboxen? Dan is de Ultimate Fit Deal €37,50 per maand. Een dagpas kost €7,00. Eenmalig €17,00 inschrijfkosten bij alle abonnementen.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            Kan ik gratis komen uitproberen?
+            <span class="faq-icon">+</span>
+          </summary>
+          <div class="faq-answer">
+            <p>Ja, je eerste proeftraining is gratis en vrijblijvend. Neem even contact op om een moment af te spreken dat jou uitkomt.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            Wat zijn de openingstijden?
+            <span class="faq-icon">+</span>
+          </summary>
+          <div class="faq-answer">
+            <p>Maandag t/m vrijdag: 08:30 tot 22:00. Zaterdag: 09:00 tot 16:00. Zondag: 09:30 tot 16:00. We zijn dus 7 dagen per week open.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            Kan ik mijn abonnement opzeggen?
+            <span class="faq-icon">+</span>
+          </summary>
+          <div class="faq-answer">
+            <p>Bij Flex abonnementen kun je opzeggen met 1 kalendermaand opzegtermijn. Bij vaste contracten geldt na afloop van de contractperiode ook 1 maand opzegtermijn. We houden je sowieso niet langer vast dan afgesproken.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            Is er altijd personeel aanwezig?
+            <span class="faq-icon">+</span>
+          </summary>
+          <div class="faq-answer">
+            <p>Ja, tijdens alle openingstijden is er personeel dat je gratis helpt en begeleidt. Je hoeft nooit zelf uit te zoeken hoe een apparaat werkt.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            Wat is de Ladies Only zone?
+            <span class="faq-icon">+</span>
+          </summary>
+          <div class="faq-answer">
+            <p>Een aparte trainingsvloer beneden, alleen voor vrouwen. Volledig uitgerust met eigen apparatuur. Met een Ladies Only abonnement heb je ook gewoon toegang tot de rest van de gym.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECTION 10 — CONTACT CTA (yellow full-bleed)
+       ============================================ -->
+  <CtaSection
+    title="KLAAR OM TE BEGINNEN?"
+    text="Je eerste proeftraining is gratis en vrijblijvend. Kom gerust even langs, of word direct lid."
+    primaryLabel="WORD NU LID"
+    primaryHref="/signup/"
+    secondaryLabel="PLAN PROEFTRAINING"
+    secondaryHref="/contact/"
+  />
+
+  <Footer />
+  <MobileCTA />
+
+  <!-- Scroll reveal fallback for Firefox -->
+  <script>
+    if (!CSS.supports('animation-timeline', 'view()')) {
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!prefersReduced) {
+        const elements = document.querySelectorAll('[data-scroll-reveal]');
+        elements.forEach(el => el.classList.add('js-scroll-reveal'));
+        const observer = new IntersectionObserver(
+          entries => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1, rootMargin: '0px 0px -10% 0px' }
+        );
+        elements.forEach(el => observer.observe(el));
+      }
+    }
+
+    // Pricing toggle
+    const toggleBtns = document.querySelectorAll('.pricing-toggle-btn');
+    const grids = document.querySelectorAll('[data-pricing-group]');
+
+    toggleBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const plan = btn.dataset.plan;
+        toggleBtns.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        grids.forEach(g => {
+          g.style.display = g.dataset.pricingGroup === plan ? '' : 'none';
+        });
+      });
+    });
+  </script>
+</Layout>
+
+<style>
+  /* =========================================
+     HERO
+     ========================================= */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-bg);
+    overflow: hidden;
+  }
+
+  .hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+  }
+
+  .hero-blur-blob {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: var(--color-primary);
+    opacity: 0.04;
+    filter: blur(100px);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  @media (min-width: 768px) {
+    .hero-blur-blob { width: 400px; height: 400px; }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 6rem 1.5rem 4rem;
+    max-width: 620px;
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .hero-content {
+      padding: 0 2rem;
+    }
+  }
+
+  /* Glass pill */
+  .hero-reviews {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 0.625rem 1.25rem;
+    border-radius: 9999px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-reviews-stars { display: flex; gap: 2px; }
+  .hero-reviews-rating { font-weight: 600; font-size: 1.1rem; color: var(--color-text); }
+  .hero-reviews-sep { color: var(--color-separator); }
+  .hero-reviews-count { font-size: 0.875rem; color: var(--color-text-muted); }
+
+  .hero-title {
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    line-height: 1.0;
+    color: var(--color-text);
+    margin-bottom: 1rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+    color: var(--color-text-body);
+    margin-bottom: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .hero-subtitle { font-size: 1.25rem; }
+  }
+
+  .hero-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .hero-buttons { flex-direction: row; justify-content: center; }
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    background: var(--color-primary);
+    color: var(--color-bg);
+    padding: 1rem 2.5rem;
+    border: none;
+    min-height: 44px;
+    transition: opacity 0.2s;
+  }
+
+  .btn-primary:hover { opacity: 0.9; }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    background: transparent;
+    color: var(--color-text);
+    padding: 1rem 2.5rem;
+    border: 2px solid rgba(255,255,255,0.3);
+    min-height: 44px;
+    transition: border-color 0.2s;
+  }
+
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.6); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    color: var(--color-primary);
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+    40% { transform: translateX(-50%) translateY(-10px); }
+    60% { transform: translateX(-50%) translateY(-5px); }
+  }
+
+  /* =========================================
+     DIRECT ANSWER
+     ========================================= */
+  .direct-answer {
+    background: var(--color-bg);
+    padding: 2rem 0 0;
+  }
+
+  .direct-answer-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .direct-answer p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--color-text-muted);
+  }
+
+  /* =========================================
+     WAVE DIVIDER
+     ========================================= */
+  .wave-divider {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: -1px;
+    background: var(--color-bg);
+  }
+
+  /* =========================================
+     BRANDS STRIP
+     ========================================= */
+  .brands-strip {
+    background: var(--color-surface-dark);
+    padding: 1.25rem 0;
+    overflow: hidden;
+  }
+
+  .brands-strip-inner {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .brands-label {
+    display: none;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.7rem;
+    color: var(--color-separator);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    padding-left: 2rem;
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 768px) { .brands-label { display: block; } }
+
+  .brands-marquee-wrapper {
+    flex: 1;
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, black 15%, black 85%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, black 15%, black 85%, transparent);
+  }
+
+  .brands-marquee {
+    display: flex;
+    gap: 3rem;
+    animation: marquee 20s linear infinite;
+    width: max-content;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .brands-marquee { animation: none; }
+  }
+
+  .brands-marquee span {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--color-text);
+    opacity: 0.4;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    white-space: nowrap;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* =========================================
+     SERVICES — ONS AANBOD
+     ========================================= */
+  .services {
+    background: var(--color-bg);
+    padding: 3rem 0;
+  }
+
+  @media (min-width: 768px) { .services { padding: 6rem 0; } }
+
+  .services-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  @media (min-width: 768px) { .services-container { padding: 0 2rem; } }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .services-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 2rem;
+    }
+  }
+
+  .service-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+
+  .service-card--fitness { border-top: 3px solid var(--color-primary); }
+
+  @media (min-width: 768px) {
+    .service-card--fitness { grid-row: 1 / 3; grid-column: 1; }
+  }
+
+  .service-card--ladies { border-top: 3px solid var(--color-secondary); }
+  .service-card--kickboxing { border-top: 3px solid var(--color-primary); }
+
+  .service-card-image {
+    aspect-ratio: 16/9;
+    background: #252525;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    font-size: 0.8rem;
+    font-family: var(--font-body);
+  }
+
+  @media (min-width: 768px) {
+    .service-card--fitness .service-card-image { aspect-ratio: 16/10; }
+  }
+
+  .service-card-body { padding: 1.5rem; }
+
+  @media (min-width: 768px) {
+    .service-card--fitness .service-card-body { padding: 2rem; }
+  }
+
+  .service-card-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .service-card-title::after { display: none; }
+
+  .service-card--fitness .service-card-title,
+  .service-card--kickboxing .service-card-title { color: var(--color-primary); }
+  .service-card--ladies .service-card-title { color: var(--color-secondary); }
+
+  .service-card-desc {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+
+  .service-card-link {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: opacity 0.2s;
+  }
+
+  .service-card--fitness .service-card-link,
+  .service-card--kickboxing .service-card-link { color: var(--color-primary); }
+  .service-card--ladies .service-card-link { color: var(--color-secondary); }
+  .service-card-link:hover { opacity: 0.8; }
+
+  /* Full-card clickability via stretch pattern */
+  .service-card-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  /* =========================================
+     VIBE — DE VIBE
+     ========================================= */
+  .vibe {
+    background: var(--color-surface-alt);
+    padding: 3rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) { .vibe { padding: 5rem 0; } }
+
+  .vibe-grain {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.25;
+  }
+
+  .vibe-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (min-width: 768px) { .vibe-container { padding: 0 2rem; } }
+
+  .vibe-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    margin-top: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .vibe-grid { grid-template-columns: 7fr 5fr; gap: 3rem; align-items: center; }
+  }
+
+  .vibe-lead {
+    font-size: 1.15rem;
+    color: var(--color-text);
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .vibe-text p {
+    color: var(--color-text-body);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
+  .vibe-checklist {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    list-style: none;
+  }
+
+  .vibe-checklist li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--color-text-body);
+    font-size: 0.95rem;
+  }
+
+  .vibe-checklist svg { flex-shrink: 0; color: var(--color-primary); }
+
+  .vibe-image {
+    aspect-ratio: 4/5;
+    background: #252525;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    font-size: 0.8rem;
+    font-family: var(--font-body);
+  }
+
+  /* =========================================
+     PRICING — PRIJZEN
+     ========================================= */
+  .pricing {
+    background: var(--color-bg);
+    padding: 3rem 0;
+  }
+
+  @media (min-width: 768px) { .pricing { padding: 6rem 0; } }
+
+  .pricing-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    text-align: center;
+  }
+
+  @media (min-width: 768px) { .pricing-container { padding: 0 2rem; } }
+
+  .pricing-intro {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+  }
+
+  .pricing-toggle {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(4px);
+    border: 1px solid var(--color-border);
+    border-radius: 9999px;
+    padding: 4px;
+    margin-bottom: 2.5rem;
+  }
+
+  .pricing-toggle-btn {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.5rem 1.5rem;
+    border-radius: 9999px;
+    border: none;
+    background: transparent;
+    color: var(--color-text-muted);
+    min-height: 44px;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .pricing-toggle-btn.active {
+    background: var(--color-primary);
+    color: var(--color-bg);
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    text-align: left;
+    margin-bottom: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .pricing-grid { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  }
+
+  .pricing-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    padding: 2rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pricing-card--unavailable {
+    opacity: 0.5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pricing-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--color-primary);
+    color: var(--color-bg);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.3rem 0.75rem;
+    border-radius: 0.25rem;
+  }
+
+  .pricing-card-name {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .pricing-card-name::after { display: none; }
+
+  .pricing-card--primary .pricing-card-name { color: var(--color-text); }
+  .pricing-card--secondary .pricing-card-name { color: var(--color-secondary); }
+
+  .pricing-card-price { margin-bottom: 0.25rem; }
+
+  .pricing-amount {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  .pricing-card--primary .pricing-amount,
+  .pricing-card--default .pricing-amount { color: var(--color-primary); }
+  .pricing-card--secondary .pricing-amount { color: var(--color-secondary); }
+
+  .pricing-period {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+  }
+
+  .pricing-card-duration {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .pricing-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    flex: 1;
+  }
+
+  .pricing-features li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-text-body);
+    font-size: 0.9rem;
+  }
+
+  .pricing-features svg {
+    flex-shrink: 0;
+    color: var(--color-primary);
+  }
+
+  .pricing-card--secondary .pricing-features svg { color: var(--color-secondary); }
+
+  .pricing-card-footnote {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .pricing-card-cta {
+    display: block;
+    text-align: center;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 1rem;
+    min-height: 44px;
+    transition: opacity 0.2s;
+    width: 100%;
+  }
+
+  .pricing-card-cta--primary {
+    background: var(--color-primary);
+    color: var(--color-bg);
+  }
+
+  .pricing-card-cta--secondary {
+    background: var(--color-secondary);
+    color: var(--color-text);
+  }
+
+  .pricing-card-cta:hover { opacity: 0.9; }
+
+  .pricing-card-unavailable {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 2rem 1rem;
+  }
+
+  /* Extras */
+  .pricing-extras {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    max-width: 700px;
+    margin: 0 auto 2rem;
+    text-align: left;
+  }
+
+  @media (min-width: 768px) {
+    .pricing-extras { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .pricing-extra {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: baseline;
+    padding: 0.75rem 1rem;
+    background: var(--color-surface);
+    border-radius: 0.25rem;
+    font-size: 0.85rem;
+  }
+
+  .pricing-extra-name {
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .pricing-extra-price {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  .pricing-extra-note {
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    width: 100%;
+  }
+
+  .pricing-extra-note a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .pricing-supporting {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    text-align: center;
+  }
+
+  /* =========================================
+     KICKBOXING GALLERY
+     ========================================= */
+  .kickboxing {
+    background: var(--color-surface-dark);
+    padding: 3rem 0;
+  }
+
+  @media (min-width: 768px) { .kickboxing { padding: 5rem 0; } }
+
+  .kickboxing-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  @media (min-width: 768px) { .kickboxing-container { padding: 0 2rem; } }
+
+  .kickboxing-body {
+    color: var(--color-text-body);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-top: 1.5rem;
+    max-width: 600px;
+  }
+
+  .kickboxing-schedule {
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    margin-top: 0.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .kickboxing-gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .kickboxing-gallery {
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 1rem;
+    }
+  }
+
+  .kickboxing-item {
+    aspect-ratio: 1;
+    background: #252525;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    font-size: 0.75rem;
+    font-family: var(--font-body);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .kickboxing-item--large {
+    grid-column: 1 / -1;
+    aspect-ratio: 2/1;
+  }
+
+  @media (min-width: 768px) {
+    .kickboxing-item--large {
+      grid-column: 1;
+      grid-row: 1 / 3;
+      aspect-ratio: auto;
+    }
+  }
+
+  .btn-ghost-yellow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+    padding: 0.875rem 2rem;
+    min-height: 44px;
+    transition: background 0.2s;
+    background: transparent;
+  }
+
+  .btn-ghost-yellow:hover { background: rgba(255,227,3,0.08); }
+
+  /* =========================================
+     REVIEWS STRIP
+     ========================================= */
+  .reviews-strip {
+    background: var(--color-surface-alt);
+    border-top: 1px solid rgba(255,227,3,0.15);
+    border-bottom: 1px solid rgba(255,227,3,0.15);
+    padding: 1.5rem 0;
+  }
+
+  @media (min-width: 768px) { .reviews-strip { padding: 2rem 0; } }
+
+  .reviews-strip-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  @media (min-width: 768px) {
+    .reviews-strip-inner {
+      flex-direction: row;
+      justify-content: center;
+      gap: 1rem;
+      padding: 0 2rem;
+    }
+  }
+
+  .reviews-strip-logo {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--color-primary);
+    text-transform: uppercase;
+  }
+
+  .reviews-strip-stars { display: flex; gap: 2px; }
+
+  .reviews-strip-rating {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .reviews-strip-sep {
+    color: var(--color-separator);
+    display: none;
+  }
+
+  @media (min-width: 768px) { .reviews-strip-sep { display: inline; } }
+
+  .reviews-strip-link {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.2s;
+  }
+
+  .reviews-strip-link:hover { color: var(--color-text); }
+
+  /* =========================================
+     FAQ
+     ========================================= */
+  .faq {
+    background: var(--color-bg);
+    padding: 3rem 0;
+  }
+
+  @media (min-width: 768px) { .faq { padding: 5rem 0; } }
+
+  .faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  @media (min-width: 768px) { .faq-container { padding: 0 2rem; } }
+
+  .faq-list { margin-top: 2rem; }
+
+  .faq-item {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--color-text);
+    padding: 1.25rem 0;
+    cursor: pointer;
+    min-height: 44px;
+    list-style: none;
+  }
+
+  .faq-question::-webkit-details-marker,
+  .faq-question::marker { display: none; content: ''; }
+
+  .faq-icon {
+    font-size: 1.5rem;
+    color: var(--color-primary);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .faq-item[open] .faq-icon { transform: rotate(45deg); }
+
+  .faq-answer {
+    padding-bottom: 1.25rem;
+  }
+
+  .faq-answer p {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  /* =========================================
+     MOBILE BOTTOM SPACING (for sticky CTA bar)
+     ========================================= */
+  @media (max-width: 767px) {
+    :global(body) { padding-bottom: 72px; }
+  }
+</style>
