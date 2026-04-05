@@ -207,6 +207,54 @@
   font-weight: 600;
 }
 
+/* Mobile: stack table rows as cards */
+@media (max-width: 767px) {
+  .pricing-table-wrap { overflow-x: visible; }
+
+  .pricing-table thead { display: none; }
+
+  .pricing-table tbody { display: flex; flex-direction: column; gap: 0.75rem; }
+
+  .pricing-table tr {
+    display: block;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    background: var(--color-surface);
+  }
+
+  .pricing-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.25rem 0;
+    border-bottom: none;
+  }
+
+  .pricing-table td::before {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+    margin-right: 1rem;
+  }
+
+  .pricing-table td:first-child {
+    font-size: 1rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .pricing-table td:first-child::before { content: none; }
+  .pricing-table td:nth-child(2)::before { content: 'Prijs'; }
+  .pricing-table td:nth-child(3)::before { content: 'Duur'; }
+  .pricing-table td:nth-child(4)::before { content: 'Inclusief'; }
+}
+
 .pricing-note {
   font-size: 0.8rem;
   color: var(--color-text-muted);

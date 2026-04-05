@@ -59,9 +59,9 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
     </div>
 
     <!-- Scroll indicator -->
-    <div class="hero-scroll" aria-hidden="true">
+    <button class="hero-scroll" aria-label="Scroll naar beneden" id="hero-scroll-btn" type="button">
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-    </div>
+    </button>
   </section>
 
   <!-- ============================================
@@ -406,6 +406,20 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
       }
     }
 
+    // Hero scroll button
+    const scrollBtn = document.getElementById('hero-scroll-btn');
+    if (scrollBtn) {
+      scrollBtn.addEventListener('click', () => {
+        const hero = document.getElementById('hero');
+        if (hero) {
+          const nextSection = hero.nextElementSibling;
+          if (nextSection) {
+            nextSection.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      });
+    }
+
     // Pricing toggle
     const toggleBtns = document.querySelectorAll('.pricing-toggle-btn');
     const grids = document.querySelectorAll('[data-pricing-group]');
@@ -588,6 +602,15 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
     z-index: 2;
     color: var(--color-primary);
     animation: bounce 2s infinite;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   @keyframes bounce {
@@ -692,7 +715,7 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
 
   .service-card--fitness .service-card-title,
   .service-card--kickboxing .service-card-title { color: var(--color-primary); }
-  .service-card--ladies .service-card-title { color: var(--color-secondary); }
+  .service-card--ladies .service-card-title { color: var(--color-text); }
 
   .service-card-desc {
     color: var(--color-text-muted);
@@ -855,6 +878,11 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
     color: var(--color-text-muted);
     min-height: 44px;
     transition: background 0.2s, color 0.2s;
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
   }
 
   .pricing-toggle-btn.active {
