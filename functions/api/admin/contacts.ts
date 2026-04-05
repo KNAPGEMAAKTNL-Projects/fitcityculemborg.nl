@@ -119,6 +119,33 @@ async function handlePatch(context: EventContext<Env, string, unknown>): Promise
   }
 }
 
+async function handleDelete(context: EventContext<Env, string, unknown>): Promise<Response> {
+  try {
+    const body = (await context.request.json()) as { id?: number };
+
+    if (!body.id) {
+      return jsonResponse({ error: 'ID is verplicht.' }, 400);
+    }
+
+    const existing = await context.env.DB.prepare(
+      'SELECT id FROM contacts WHERE id = ?'
+    ).bind(body.id).first();
+
+    if (!existing) {
+      return jsonResponse({ error: 'Bericht niet gevonden.' }, 404);
+    }
+
+    await context.env.DB.prepare('DELETE FROM contacts WHERE id = ?')
+      .bind(body.id)
+      .run();
+
+    return jsonResponse({ success: true });
+  } catch (err) {
+    console.error('Admin contacts DELETE error:', err);
+    return jsonResponse({ error: 'Serverfout bij verwijderen van bericht.' }, 500);
+  }
+}
+
 export const onRequest: PagesFunction<Env> = async (context) => {
   if (context.request.method === 'GET') {
     return handleGet(context);
@@ -126,6 +153,10 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
   if (context.request.method === 'PATCH') {
     return handlePatch(context);
+  }
+
+  if (context.request.method === 'DELETE') {
+    return handleDelete(context);
   }
 
   return new Response(JSON.stringify({ error: 'Method not allowed' }), {
