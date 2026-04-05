@@ -1,0 +1,56 @@
+import type { Env } from '../_shared/types';
+import { decrypt } from '../_shared/encryption';
+
+const CORS_HEADERS = {
+  'Content-Type': 'application/json',
+};
+
+function jsonResponse(body: Record<string, unknown>, status = 200): Response {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: CORS_HEADERS,
+  });
+}
+
+/**
+ * POST /api/admin/iban/
+ * Decrypts a single IBAN for viewing in the admin dashboard.
+ * Protected by Cloudflare Zero Trust — no additional auth needed.
+ */
+export const onRequest: PagesFunction<Env> = async (context) => {
+  if (context.request.method !== 'POST') {
+    return jsonResponse({ error: 'Method not allowed' }, 405);
+  }
+
+  try {
+    const body = (await context.request.json()) as { id?: number };
+
+    if (!body.id) {
+      return jsonResponse({ error: 'ID is verplicht.' }, 400);
+    }
+
+    const row = await context.env.DB.prepare(
+      'SELECT iban_encrypted FROM signups WHERE id = ?'
+    )
+      .bind(body.id)
+      .first<{ iban_encrypted: string }>();
+
+    if (!row) {
+      return jsonResponse({ error: 'Inschrijving niet gevonden.' }, 404);
+    }
+
+    const iban = await decrypt(row.iban_encrypted, context.env.ENCRYPTION_SECRET);
+
+    // Format in groups of 4
+    const cleaned = iban.replace(/\s/g, '').toUpperCase();
+    const groups: string[] = [];
+    for (let i = 0; i < cleaned.length; i += 4) {
+      groups.push(cleaned.slice(i, i + 4));
+    }
+
+    return jsonResponse({ iban: groups.join(' ') });
+  } catch (err) {
+    console.error('Admin IBAN decrypt error:', err);
+    return jsonResponse({ error: 'Kon IBAN niet ontsleutelen.' }, 500);
+  }
+};

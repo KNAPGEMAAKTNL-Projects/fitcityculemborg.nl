@@ -304,6 +304,27 @@ import Layout from '../../layouts/Layout.astro';
     border-color: var(--color-primary);
   }
 
+  /* ===================== IBAN TOGGLE BUTTON ===================== */
+  .iban-toggle {
+    background: none;
+    border: 1px solid var(--color-border);
+    border-radius: 0.25rem;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    padding: 0.2rem 0.35rem;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+    transition: color 0.2s, border-color 0.2s;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .iban-toggle:hover {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+
   /* ===================== EMPTY STATE ===================== */
   .table-empty {
     text-align: center;
@@ -379,9 +400,23 @@ import Layout from '../../layouts/Layout.astro';
     return `${d.getDate()} ${dutchMonths[d.getMonth()]} ${d.getFullYear()}`;
   }
 
+  // ===================== DUTCH STATUS LABELS =====================
+  const STATUS_LABELS: Record<string, string> = {
+    new: 'Nieuw',
+    contacted: 'Contact gelegd',
+    activated: 'Geactiveerd',
+    cancelled: 'Geannuleerd',
+    replied: 'Beantwoord',
+    closed: 'Gesloten',
+  };
+
+  function statusLabel(status: string): string {
+    return STATUS_LABELS[status] || status;
+  }
+
   // ===================== BADGE HTML =====================
   function badgeHtml(status: string): string {
-    return `<span class="badge badge--${status}">${status}</span>`;
+    return `<span class="badge badge--${status}">${statusLabel(status)}</span>`;
   }
 
   // ===================== RENDER STATS =====================
@@ -406,27 +441,39 @@ import Layout from '../../layouts/Layout.astro';
       return;
     }
 
-    tbody.innerHTML = signups.map((s, i) => `
-      <tr>
+    tbody.innerHTML = signups.map((s, i) => {
+      const isNew = s.status === 'new';
+      const rowWeight = isNew ? 'font-weight: 600;' : 'font-weight: 400;';
+      const nameStyle = isNew ? 'font-weight: 700; color: var(--color-text);' : 'font-weight: 400; color: var(--color-text-body);';
+      return `
+      <tr style="${rowWeight}">
         <td>${i + 1}</td>
         <td>${badgeHtml(s.status)}</td>
         <td>${formatDutchDate(s.created_at)}</td>
-        <td style="font-weight: 600; color: var(--color-text);">${escapeHtml(s.full_name)}</td>
+        <td style="${nameStyle}">${escapeHtml(s.full_name)}</td>
         <td><a href="mailto:${escapeHtml(s.email)}">${escapeHtml(s.email)}</a></td>
         <td><a href="tel:${escapeHtml(s.phone)}">${escapeHtml(s.phone)}</a></td>
         <td>${escapeHtml(s.plan_name)}</td>
         <td>${escapeHtml(s.plan_price)}</td>
-        <td style="font-family: monospace; font-size: 0.8rem;">${escapeHtml(s.iban_masked)}</td>
+        <td style="font-family: monospace; font-size: 0.8rem; white-space: nowrap;">
+          <span id="iban-${s.id}">${escapeHtml(s.iban_masked)}</span>
+          <button class="iban-toggle" data-id="${s.id}" onclick="handleIbanToggle(this)" title="IBAN tonen">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </td>
         <td>
           <select class="status-select" data-signup-id="${s.id}" onchange="handleSignupStatusChange(this)">
-            <option value="new" ${s.status === 'new' ? 'selected' : ''}>new</option>
-            <option value="contacted" ${s.status === 'contacted' ? 'selected' : ''}>contacted</option>
-            <option value="activated" ${s.status === 'activated' ? 'selected' : ''}>activated</option>
-            <option value="cancelled" ${s.status === 'cancelled' ? 'selected' : ''}>cancelled</option>
+            <option value="new" ${s.status === 'new' ? 'selected' : ''}>Nieuw</option>
+            <option value="contacted" ${s.status === 'contacted' ? 'selected' : ''}>Contact gelegd</option>
+            <option value="activated" ${s.status === 'activated' ? 'selected' : ''}>Geactiveerd</option>
+            <option value="cancelled" ${s.status === 'cancelled' ? 'selected' : ''}>Geannuleerd</option>
           </select>
         </td>
-      </tr>
-    `).join('');
+      </tr>`;
+    }).join('');
   }
 
   // ===================== RENDER CONTACTS TABLE =====================
@@ -439,24 +486,28 @@ import Layout from '../../layouts/Layout.astro';
       return;
     }
 
-    tbody.innerHTML = contacts.map((c, i) => `
-      <tr>
+    tbody.innerHTML = contacts.map((c, i) => {
+      const isNew = c.status === 'new';
+      const rowWeight = isNew ? 'font-weight: 600;' : 'font-weight: 400;';
+      const nameStyle = isNew ? 'font-weight: 700; color: var(--color-text);' : 'font-weight: 400; color: var(--color-text-body);';
+      return `
+      <tr style="${rowWeight}">
         <td>${i + 1}</td>
         <td>${badgeHtml(c.status)}</td>
         <td>${formatDutchDate(c.created_at)}</td>
-        <td style="font-weight: 600; color: var(--color-text);">${escapeHtml(c.name)}</td>
+        <td style="${nameStyle}">${escapeHtml(c.name)}</td>
         <td><a href="mailto:${escapeHtml(c.email)}">${escapeHtml(c.email)}</a></td>
         <td>${escapeHtml(c.subject)}</td>
         <td>${escapeHtml(truncate(c.message, 50))}</td>
         <td>
           <select class="status-select" data-contact-id="${c.id}" onchange="handleContactStatusChange(this)">
-            <option value="new" ${c.status === 'new' ? 'selected' : ''}>new</option>
-            <option value="replied" ${c.status === 'replied' ? 'selected' : ''}>replied</option>
-            <option value="closed" ${c.status === 'closed' ? 'selected' : ''}>closed</option>
+            <option value="new" ${c.status === 'new' ? 'selected' : ''}>Nieuw</option>
+            <option value="replied" ${c.status === 'replied' ? 'selected' : ''}>Beantwoord</option>
+            <option value="closed" ${c.status === 'closed' ? 'selected' : ''}>Gesloten</option>
           </select>
         </td>
-      </tr>
-    `).join('');
+      </tr>`;
+    }).join('');
   }
 
   // ===================== HELPERS =====================
@@ -521,6 +572,22 @@ import Layout from '../../layouts/Layout.astro';
     }
   }
 
+  // ===================== IBAN REVEAL =====================
+  async function revealIban(id: number): Promise<string | null> {
+    try {
+      const res = await fetch('/api/admin/iban/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id }),
+      });
+      if (!res.ok) return null;
+      const data = await res.json() as { iban: string };
+      return data.iban;
+    } catch {
+      return null;
+    }
+  }
+
   // Expose handlers to inline onchange (Astro script modules are isolated)
   (window as any).handleSignupStatusChange = function(select: HTMLSelectElement) {
     const id = parseInt(select.dataset.signupId || '0');
@@ -530,6 +597,44 @@ import Layout from '../../layouts/Layout.astro';
   (window as any).handleContactStatusChange = function(select: HTMLSelectElement) {
     const id = parseInt(select.dataset.contactId || '0');
     updateContactStatus(id, select.value);
+  };
+
+  (window as any).handleIbanToggle = async function(btn: HTMLButtonElement) {
+    const id = parseInt(btn.dataset.id || '0');
+    const span = document.getElementById(`iban-${id}`);
+    if (!span) return;
+
+    // If already revealed, toggle back to masked
+    if (btn.dataset.revealed === 'true') {
+      span.textContent = btn.dataset.masked || '';
+      btn.dataset.revealed = 'false';
+      btn.title = 'IBAN tonen';
+      btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+        <circle cx="12" cy="12" r="3"/>
+      </svg>`;
+      return;
+    }
+
+    // Reveal
+    btn.innerHTML = '...';
+    const iban = await revealIban(id);
+    if (iban) {
+      btn.dataset.masked = span.textContent || '';
+      span.textContent = iban;
+      btn.dataset.revealed = 'true';
+      btn.title = 'IBAN verbergen';
+      btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+        <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+        <line x1="1" y1="1" x2="23" y2="23"/>
+      </svg>`;
+    } else {
+      btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+        <circle cx="12" cy="12" r="3"/>
+      </svg>`;
+    }
   };
 
   // ===================== INIT =====================
