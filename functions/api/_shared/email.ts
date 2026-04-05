@@ -8,7 +8,7 @@
 
 const RESEND_API = 'https://api.resend.com/emails';
 const FROM_EMAIL = 'Rachid van Fitcity Culemborg <info@knapgemaakt.nl>';
-const OWNER_EMAIL = 'info@fitcityculemborg.nl';
+const OWNER_EMAIL = 'yannick@knapgemaakt.nl';
 const ADMIN_URL = 'https://fitcityculemborg.knapgemaakt.nl/admin/';
 const SITE_URL = 'https://fitcityculemborg.knapgemaakt.nl';
 const LOGO_URL = 'https://fitcityculemborg.knapgemaakt.nl/images/fitcity-logo.webp';
