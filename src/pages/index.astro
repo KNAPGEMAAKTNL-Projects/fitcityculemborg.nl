@@ -395,60 +395,66 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
     document.addEventListener('astro:page-load', restartHeroVideo);
   </script>
 
-  <!-- Scroll reveal fallback for Firefox -->
+  <!-- Homepage interactive scripts — re-run after view transitions -->
   <script>
-    if (!CSS.supports('animation-timeline', 'view()')) {
-      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (!prefersReduced) {
-        const elements = document.querySelectorAll('[data-scroll-reveal]');
-        elements.forEach(el => el.classList.add('js-scroll-reveal'));
-        const observer = new IntersectionObserver(
-          entries => {
-            entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                observer.unobserve(entry.target);
-              }
-            });
-          },
-          { threshold: 0.1, rootMargin: '0px 0px -10% 0px' }
-        );
-        elements.forEach(el => observer.observe(el));
-      }
-    }
-
-    // Hero scroll button
-    const scrollBtn = document.getElementById('hero-scroll-btn');
-    if (scrollBtn) {
-      scrollBtn.addEventListener('click', () => {
-        const hero = document.getElementById('hero');
-        if (hero) {
-          const nextSection = hero.nextElementSibling;
-          if (nextSection) {
-            nextSection.scrollIntoView({ behavior: 'smooth' });
-          }
+    function initHomepage() {
+      // Scroll reveal fallback for Firefox
+      if (!CSS.supports('animation-timeline', 'view()')) {
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!prefersReduced) {
+          const elements = document.querySelectorAll('[data-scroll-reveal]');
+          elements.forEach(el => el.classList.add('js-scroll-reveal'));
+          const observer = new IntersectionObserver(
+            entries => {
+              entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('is-visible');
+                  observer.unobserve(entry.target);
+                }
+              });
+            },
+            { threshold: 0.1, rootMargin: '0px 0px -10% 0px' }
+          );
+          elements.forEach(el => observer.observe(el));
         }
+      }
+
+      // Hero scroll button
+      const scrollBtn = document.getElementById('hero-scroll-btn');
+      if (scrollBtn) {
+        scrollBtn.addEventListener('click', () => {
+          const hero = document.getElementById('hero');
+          if (hero) {
+            const nextSection = hero.nextElementSibling;
+            if (nextSection) {
+              nextSection.scrollIntoView({ behavior: 'smooth' });
+            }
+          }
+        });
+      }
+
+      // Pricing toggle
+      const toggleBtns = document.querySelectorAll('.pricing-toggle-btn');
+      const grids = document.querySelectorAll('[data-pricing-group]');
+
+      toggleBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const plan = (btn as HTMLElement).dataset.plan;
+          toggleBtns.forEach(b => {
+            b.classList.remove('active');
+            b.setAttribute('aria-selected', 'false');
+          });
+          btn.classList.add('active');
+          btn.setAttribute('aria-selected', 'true');
+          grids.forEach(g => {
+            (g as HTMLElement).style.display = (g as HTMLElement).dataset.pricingGroup === plan ? '' : 'none';
+          });
+        });
       });
     }
 
-    // Pricing toggle
-    const toggleBtns = document.querySelectorAll('.pricing-toggle-btn');
-    const grids = document.querySelectorAll('[data-pricing-group]');
-
-    toggleBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const plan = btn.dataset.plan;
-        toggleBtns.forEach(b => {
-          b.classList.remove('active');
-          b.setAttribute('aria-selected', 'false');
-        });
-        btn.classList.add('active');
-        btn.setAttribute('aria-selected', 'true');
-        grids.forEach(g => {
-          g.style.display = g.dataset.pricingGroup === plan ? '' : 'none';
-        });
-      });
-    });
+    initHomepage();
+    document.addEventListener('astro:after-swap', initHomepage);
   </script>
 </Layout>
 
