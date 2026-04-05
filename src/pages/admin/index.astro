@@ -51,14 +51,19 @@ import Layout from '../../layouts/Layout.astro';
               <th>Naam</th>
               <th>Email</th>
               <th>Telefoon</th>
+              <th>Geboortedatum</th>
+              <th>Adres</th>
+              <th>Postcode</th>
+              <th>Plaats</th>
               <th>Abonnement</th>
               <th>Prijs</th>
+              <th>Rekeninghouder</th>
               <th>IBAN</th>
               <th>Acties</th>
             </tr>
           </thead>
           <tbody id="signups-body">
-            <tr><td colspan="10" class="table-loading">Laden...</td></tr>
+            <tr><td colspan="15" class="table-loading">Laden...</td></tr>
           </tbody>
         </table>
       </div>
@@ -216,7 +221,7 @@ import Layout from '../../layouts/Layout.astro';
   .admin-table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 900px;
+    min-width: 1400px;
   }
 
   .admin-table th {
@@ -296,7 +301,12 @@ import Layout from '../../layouts/Layout.astro';
     padding: 0.375rem 0.5rem;
     border-radius: 0.25rem;
     cursor: pointer;
-    min-width: 120px;
+    min-width: 130px;
+  }
+
+  .status-select option {
+    background: #fff;
+    color: #141414;
   }
 
   .status-select:focus {
@@ -343,8 +353,14 @@ import Layout from '../../layouts/Layout.astro';
     full_name: string;
     email: string;
     phone: string;
+    date_of_birth: string;
+    street: string;
+    house_number: string;
+    postcode: string;
+    city: string;
     plan_name: string;
     plan_price: string;
+    account_holder: string;
     iban_masked: string;
   }
 
@@ -437,7 +453,7 @@ import Layout from '../../layouts/Layout.astro';
     if (!tbody) return;
 
     if (signups.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="10" class="table-empty">Geen inschrijvingen gevonden</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="15" class="table-empty">Geen inschrijvingen gevonden</td></tr>';
       return;
     }
 
@@ -449,12 +465,17 @@ import Layout from '../../layouts/Layout.astro';
       <tr style="${rowWeight}">
         <td>${i + 1}</td>
         <td>${badgeHtml(s.status)}</td>
-        <td>${formatDutchDate(s.created_at)}</td>
-        <td style="${nameStyle}">${escapeHtml(s.full_name)}</td>
+        <td style="white-space: nowrap;">${formatDutchDate(s.created_at)}</td>
+        <td style="${nameStyle} white-space: nowrap;">${escapeHtml(s.full_name)}</td>
         <td><a href="mailto:${escapeHtml(s.email)}">${escapeHtml(s.email)}</a></td>
-        <td><a href="tel:${escapeHtml(s.phone)}">${escapeHtml(s.phone)}</a></td>
-        <td>${escapeHtml(s.plan_name)}</td>
-        <td>${escapeHtml(s.plan_price)}</td>
+        <td style="white-space: nowrap;"><a href="tel:${escapeHtml(s.phone)}">${escapeHtml(s.phone)}</a></td>
+        <td style="white-space: nowrap;">${formatDutchDate(s.date_of_birth)}</td>
+        <td style="white-space: nowrap;">${escapeHtml(s.street)} ${escapeHtml(s.house_number)}</td>
+        <td style="white-space: nowrap;">${escapeHtml(s.postcode)}</td>
+        <td style="white-space: nowrap;">${escapeHtml(s.city)}</td>
+        <td style="white-space: nowrap;">${escapeHtml(s.plan_name)}</td>
+        <td style="white-space: nowrap;">${escapeHtml(s.plan_price)}</td>
+        <td style="white-space: nowrap;">${escapeHtml(s.account_holder)}</td>
         <td style="font-family: monospace; font-size: 0.8rem; white-space: nowrap;">
           <span id="iban-${s.id}">${escapeHtml(s.iban_masked)}</span>
           <button class="iban-toggle" data-id="${s.id}" onclick="handleIbanToggle(this)" title="IBAN tonen">
