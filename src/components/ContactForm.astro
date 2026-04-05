@@ -5,13 +5,13 @@
 <form class="contact-form" id="contact-form" action="/api/contact/" method="POST" novalidate>
   <div class="form-field">
     <label for="naam">Je naam</label>
-    <input type="text" id="naam" name="naam" required autocomplete="name" />
+    <input type="text" id="naam" name="naam" required autocomplete="name" maxlength="100" />
     <span class="form-error" data-error="naam">Vul je naam in</span>
   </div>
 
   <div class="form-field">
     <label for="email">Je e-mailadres</label>
-    <input type="email" id="email" name="email" required autocomplete="email" />
+    <input type="email" id="email" name="email" required autocomplete="email" maxlength="254" />
     <span class="form-error" data-error="email">Vul een geldig e-mailadres in</span>
   </div>
 
@@ -22,7 +22,7 @@
       <option value="proeftraining">Proeftraining plannen</option>
       <option value="prijzen">Vraag over prijzen</option>
       <option value="abonnementen">Vraag over abonnementen</option>
-      <option value="kickboxlessen">Vraag over kickboxlessen</option>
+      <option value="kickboxlessen">Vraag over bokszaktraining</option>
       <option value="ladies-only">Vraag over Ladies Only</option>
       <option value="opzeggen">Opzeggen</option>
       <option value="anders">Anders</option>
@@ -32,7 +32,7 @@
 
   <div class="form-field">
     <label for="bericht">Je bericht</label>
-    <textarea id="bericht" name="bericht" rows="5" required placeholder="Schrijf hier je vraag of opmerking"></textarea>
+    <textarea id="bericht" name="bericht" rows="5" required placeholder="Schrijf hier je vraag of opmerking" maxlength="2000"></textarea>
     <span class="form-error" data-error="bericht">Schrijf een bericht</span>
   </div>
 

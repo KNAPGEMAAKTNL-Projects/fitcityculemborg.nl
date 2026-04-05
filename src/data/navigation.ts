@@ -1,7 +1,7 @@
 export const mainNav = [
   { label: 'Fitness', href: '/fitness/' },
   { label: 'Ladies Only', href: '/ladies-only/' },
-  { label: 'Kickboxing', href: '/kickboxing/' },
+  { label: 'Bokszaktraining', href: '/kickboxing/' },
   { label: 'Over Ons', href: '/over-ons/' },
   { label: 'Contact', href: '/contact/' },
 ] as const;
@@ -14,7 +14,7 @@ export const mobileNav = [
 export const footerNav = [
   { label: 'Fitness', href: '/fitness/' },
   { label: 'Ladies Only', href: '/ladies-only/' },
-  { label: 'Kickboxing', href: '/kickboxing/' },
+  { label: 'Bokszaktraining', href: '/kickboxing/' },
   { label: 'Over Ons', href: '/over-ons/' },
   { label: 'Contact', href: '/contact/' },
   { label: 'FAQ', href: '/faq/' },

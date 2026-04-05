@@ -60,7 +60,7 @@ export const pricingPlans: Record<string, PricingPlan[]> = {
       price: '€37,50',
       period: '/maand',
       duration: '12 maanden',
-      features: ['Onbeperkt fitness + kickboxing', 'Alle lessen inclusief'],
+      features: ['Onbeperkt fitness + bokszaktraining', 'Alle lessen inclusief'],
       accent: 'primary',
       cta: 'KIES ULTIMATE FIT',
       href: '/signup/?plan=ultimate-fit',
@@ -144,7 +144,7 @@ export const pricingExtras: PricingExtra[] = [
   { name: 'Dagpas', price: '€7,00', note: 'Eenmalig' },
   { name: 'Quick Deal', price: '€99,00', note: '3 maanden, eenmalige betaling' },
   { name: 'Combi Deal', price: '€39,50/maand', note: '12 maanden, voor 2 personen' },
-  { name: 'Kickboxing los', price: 'vanaf €19,95/maand', note: 'Zie kickboxing pagina voor alle opties', href: '/kickboxing/' },
+  { name: 'Bokszaktraining los', price: 'vanaf €19,95/maand', note: 'Zie bokszaktraining pagina voor alle opties', href: '/kickboxing/' },
 ];
 
 export const signupExtras: SignupExtra[] = [
@@ -167,21 +167,21 @@ export const signupExtras: SignupExtra[] = [
     accent: 'primary',
   },
   {
-    name: 'Kickboxing 1x p/w',
+    name: 'Bokszaktraining 1x p/w',
     slug: 'kb-1x',
     price: '€19,95',
     period: '/maand',
     duration: '12 maanden',
-    note: '1 kickboxles per week, 12 maanden',
+    note: '1 bokszaktraining per week, 12 maanden (kickboxlessen tijdelijk gepauzeerd)',
     accent: 'primary',
   },
   {
-    name: 'Kickboxing Unlimited',
+    name: 'Bokszaktraining Unlimited',
     slug: 'kb-unlimited',
     price: '€26,95',
     period: '/maand',
     duration: '12 maanden',
-    note: 'Onbeperkt kickboxlessen, 12 maanden',
+    note: 'Onbeperkt bokszaktraining, 12 maanden (kickboxlessen tijdelijk gepauzeerd)',
     accent: 'primary',
   },
   {
