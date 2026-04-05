@@ -11,6 +11,7 @@ import {
   validateAge,
   hashIP,
 } from './_shared/validation';
+import { sendSignupCustomerEmail, sendSignupOwnerEmail } from './_shared/email';
 
 const CORS_HEADERS = {
   'Content-Type': 'application/json',
@@ -212,6 +213,31 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         ipHash
       )
       .run();
+
+    // Send confirmation emails (non-blocking — don't fail the request)
+    if (context.env.RESEND_API_KEY) {
+      context.waitUntil(
+        Promise.allSettled([
+          sendSignupCustomerEmail(context.env.RESEND_API_KEY, {
+            full_name: data.full_name,
+            email: data.email,
+            plan_name: data.plan_name,
+            plan_price: data.plan_price,
+            plan_duration: data.plan_duration,
+          }),
+          sendSignupOwnerEmail(context.env.RESEND_API_KEY, {
+            full_name: data.full_name,
+            email: data.email,
+            phone: data.phone,
+            plan_name: data.plan_name,
+            plan_price: data.plan_price,
+            plan_duration: data.plan_duration,
+            date_of_birth: data.date_of_birth,
+            city: data.city,
+          }),
+        ])
+      );
+    }
 
     return jsonResponse({ success: true, message: 'Inschrijving ontvangen' });
   } catch (err) {

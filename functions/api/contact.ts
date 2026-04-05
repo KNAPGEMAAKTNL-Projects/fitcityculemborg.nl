@@ -5,6 +5,7 @@ import {
   isValidSubject,
   hashIP,
 } from './_shared/validation';
+import { sendContactCustomerEmail, sendContactOwnerEmail } from './_shared/email';
 
 const CORS_HEADERS = {
   'Content-Type': 'application/json',
@@ -110,6 +111,25 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         ipHash
       )
       .run();
+
+    // Send confirmation emails (non-blocking — don't fail the request)
+    if (context.env.RESEND_API_KEY) {
+      context.waitUntil(
+        Promise.allSettled([
+          sendContactCustomerEmail(context.env.RESEND_API_KEY, {
+            naam: data.naam,
+            email: data.email,
+            onderwerp: data.onderwerp,
+          }),
+          sendContactOwnerEmail(context.env.RESEND_API_KEY, {
+            naam: data.naam,
+            email: data.email,
+            onderwerp: data.onderwerp,
+            bericht: data.bericht,
+          }),
+        ])
+      );
+    }
 
     return jsonResponse({ success: true, message: 'Bericht verzonden' });
   } catch (err) {

@@ -1,6 +1,7 @@
 export interface Env {
   DB: D1Database;
   ENCRYPTION_SECRET: string;
+  RESEND_API_KEY: string;
 }
 
 export interface SignupRequest {
