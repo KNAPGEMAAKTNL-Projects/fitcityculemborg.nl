@@ -172,7 +172,7 @@ export const signupExtras: SignupExtra[] = [
     price: '€19,95',
     period: '/maand',
     duration: '12 maanden',
-    note: '1 bokszaktraining per week, 12 maanden (kickboxlessen tijdelijk gepauzeerd)',
+    note: '1 bokszaktraining per week, 12 maanden',
     accent: 'primary',
   },
   {
@@ -181,7 +181,7 @@ export const signupExtras: SignupExtra[] = [
     price: '€26,95',
     period: '/maand',
     duration: '12 maanden',
-    note: 'Onbeperkt bokszaktraining, 12 maanden (kickboxlessen tijdelijk gepauzeerd)',
+    note: 'Onbeperkt bokszaktraining, 12 maanden',
     accent: 'primary',
   },
   {
