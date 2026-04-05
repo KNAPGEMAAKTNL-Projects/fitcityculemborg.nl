@@ -1,0 +1,9 @@
+name = "fitcity-culemborg"
+compatibility_date = "2024-12-01"
+pages_build_output_dir = "./dist"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "fitcity-production"
+database_id = "5fa22170-0cee-45c2-8f0d-d0222829cdcb"
+migrations_dir = "./migrations"

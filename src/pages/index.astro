@@ -8,8 +8,8 @@ import MobileCTA from '../components/MobileCTA.astro';
 import { pricingPlans, pricingExtras } from '../data/pricing';
 ---
 <Layout
-  title="Sportschool Culemborg · Fitness vanaf €20,50 · [FitCity]"
-  description="De sportschool van Culemborg. Fitness, ladies only en kickboxing. Apparatuur van topmerken. Vanaf €20,50/maand met gratis begeleiding. Plan een gratis proeftraining."
+  title="Sportschool Culemborg · Fitness vanaf €20,50 · Fitcity Culemborg"
+  description="De meest betaalbare sportschool van Culemborg. Fitness, ladies only en kickboxing. Apparatuur van topmerken. Vanaf €20,50/maand met gratis begeleiding. Je eerste proefles is altijd gratis."
 >
   <Header />
 
@@ -28,30 +28,29 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
 
     <div class="hero-content hero-entrance">
       <!-- Glass pill reviews -->
-      <div class="hero-reviews">
+      <a href="https://www.google.com/maps/search/Fitcity+Culemborg+Houtweg+8" target="_blank" rel="noopener" class="hero-reviews">
         <div class="hero-reviews-stars">
           {[1,2,3,4].map(() => (
             <svg width="20" height="20" viewBox="0 0 24 24" fill="#FFE303" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           ))}
-          <!-- Partial star (60% fill) -->
+          <!-- Partial star (70% fill for 4,7) -->
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="none">
             <defs>
               <linearGradient id="star-partial">
-                <stop offset="60%" stop-color="#FFE303"/>
-                <stop offset="60%" stop-color="#555"/>
+                <stop offset="70%" stop-color="#FFE303"/>
+                <stop offset="70%" stop-color="#555"/>
               </linearGradient>
             </defs>
             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="url(#star-partial)"/>
           </svg>
         </div>
-        <span class="hero-reviews-rating">4,6</span>
-        <span class="hero-reviews-sep">·</span>
-        <span class="hero-reviews-count">28 Google Reviews</span>
-      </div>
+        <span class="hero-reviews-rating">4,7</span>
+        <span class="hero-reviews-sep">|</span>
+        <span class="hero-reviews-count">29 Google Reviews</span>
+      </a>
 
-      <h1 class="hero-title">Sportschool Culemborg</h1>
-
-      <p class="hero-subtitle">Fitness, ladies only en kickboxing onder een dak. Lid worden kan al vanaf €20,50 per maand, inclusief gratis begeleiding.</p>
+      <h1 class="hero-title">Elke dag fitter</h1>
+      <p class="hero-tagline">De meest betaalbare sportschool van Culemborg</p>
 
       <div class="hero-buttons">
         <a href="/signup/" class="btn-primary">WORD NU LID</a>
@@ -70,41 +69,7 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
        ============================================ -->
   <section class="direct-answer">
     <div class="direct-answer-inner">
-      <p>[FitCity] is de sportschool van Culemborg voor fitness, ladies only en kickboxing. Je traint op apparatuur van Nautilus, SportsArt en Technogym, op jouw tempo en met gratis begeleiding bij elk bezoek. Al vanaf €20,50 per maand ben je lid. Plan een gratis proeftraining en ervaar het zelf.</p>
-    </div>
-  </section>
-
-  <!-- Visual Craft: Gentle Wave Divider -->
-  <svg class="wave-divider" viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M0,0 C360,60 1080,60 1440,0 L1440,60 L0,60 Z" fill="var(--color-surface-dark)"/>
-  </svg>
-
-  <!-- ============================================
-       SECTION 3 — EQUIPMENT BRANDS STRIP (marquee)
-       ============================================ -->
-  <section class="brands-strip">
-    <div class="brands-strip-inner">
-      <span class="brands-label">WIJ TRAINEN OP</span>
-      <div class="brands-marquee-wrapper">
-        <div class="brands-marquee">
-          {[1,2].map(() => (
-            <>
-              <span>NAUTILUS</span>
-              <span>·</span>
-              <span>SPORTSART</span>
-              <span>·</span>
-              <span>TECHNOGYM</span>
-              <span>·</span>
-              <span>NAUTILUS</span>
-              <span>·</span>
-              <span>SPORTSART</span>
-              <span>·</span>
-              <span>TECHNOGYM</span>
-              <span>·</span>
-            </>
-          ))}
-        </div>
-      </div>
+      <p>Fitcity Culemborg is de sportschool van Culemborg voor fitness, ladies only en kickboxing. Je traint op apparatuur van Nautilus, SportsArt en Technogym, op jouw tempo en met gratis begeleiding bij elk bezoek. Al vanaf €20,50 per maand ben je lid. Je eerste proefles is altijd gratis.</p>
     </div>
   </section>
 
@@ -119,11 +84,11 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
         <!-- Card 1: Fitness (spans 2 rows on desktop) -->
         <div class="service-card service-card--fitness hover-lift">
           <div class="service-card-image">
-            <span>Fitness afbeelding</span>
+            <img src="/images/fitness.webp" alt="Fitness bij Fitcity Culemborg" loading="lazy" />
           </div>
           <div class="service-card-body">
             <h3 class="service-card-title">Fitness</h3>
-            <p class="service-card-desc">Onbeperkt trainen op apparatuur van topmerken. Gratis begeleiding bij elk bezoek, zodat je het maximale uit je training haalt.</p>
+            <p class="service-card-desc">Onbeperkt trainen op apparatuur van topmerken. Train wanneer het jou uitkomt, 7 dagen per week.</p>
             <a href="/fitness/" class="service-card-link">Meer info →</a>
           </div>
         </div>
@@ -131,7 +96,7 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
         <!-- Card 2: Ladies Only -->
         <div class="service-card service-card--ladies hover-lift">
           <div class="service-card-image">
-            <span>Ladies Only afbeelding</span>
+            <img src="/images/ladies-only.webp" alt="Ladies Only bij Fitcity Culemborg" loading="lazy" />
           </div>
           <div class="service-card-body">
             <h3 class="service-card-title">Ladies Only</h3>
@@ -143,7 +108,7 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
         <!-- Card 3: Kickboxing -->
         <div class="service-card service-card--kickboxing hover-lift">
           <div class="service-card-image">
-            <span>Kickboxing afbeelding</span>
+            <img src="/images/kickboxing.webp" alt="Kickboxing bij Fitcity Culemborg" loading="lazy" />
           </div>
           <div class="service-card-body">
             <h3 class="service-card-title">Kickboxing</h3>
@@ -168,17 +133,16 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
     </svg>
 
     <div class="vibe-container">
-      <SectionHeading eyebrow="WAAROM [FITCITY]" title="DE VIBE" />
+      <SectionHeading eyebrow="WAAROM FITCITY" title="DE VIBE" />
 
       <div class="vibe-grid">
         <div class="vibe-text">
-          <p class="vibe-lead">Je komt binnen, gooit je tas neer en je gaat trainen. Dát is [FitCity].</p>
-          <p>We zijn geen grote keten. We zijn een lokale sportschool waar de trainers je naam kennen en 120+ leden elke week komen, gewoon omdat het hier lekker trainen is. Er staat altijd iemand klaar om je te helpen.</p>
-          <p>Zeven dagen per week open, van 's ochtends vroeg tot 's avonds laat. Kom gerust een keer kijken, dan merk je het vanzelf.</p>
+          <p class="vibe-lead">Je komt binnen, gooit je tas neer en je gaat trainen. Dát is Fitcity Culemborg.</p>
+          <p>We zijn geen grote keten. We zijn een lokale sportschool waar de trainers je naam kennen, gewoon omdat het hier lekker trainen is. Er staat altijd iemand klaar om je te helpen.</p>
+          <p>Zeven dagen per week open. Doordeweeks van 08:30 tot 22:00, in het weekend vanaf 09:00. Kom gerust een keer kijken, dan merk je het vanzelf.</p>
 
           <ul class="vibe-checklist">
             {[
-              'Gratis begeleiding bij elk bezoek',
               'Apparatuur van Nautilus, SportsArt en Technogym',
               'Ladies Only zone',
               'Kickboxlessen 3x per week',
@@ -193,7 +157,9 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
         </div>
 
         <div class="vibe-image">
-          <span>Sfeer afbeelding gym</span>
+          <video autoplay muted loop playsinline preload="auto" aria-hidden="true">
+            <source src="/images/fitcity-sfeer.mp4" type="video/mp4" />
+          </video>
         </div>
       </div>
     </div>
@@ -206,7 +172,7 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
     <div class="pricing-container">
       <SectionHeading eyebrow="LIDMAATSCHAP" title="PRIJZEN" centered />
 
-      <p class="pricing-intro">Alle abonnementen inclusief gratis begeleiding en toegang tot alle apparatuur.</p>
+      <p class="pricing-intro">Kies het abonnement dat bij je past.</p>
 
       <!-- Duration toggle -->
       <div class="pricing-toggle" role="tablist" aria-label="Abonnementsduur">
@@ -280,7 +246,7 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
         ))}
       </div>
 
-      <p class="pricing-supporting">Liever eerst even kijken? Je eerste proeftraining is gratis en vrijblijvend.</p>
+      <p class="pricing-supporting">Liever eerst even kijken? Je eerste proefles is altijd gratis.</p>
     </div>
   </section>
 
@@ -296,9 +262,9 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
       <p class="kickboxing-schedule">Di 19:00 · Do 19:00 · Zo 10:00</p>
 
       <div class="kickboxing-gallery stagger-container">
-        {[1,2,3,4,5,6].map((n) => (
+        {[1,2,3,4,5].map((n) => (
           <div class:list={['kickboxing-item hover-image-overlay hover-image-zoom', { 'kickboxing-item--large': n === 1 }]}>
-            <span>Kickboxing foto {n}</span>
+            <img src={`/images/kickboxen-${n}.webp`} alt={`Kickboxing bij Fitcity Culemborg`} loading="lazy" />
           </div>
         ))}
       </div>
@@ -312,23 +278,23 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
        ============================================ -->
   <section class="reviews-strip">
     <div class="reviews-strip-inner">
-      <span class="reviews-strip-logo">[FITCITY]</span>
+      <span class="reviews-strip-logo">FITCITY CULEMBORG</span>
 
       <div class="reviews-strip-stars">
         {[1,2,3,4].map(() => (
           <svg width="20" height="20" viewBox="0 0 24 24" fill="#FFE303" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         ))}
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="none">
-          <defs><linearGradient id="star-partial-2"><stop offset="60%" stop-color="#FFE303"/><stop offset="60%" stop-color="#555"/></linearGradient></defs>
+          <defs><linearGradient id="star-partial-2"><stop offset="70%" stop-color="#FFE303"/><stop offset="70%" stop-color="#555"/></linearGradient></defs>
           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="url(#star-partial-2)"/>
         </svg>
       </div>
 
-      <span class="reviews-strip-rating">4,6 uit 28 reviews</span>
+      <span class="reviews-strip-rating">4,7 uit 29 reviews</span>
 
       <span class="reviews-strip-sep">|</span>
 
-      <a href="#" class="reviews-strip-link" target="_blank" rel="noopener">Bekijk op Google</a>
+      <a href="https://www.google.com/maps/search/Fitcity+Culemborg+Houtweg+8" class="reviews-strip-link" target="_blank" rel="noopener">Bekijk op Google</a>
     </div>
   </section>
 
@@ -342,7 +308,7 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
       <div class="faq-list">
         <details class="faq-item">
           <summary class="faq-question">
-            Wat kost een abonnement bij [FitCity]?
+            Wat kost een abonnement bij Fitcity Culemborg?
             <span class="faq-icon">+</span>
           </summary>
           <div class="faq-answer">
@@ -356,7 +322,7 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
             <span class="faq-icon">+</span>
           </summary>
           <div class="faq-answer">
-            <p>Ja, je eerste proeftraining is gratis en vrijblijvend. Neem even contact op om een moment af te spreken dat jou uitkomt.</p>
+            <p>Ja, je eerste proefles is altijd gratis. Neem even contact op om een moment af te spreken dat jou uitkomt.</p>
           </div>
         </details>
 
@@ -408,7 +374,7 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
        ============================================ -->
   <CtaSection
     title="KLAAR OM TE BEGINNEN?"
-    text="Je eerste proeftraining is gratis en vrijblijvend. Kom gerust even langs, of word direct lid."
+    text="Je eerste proefles is altijd gratis. Kom gerust even langs, of word direct lid."
     primaryLabel="WORD NU LID"
     primaryHref="/signup/"
     secondaryLabel="PLAN PROEFTRAINING"
@@ -539,21 +505,30 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
   .hero-reviews-sep { color: var(--color-separator); }
   .hero-reviews-count { font-size: 0.875rem; color: var(--color-text-muted); }
 
+  .hero-reviews {
+    text-decoration: none;
+  }
+
   .hero-title {
     font-size: clamp(3rem, 8vw, 5.5rem);
     line-height: 1.0;
     color: var(--color-text);
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
 
-  .hero-subtitle {
-    font-size: 1.1rem;
-    color: var(--color-text-body);
-    margin-bottom: 2rem;
+  .hero-tagline {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: clamp(1rem, 2.5vw, 1.35rem);
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 1.25rem;
   }
 
-  @media (min-width: 768px) {
-    .hero-subtitle { font-size: 1.25rem; }
+  .hero-reviews-sep {
+    color: var(--color-separator);
+    font-weight: 400;
   }
 
   .hero-buttons {
@@ -642,81 +617,6 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
   }
 
   /* =========================================
-     WAVE DIVIDER
-     ========================================= */
-  .wave-divider {
-    display: block;
-    width: 100%;
-    height: auto;
-    margin-top: -1px;
-    background: var(--color-bg);
-  }
-
-  /* =========================================
-     BRANDS STRIP
-     ========================================= */
-  .brands-strip {
-    background: var(--color-surface-dark);
-    padding: 1.25rem 0;
-    overflow: hidden;
-  }
-
-  .brands-strip-inner {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-  }
-
-  .brands-label {
-    display: none;
-    font-family: var(--font-body);
-    font-weight: 600;
-    font-size: 0.7rem;
-    color: var(--color-separator);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    white-space: nowrap;
-    padding-left: 2rem;
-    flex-shrink: 0;
-  }
-
-  @media (min-width: 768px) { .brands-label { display: block; } }
-
-  .brands-marquee-wrapper {
-    flex: 1;
-    overflow: hidden;
-    mask-image: linear-gradient(90deg, transparent, black 15%, black 85%, transparent);
-    -webkit-mask-image: linear-gradient(90deg, transparent, black 15%, black 85%, transparent);
-  }
-
-  .brands-marquee {
-    display: flex;
-    gap: 3rem;
-    animation: marquee 20s linear infinite;
-    width: max-content;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .brands-marquee { animation: none; }
-  }
-
-  .brands-marquee span {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: 1rem;
-    color: var(--color-text);
-    opacity: 0.4;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    white-space: nowrap;
-  }
-
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-
-  /* =========================================
      SERVICES — ONS AANBOD
      ========================================= */
   .services {
@@ -743,8 +643,7 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
 
   @media (min-width: 768px) {
     .services-grid {
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto auto;
+      grid-template-columns: repeat(3, 1fr);
       gap: 2rem;
     }
   }
@@ -765,33 +664,24 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
 
   .service-card--fitness { border-top: 3px solid var(--color-primary); }
 
-  @media (min-width: 768px) {
-    .service-card--fitness { grid-row: 1 / 3; grid-column: 1; }
-  }
-
   .service-card--ladies { border-top: 3px solid var(--color-secondary); }
   .service-card--kickboxing { border-top: 3px solid var(--color-primary); }
 
   .service-card-image {
     aspect-ratio: 16/9;
     background: #252525;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #555;
-    font-size: 0.8rem;
-    font-family: var(--font-body);
+    overflow: hidden;
   }
 
-  @media (min-width: 768px) {
-    .service-card--fitness .service-card-image { aspect-ratio: 16/10; }
+  .service-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
+
 
   .service-card-body { padding: 1.5rem; }
 
-  @media (min-width: 768px) {
-    .service-card--fitness .service-card-body { padding: 2rem; }
-  }
 
   .service-card-title {
     font-size: 1.25rem;
@@ -908,12 +798,13 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
     aspect-ratio: 4/5;
     background: #252525;
     border-radius: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #555;
-    font-size: 0.8rem;
-    font-family: var(--font-body);
+    overflow: hidden;
+  }
+
+  .vibe-image video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   /* =========================================
@@ -1217,14 +1108,14 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
     aspect-ratio: 1;
     background: #252525;
     border-radius: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #555;
-    font-size: 0.75rem;
-    font-family: var(--font-body);
     overflow: hidden;
     position: relative;
+  }
+
+  .kickboxing-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .kickboxing-item--large {

@@ -1,0 +1,229 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+import Footer from '../../../components/Footer.astro';
+---
+<Layout
+  title="Inschrijving Ontvangen · Fitcity Culemborg"
+  robots="noindex, nofollow"
+>
+  <Header />
+
+  <section class="inner-hero" style="min-height: 30vh;">
+    <div class="inner-hero-inner">
+      <Breadcrumb items={[{ label: 'Word Lid', href: '/signup/' }, { label: 'Bevestiging' }]} />
+      <h1>BEDANKT!</h1>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="content-narrow">
+      <!-- Animated checkmark -->
+      <div class="success-icon">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+          <circle cx="32" cy="32" r="30" stroke="#22c55e" stroke-width="3" opacity="0.3" />
+          <circle cx="32" cy="32" r="30" stroke="#22c55e" stroke-width="3" class="check-circle" />
+          <path d="M20 33l8 8 16-16" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="check-path" />
+        </svg>
+      </div>
+
+      <h2 class="sub-heading" style="text-align: center; margin-top: 2rem;">WAT GEBEURT ER NU?</h2>
+
+      <!-- Numbered steps -->
+      <div class="next-steps">
+        <div class="next-step-card">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>We bekijken je aanmelding</h3>
+            <p>We nemen binnen 1 werkdag contact met je op om je inschrijving te bevestigen.</p>
+          </div>
+        </div>
+
+        <div class="next-step-card">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Haal je ledenpas op</h3>
+            <p>Kom langs bij Fitcity Culemborg (Houtweg 8, Culemborg) om je ledenpas op te halen.</p>
+          </div>
+        </div>
+
+        <div class="next-step-card">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>Start met trainen</h3>
+            <p>Bij het ophalen betaal je de eenmalige inschrijfkosten van €17,00 en toon je een geldig legitimatiebewijs. Daarna kun je direct beginnen!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact box -->
+      <div class="contact-box">
+        <p>Vragen? Stuur een <a href="https://wa.me/31646872274?text=Hoi%2C%20ik%20heb%20een%20vraag%20over%20mijn%20inschrijving" target="_blank" rel="noopener">WhatsApp</a> of mail naar <a href="mailto:info@fitcityculemborg.nl">info@fitcityculemborg.nl</a></p>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="success-actions">
+        <a href="/" class="btn-primary">TERUG NAAR HOME</a>
+        <a href="/contact/" class="btn-ghost">NEEM CONTACT OP</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  @import '../../../styles/inner-pages.css';
+
+  /* Animated checkmark */
+  .success-icon {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .success-icon svg {
+    display: inline-block;
+  }
+
+  .check-circle {
+    stroke-dasharray: 190;
+    stroke-dashoffset: 190;
+    animation: draw-circle 0.6s ease-out 0.2s forwards;
+  }
+
+  .check-path {
+    stroke-dasharray: 50;
+    stroke-dashoffset: 50;
+    animation: draw-check 0.4s ease-out 0.7s forwards;
+  }
+
+  @keyframes draw-circle {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes draw-check {
+    to { stroke-dashoffset: 0; }
+  }
+
+  /* Next steps */
+  .next-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+
+  .next-step-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding: 1.5rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+  }
+
+  .step-number {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: var(--color-bg);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .step-content h3 {
+    font-size: 1rem;
+    color: var(--color-text);
+    margin-bottom: 0.375rem;
+  }
+
+  .step-content h3::after { display: none; }
+
+  .step-content p {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  /* Contact box */
+  .contact-box {
+    margin-top: 2.5rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    text-align: center;
+  }
+
+  .contact-box p {
+    font-size: 0.95rem;
+    color: var(--color-text-body);
+  }
+
+  .contact-box a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font-weight: 600;
+  }
+
+  /* Buttons */
+  .success-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .success-actions {
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+
+  .btn-primary,
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 1rem 2.5rem;
+    min-height: 44px;
+    transition: opacity 0.2s;
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .btn-primary,
+    .btn-ghost { width: auto; }
+  }
+
+  .btn-primary {
+    background: var(--color-primary);
+    color: var(--color-bg);
+  }
+
+  .btn-primary:hover { opacity: 0.9; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+  }
+
+  .btn-ghost:hover { border-color: var(--color-text-muted); }
+</style>

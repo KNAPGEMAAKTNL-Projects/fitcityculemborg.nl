@@ -1,7 +1,7 @@
-# [FitCity] Project Guidelines
+# Fitcity Culemborg Project Guidelines
 
 ## Brand Name
-Always write the brand name as **[FitCity]** (exact format).
+Always write the brand name as **Fitcity Culemborg** (exact format). NOT [FitCity].
 
 ## Tech Stack
 - Framework: Astro 5 (Static Site Generation)

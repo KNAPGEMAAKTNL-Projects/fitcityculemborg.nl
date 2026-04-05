@@ -272,12 +272,28 @@
       // Submit
       submitBtn.classList.add('is-loading');
       try {
-        const data = new FormData(form);
-        const response = await fetch(form.action, { method: 'POST', body: data });
+        const data = {
+          naam: (form.elements.namedItem('naam') as HTMLInputElement).value,
+          email: (form.elements.namedItem('email') as HTMLInputElement).value,
+          onderwerp: (form.elements.namedItem('onderwerp') as HTMLSelectElement).value,
+          bericht: (form.elements.namedItem('bericht') as HTMLTextAreaElement).value,
+          privacy_consent: (form.elements.namedItem('privacy') as HTMLInputElement).checked,
+          honeypot: (form.elements.namedItem('website') as HTMLInputElement).value,
+        };
+        const response = await fetch('/api/contact/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
         if (response.ok) {
           form.reset();
           successMsg?.removeAttribute('hidden');
         } else {
+          const result = await response.json().catch(() => null);
+          if (result?.field) {
+            const fieldEl = form.elements.namedItem(result.field === 'name' ? 'naam' : result.field === 'subject' ? 'onderwerp' : result.field === 'message' ? 'bericht' : result.field);
+            if (fieldEl) (fieldEl as HTMLElement).closest('.form-field')?.classList.add('has-error');
+          }
           errorMsg?.removeAttribute('hidden');
         }
       } catch {

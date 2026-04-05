@@ -1,0 +1,224 @@
+import type { Env, SignupRequest } from './_shared/types';
+import { encrypt, maskIBAN } from './_shared/encryption';
+import {
+  sanitize,
+  validateEmail,
+  validatePhone,
+  validatePostcode,
+  normalizePostcode,
+  validateIBAN,
+  isValidPlanSlug,
+  validateAge,
+  hashIP,
+} from './_shared/validation';
+
+const CORS_HEADERS = {
+  'Content-Type': 'application/json',
+};
+
+function jsonResponse(body: Record<string, unknown>, status = 200): Response {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: CORS_HEADERS,
+  });
+}
+
+export const onRequestPost: PagesFunction<Env> = async (context) => {
+  try {
+    const body = (await context.request.json()) as SignupRequest;
+
+    // Honeypot check — silent reject
+    if (body.honeypot) {
+      return jsonResponse({ success: true });
+    }
+
+    // Sanitize all string inputs
+    const data = {
+      plan_slug: sanitize(body.plan_slug ?? ''),
+      plan_name: sanitize(body.plan_name ?? ''),
+      plan_price: sanitize(body.plan_price ?? ''),
+      plan_duration: sanitize(body.plan_duration ?? ''),
+      full_name: sanitize(body.full_name ?? ''),
+      email: sanitize(body.email ?? '').toLowerCase(),
+      phone: sanitize(body.phone ?? ''),
+      date_of_birth: sanitize(body.date_of_birth ?? ''),
+      street: sanitize(body.street ?? ''),
+      house_number: sanitize(body.house_number ?? ''),
+      postcode: sanitize(body.postcode ?? ''),
+      city: sanitize(body.city ?? ''),
+      iban: sanitize(body.iban ?? ''),
+      account_holder: sanitize(body.account_holder ?? ''),
+      privacy_consent: body.privacy_consent,
+      sepa_consent: body.sepa_consent,
+      terms_consent: body.terms_consent,
+    };
+
+    // Validate required fields are non-empty
+    const requiredStringFields: Array<[string, string]> = [
+      [data.plan_slug, 'plan_slug'],
+      [data.plan_name, 'plan_name'],
+      [data.plan_price, 'plan_price'],
+      [data.plan_duration, 'plan_duration'],
+      [data.full_name, 'full_name'],
+      [data.email, 'email'],
+      [data.phone, 'phone'],
+      [data.date_of_birth, 'date_of_birth'],
+      [data.street, 'street'],
+      [data.house_number, 'house_number'],
+      [data.postcode, 'postcode'],
+      [data.city, 'city'],
+      [data.iban, 'iban'],
+      [data.account_holder, 'account_holder'],
+    ];
+
+    for (const [value, field] of requiredStringFields) {
+      if (!value) {
+        return jsonResponse(
+          { error: `Veld '${field}' is verplicht.`, field },
+          400
+        );
+      }
+    }
+
+    // Validate email
+    if (!validateEmail(data.email)) {
+      return jsonResponse(
+        { error: 'Ongeldig e-mailadres.', field: 'email' },
+        400
+      );
+    }
+
+    // Validate phone
+    if (!validatePhone(data.phone)) {
+      return jsonResponse(
+        { error: 'Ongeldig telefoonnummer. Gebruik 10-12 cijfers.', field: 'phone' },
+        400
+      );
+    }
+
+    // Validate postcode
+    if (!validatePostcode(data.postcode)) {
+      return jsonResponse(
+        { error: 'Ongeldige postcode. Gebruik formaat 1234 AB.', field: 'postcode' },
+        400
+      );
+    }
+    data.postcode = normalizePostcode(data.postcode);
+
+    // Validate age (minimum 12 per terms)
+    if (!validateAge(data.date_of_birth, 12)) {
+      return jsonResponse(
+        { error: 'Ongeldige geboortedatum of je moet minimaal 12 jaar zijn.', field: 'date_of_birth' },
+        400
+      );
+    }
+
+    // Validate IBAN
+    if (!validateIBAN(data.iban)) {
+      return jsonResponse(
+        { error: 'Ongeldig IBAN-nummer.', field: 'iban' },
+        400
+      );
+    }
+
+    // Validate plan slug
+    if (!isValidPlanSlug(data.plan_slug)) {
+      return jsonResponse(
+        { error: 'Ongeldig abonnement geselecteerd.', field: 'plan_slug' },
+        400
+      );
+    }
+
+    // Validate all three consents
+    if (!data.privacy_consent || !data.sepa_consent || !data.terms_consent) {
+      return jsonResponse(
+        { error: 'Alle toestemmingen zijn verplicht.' },
+        400
+      );
+    }
+
+    // Rate limit: hash IP and check
+    const clientIP = context.request.headers.get('CF-Connecting-IP') || 'unknown';
+    const ipHash = await hashIP(clientIP);
+
+    const rateLimitResult = await context.env.DB.prepare(
+      "SELECT COUNT(*) as count FROM signups WHERE ip_hash = ? AND created_at > datetime('now', '-1 hour')"
+    )
+      .bind(ipHash)
+      .first<{ count: number }>();
+
+    if (rateLimitResult && rateLimitResult.count >= 3) {
+      return jsonResponse(
+        { error: 'Te veel aanmeldingen. Probeer het over een uur opnieuw.' },
+        429
+      );
+    }
+
+    // Email uniqueness check
+    const existingEmail = await context.env.DB.prepare(
+      'SELECT id FROM signups WHERE email = ?'
+    )
+      .bind(data.email)
+      .first();
+
+    if (existingEmail) {
+      return jsonResponse(
+        {
+          error:
+            'Dit e-mailadres is al geregistreerd. Neem contact op als je een nieuw abonnement wilt afsluiten.',
+          field: 'email',
+        },
+        400
+      );
+    }
+
+    // Encrypt IBAN and generate masked version
+    const ibanEncrypted = await encrypt(data.iban, context.env.ENCRYPTION_SECRET);
+    const ibanMasked = maskIBAN(data.iban);
+
+    // Consent timestamps
+    const consentTimestamp = new Date().toISOString();
+
+    // Insert into D1
+    await context.env.DB.prepare(
+      `INSERT INTO signups (
+        plan_slug, plan_name, plan_price, plan_duration,
+        full_name, email, phone, date_of_birth,
+        street, house_number, postcode, city,
+        iban_encrypted, iban_masked, account_holder,
+        privacy_consent_at, sepa_consent_at, terms_consent_at,
+        ip_hash
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    )
+      .bind(
+        data.plan_slug,
+        data.plan_name,
+        data.plan_price,
+        data.plan_duration,
+        data.full_name,
+        data.email,
+        data.phone,
+        data.date_of_birth,
+        data.street,
+        data.house_number,
+        data.postcode,
+        data.city,
+        ibanEncrypted,
+        ibanMasked,
+        data.account_holder,
+        consentTimestamp,
+        consentTimestamp,
+        consentTimestamp,
+        ipHash
+      )
+      .run();
+
+    return jsonResponse({ success: true, message: 'Inschrijving ontvangen' });
+  } catch (err) {
+    console.error('Signup error:', err);
+    return jsonResponse(
+      { error: 'Er is een serverfout opgetreden. Probeer het later opnieuw.' },
+      500
+    );
+  }
+};
