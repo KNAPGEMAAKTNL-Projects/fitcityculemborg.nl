@@ -384,6 +384,17 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
   <Footer />
   <MobileCTA />
 
+  <!-- Restart hero video after view transition navigation -->
+  <script>
+    function restartHeroVideo() {
+      const video = document.querySelector('.hero-video') as HTMLVideoElement | null;
+      if (video) {
+        video.play().catch(() => {});
+      }
+    }
+    document.addEventListener('astro:page-load', restartHeroVideo);
+  </script>
+
   <!-- Scroll reveal fallback for Firefox -->
   <script>
     if (!CSS.supports('animation-timeline', 'view()')) {

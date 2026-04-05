@@ -25,25 +25,24 @@ const currentPath = Astro.url.pathname;
       <span></span>
     </button>
   </div>
-
-  <!-- Mobile menu overlay -->
-  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
-    <div class="mobile-menu-header">
-      <a href="/" class="header-logo"><img src="/images/fitcity-logo.webp" alt="Fitcity Culemborg" class="header-logo-img" /></a>
-      <button class="mobile-menu-close" id="menu-close" aria-label="Menu sluiten">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-      </button>
-    </div>
-    <nav class="mobile-menu-nav" aria-label="Mobiel menu">
-      {mobileNav.map(item => (
-        <a href={item.href} class:list={{ 'nav-active': currentPath.startsWith(item.href) }}>{item.label}</a>
-      ))}
-    </nav>
-    <a href="/signup/" class="mobile-menu-cta">WORD NU LID</a>
-  </div>
-  <!-- Outside click overlay -->
-  <div class="mobile-menu-backdrop" id="menu-backdrop" aria-hidden="true"></div>
 </header>
+
+<!-- Mobile menu + backdrop live OUTSIDE header to avoid backdrop-filter transparency bug on mobile -->
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <div class="mobile-menu-header">
+    <a href="/" class="mobile-menu-logo"><img src="/images/fitcity-logo.webp" alt="Fitcity Culemborg" class="header-logo-img" /></a>
+    <button class="mobile-menu-close" id="menu-close" aria-label="Menu sluiten">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+  </div>
+  <nav class="mobile-menu-nav" aria-label="Mobiel menu">
+    {mobileNav.map(item => (
+      <a href={item.href} class:list={{ 'nav-active': currentPath.startsWith(item.href) }}>{item.label}</a>
+    ))}
+  </nav>
+  <a href="/signup/" class="mobile-menu-cta">WORD NU LID</a>
+</div>
+<div class="mobile-menu-backdrop" id="menu-backdrop" aria-hidden="true"></div>
 
 <style>
   .site-header {
@@ -169,11 +168,12 @@ const currentPath = Astro.url.pathname;
     background: var(--color-text);
   }
 
-  /* Mobile menu */
+  /* Mobile menu — lives outside <header> to avoid backdrop-filter bugs */
   .mobile-menu {
     position: fixed;
     inset: 0;
-    background: var(--color-bg);
+    background: #141414;
+    background: var(--color-bg, #141414);
     z-index: 200;
     display: flex;
     flex-direction: column;
@@ -183,6 +183,11 @@ const currentPath = Astro.url.pathname;
   }
 
   .mobile-menu.is-open { transform: translateX(0); }
+
+  .mobile-menu-logo {
+    display: flex;
+    align-items: center;
+  }
 
   .mobile-menu-backdrop {
     position: fixed;
