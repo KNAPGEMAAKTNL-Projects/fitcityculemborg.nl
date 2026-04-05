@@ -6,7 +6,7 @@
 /* Inner hero */
 .inner-hero {
   background: var(--color-bg);
-  padding: 0 1.5rem 2rem;
+  padding: 0 1.5rem 1rem;
   position: relative;
 }
 
@@ -33,7 +33,7 @@
 /* Content sections */
 .content-section {
   background: var(--color-bg);
-  padding: 3rem 0;
+  padding: 1.5rem 0;
 }
 
 .content-section--alt {

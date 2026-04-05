@@ -141,7 +141,7 @@ export const pricingPlans: Record<string, PricingPlan[]> = {
 };
 
 export const pricingExtras: PricingExtra[] = [
-  { name: 'Dagpas', price: '€7,00', note: 'Eenmalig, gewoon binnenlopen' },
+  { name: 'Dagpas', price: '€7,00', note: 'Eenmalig' },
   { name: 'Quick Deal', price: '€99,00', note: '3 maanden, eenmalige betaling' },
   { name: 'Combi Deal', price: '€39,50/maand', note: '12 maanden, voor 2 personen' },
   { name: 'Kickboxing los', price: 'vanaf €19,95/maand', note: 'Zie kickboxing pagina voor alle opties', href: '/kickboxing/' },
