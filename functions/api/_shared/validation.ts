@@ -1,17 +1,25 @@
-const VALID_PLAN_SLUGS = [
-  'smart-deal',
-  'ladies-only',
-  'ultimate-fit',
-  'fit-deal',
-  'ladies-halfjaar',
-  'flex',
-  'ladies-flex',
-  'combi-deal',
-  'quick-deal',
-  'kb-1x',
-  'kb-unlimited',
-  'dagpas',
-] as const;
+interface PlanDetails {
+  name: string;
+  price: string;
+  duration: string;
+}
+
+const PLAN_CATALOG: Record<string, PlanDetails> = {
+  'smart-deal': { name: 'Smart Deal', price: '€24,50', duration: '12 maanden' },
+  'ladies-only': { name: 'Ladies Only', price: '€20,50', duration: '12 maanden' },
+  'ultimate-fit': { name: 'Ultimate Fit Deal', price: '€37,50', duration: '12 maanden' },
+  'fit-deal': { name: 'Fit Deal', price: '€29,50', duration: '6 maanden' },
+  'ladies-halfjaar': { name: 'Ladies Halfjaar', price: '€25,50', duration: '6 maanden' },
+  'flex': { name: 'Flex', price: '€37,00', duration: 'Maandelijks opzegbaar' },
+  'ladies-flex': { name: 'Ladies Flex', price: '€32,00', duration: 'Maandelijks opzegbaar' },
+  'combi-deal': { name: 'Combi Deal', price: '€39,50', duration: '12 maanden' },
+  'quick-deal': { name: 'Quick Deal', price: '€99,00', duration: '3 maanden' },
+  'kb-1x': { name: 'Bokszaktraining 1x p/w', price: '€19,95', duration: '12 maanden' },
+  'kb-unlimited': { name: 'Bokszaktraining Unlimited', price: '€26,95', duration: '12 maanden' },
+  'dagpas': { name: 'Dagpas', price: '€7,00', duration: 'Eenmalig' },
+};
+
+const VALID_PLAN_SLUGS = Object.keys(PLAN_CATALOG);
 
 const VALID_SUBJECTS = [
   'proeftraining',
@@ -89,6 +97,16 @@ export function sanitize(str: string): string {
   return str.trim().replace(/<[^>]*>/g, '');
 }
 
+export async function verifyTurnstile(token: string, secret: string, ip?: string): Promise<boolean> {
+  const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ secret, response: token, remoteip: ip }),
+  });
+  const result = await res.json() as { success: boolean };
+  return result.success;
+}
+
 export async function hashIP(ip: string): Promise<string> {
   const encoder = new TextEncoder();
   const data = encoder.encode(ip);
@@ -100,7 +118,11 @@ export async function hashIP(ip: string): Promise<string> {
 }
 
 export function isValidPlanSlug(slug: string): boolean {
-  return (VALID_PLAN_SLUGS as readonly string[]).includes(slug);
+  return VALID_PLAN_SLUGS.includes(slug);
+}
+
+export function getPlanDetails(slug: string): PlanDetails | null {
+  return PLAN_CATALOG[slug] ?? null;
 }
 
 export function isValidSubject(subject: string): boolean {

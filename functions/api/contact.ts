@@ -3,6 +3,7 @@ import {
   sanitize,
   validateEmail,
   isValidSubject,
+  verifyTurnstile,
   hashIP,
 } from './_shared/validation';
 import { sendContactCustomerEmail, sendContactOwnerEmail } from './_shared/email';
@@ -25,6 +26,13 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     // Honeypot check — silent reject
     if (body.honeypot) {
       return jsonResponse({ success: true });
+    }
+
+    // Turnstile verification
+    const clientIP = context.request.headers.get('CF-Connecting-IP') || 'unknown';
+    const turnstileToken = body.cf_turnstile_response ?? '';
+    if (!turnstileToken || !await verifyTurnstile(turnstileToken, context.env.TURNSTILE_SECRET_KEY, clientIP)) {
+      return jsonResponse({ error: 'Verificatie mislukt. Vernieuw de pagina en probeer het opnieuw.' }, 403);
     }
 
     // Sanitize all string inputs
@@ -78,7 +86,6 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     }
 
     // Rate limit: max 5 per IP per 15 minutes
-    const clientIP = context.request.headers.get('CF-Connecting-IP') || 'unknown';
     const ipHash = await hashIP(clientIP);
 
     const rateLimitResult = await context.env.DB.prepare(

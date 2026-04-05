@@ -2,6 +2,7 @@ export interface Env {
   DB: D1Database;
   ENCRYPTION_SECRET: string;
   RESEND_API_KEY: string;
+  TURNSTILE_SECRET_KEY: string;
 }
 
 export interface SignupRequest {
@@ -23,6 +24,7 @@ export interface SignupRequest {
   sepa_consent: boolean;
   terms_consent: boolean;
   honeypot?: string;
+  cf_turnstile_response?: string;
 }
 
 export interface ContactRequest {
@@ -32,4 +34,5 @@ export interface ContactRequest {
   bericht: string;
   privacy_consent: boolean;
   honeypot?: string;
+  cf_turnstile_response?: string;
 }

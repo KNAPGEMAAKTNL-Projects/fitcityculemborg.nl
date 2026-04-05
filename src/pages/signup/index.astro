@@ -340,6 +340,9 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
             <input type="text" name="website" tabindex="-1" autocomplete="off" />
           </div>
 
+          <!-- Turnstile -->
+          <div id="turnstile-signup"></div>
+
           <button type="submit" class="btn-primary-full" id="signup-submit">
             <span class="form-submit-text">INSCHRIJVING VOLTOOIEN</span>
             <span class="form-submit-loading" aria-hidden="true">
@@ -1163,6 +1166,7 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
 
 <script>
   import { validateIBAN, formatIBAN, validatePostcode, normalizePostcode, validateEmail, validatePhone } from '../../utils/validation';
+  import { TURNSTILE_SITE_KEY } from '../../config/turnstile';
 
   const STORAGE_KEY = 'fitcity-signup-draft';
   const PERSISTED_FIELDS = [
@@ -1181,6 +1185,23 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
     const durationBtns = document.querySelectorAll('.duration-btn') as NodeListOf<HTMLButtonElement>;
     const planGroups = document.querySelectorAll('.signup-plans') as NodeListOf<HTMLElement>;
     const submitBtn = document.getElementById('signup-submit') as HTMLButtonElement;
+
+    // Turnstile
+    let signupTurnstileToken = '';
+    function renderSignupTurnstile() {
+      const container = document.getElementById('turnstile-signup');
+      if (!container || typeof turnstile === 'undefined') return;
+      container.innerHTML = '';
+      turnstile.render(container, {
+        sitekey: TURNSTILE_SITE_KEY,
+        theme: 'dark',
+        callback: (token: string) => { signupTurnstileToken = token; },
+        'expired-callback': () => { signupTurnstileToken = ''; },
+      });
+    }
+    const signupTurnstileCheck = setInterval(() => {
+      if (typeof turnstile !== 'undefined') { clearInterval(signupTurnstileCheck); renderSignupTurnstile(); }
+    }, 200);
     const successMsg = document.getElementById('form-success') as HTMLElement;
     const errorMsg = document.getElementById('form-error') as HTMLElement;
 
@@ -1531,6 +1552,12 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
       errorMsg?.setAttribute('hidden', '');
       if (!validateStep(3)) return;
 
+      // Check Turnstile token
+      if (!signupTurnstileToken) {
+        errorMsg?.removeAttribute('hidden');
+        return;
+      }
+
       submitBtn.classList.add('is-loading');
       try {
         const data: Record<string, unknown> = {};
@@ -1542,6 +1569,7 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
         data.privacy_consent = (form.elements.namedItem('privacy_consent') as HTMLInputElement).checked;
         data.terms_consent = (form.elements.namedItem('terms_consent') as HTMLInputElement).checked;
         data.sepa_consent = (form.elements.namedItem('sepa_consent') as HTMLInputElement).checked;
+        data.cf_turnstile_response = signupTurnstileToken;
 
         const response = await fetch('/api/signup/', {
           method: 'POST',

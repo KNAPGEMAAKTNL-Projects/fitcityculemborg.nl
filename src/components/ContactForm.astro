@@ -50,8 +50,8 @@
     <input type="text" name="website" tabindex="-1" autocomplete="off" />
   </div>
 
-  <!-- Turnstile placeholder -->
-  <!-- <div class="cf-turnstile" data-sitekey="YOUR_SITE_KEY"></div> -->
+  <!-- Turnstile -->
+  <div id="turnstile-contact"></div>
 
   <button type="submit" class="form-submit" id="form-submit">
     <span class="form-submit-text">STUUR BERICHT</span>
@@ -229,6 +229,33 @@
 </style>
 
 <script>
+  import { TURNSTILE_SITE_KEY } from '../config/turnstile';
+
+  let contactTurnstileToken = '';
+
+  function renderContactTurnstile() {
+    const container = document.getElementById('turnstile-contact');
+    if (!container || typeof turnstile === 'undefined') return;
+    container.innerHTML = '';
+    turnstile.render(container, {
+      sitekey: TURNSTILE_SITE_KEY,
+      theme: 'dark',
+      callback: (token: string) => { contactTurnstileToken = token; },
+      'expired-callback': () => { contactTurnstileToken = ''; },
+    });
+  }
+
+  // Render when API is ready
+  const contactTurnstileCheck = setInterval(() => {
+    if (typeof turnstile !== 'undefined') {
+      clearInterval(contactTurnstileCheck);
+      renderContactTurnstile();
+    }
+  }, 200);
+
+  // Re-render after view transitions
+  document.addEventListener('astro:after-swap', renderContactTurnstile);
+
   const form = document.getElementById('contact-form') as HTMLFormElement;
   const submitBtn = document.getElementById('form-submit');
   const successMsg = document.getElementById('form-success');
@@ -269,6 +296,12 @@
 
       if (!valid) return;
 
+      // Check Turnstile token
+      if (!contactTurnstileToken) {
+        errorMsg?.removeAttribute('hidden');
+        return;
+      }
+
       // Submit
       submitBtn.classList.add('is-loading');
       try {
@@ -279,6 +312,7 @@
           bericht: (form.elements.namedItem('bericht') as HTMLTextAreaElement).value,
           privacy_consent: (form.elements.namedItem('privacy') as HTMLInputElement).checked,
           honeypot: (form.elements.namedItem('website') as HTMLInputElement).value,
+          cf_turnstile_response: contactTurnstileToken,
         };
         const response = await fetch('/api/contact/', {
           method: 'POST',
@@ -287,6 +321,8 @@
         });
         if (response.ok) {
           form.reset();
+          contactTurnstileToken = '';
+          renderContactTurnstile();
           successMsg?.removeAttribute('hidden');
         } else {
           const result = await response.json().catch(() => null);

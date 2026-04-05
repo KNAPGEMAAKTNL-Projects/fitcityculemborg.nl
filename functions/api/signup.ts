@@ -8,6 +8,8 @@ import {
   normalizePostcode,
   validateIBAN,
   isValidPlanSlug,
+  getPlanDetails,
+  verifyTurnstile,
   validateAge,
   hashIP,
 } from './_shared/validation';
@@ -33,12 +35,31 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       return jsonResponse({ success: true });
     }
 
+    // Turnstile verification
+    const clientIP = context.request.headers.get('CF-Connecting-IP') || 'unknown';
+    const turnstileToken = body.cf_turnstile_response ?? '';
+    if (!turnstileToken || !await verifyTurnstile(turnstileToken, context.env.TURNSTILE_SECRET_KEY, clientIP)) {
+      return jsonResponse({ error: 'Verificatie mislukt. Vernieuw de pagina en probeer het opnieuw.' }, 403);
+    }
+
+    // Validate plan slug first — reject early before processing other fields
+    const planSlug = sanitize(body.plan_slug ?? '');
+    if (!isValidPlanSlug(planSlug)) {
+      return jsonResponse(
+        { error: 'Ongeldig abonnement geselecteerd.', field: 'plan_slug' },
+        400
+      );
+    }
+
+    // Look up canonical plan details server-side — never trust client-sent prices
+    const plan = getPlanDetails(planSlug)!;
+
     // Sanitize all string inputs
     const data = {
-      plan_slug: sanitize(body.plan_slug ?? ''),
-      plan_name: sanitize(body.plan_name ?? ''),
-      plan_price: sanitize(body.plan_price ?? ''),
-      plan_duration: sanitize(body.plan_duration ?? ''),
+      plan_slug: planSlug,
+      plan_name: plan.name,
+      plan_price: plan.price,
+      plan_duration: plan.duration,
       full_name: sanitize(body.full_name ?? ''),
       email: sanitize(body.email ?? '').toLowerCase(),
       phone: sanitize(body.phone ?? ''),
@@ -56,10 +77,6 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
     // Validate required fields are non-empty
     const requiredStringFields: Array<[string, string]> = [
-      [data.plan_slug, 'plan_slug'],
-      [data.plan_name, 'plan_name'],
-      [data.plan_price, 'plan_price'],
-      [data.plan_duration, 'plan_duration'],
       [data.full_name, 'full_name'],
       [data.email, 'email'],
       [data.phone, 'phone'],
@@ -122,14 +139,6 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       );
     }
 
-    // Validate plan slug
-    if (!isValidPlanSlug(data.plan_slug)) {
-      return jsonResponse(
-        { error: 'Ongeldig abonnement geselecteerd.', field: 'plan_slug' },
-        400
-      );
-    }
-
     // Validate all three consents
     if (!data.privacy_consent || !data.sepa_consent || !data.terms_consent) {
       return jsonResponse(
@@ -139,7 +148,6 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     }
 
     // Rate limit: hash IP and check
-    const clientIP = context.request.headers.get('CF-Connecting-IP') || 'unknown';
     const ipHash = await hashIP(clientIP);
 
     const rateLimitResult = await context.env.DB.prepare(
