@@ -106,6 +106,11 @@ function emailWrapper(content: string): string {
     a { text-decoration: none; }
     /* Prevent auto-link styling on iOS */
     a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; font-size: inherit !important; font-family: inherit !important; font-weight: inherit !important; line-height: inherit !important; }
+    /* Mobile responsive */
+    @media only screen and (max-width: 480px) {
+      .card-padding { padding: 24px 18px !important; }
+      .detail-label { width: 90px !important; font-size: 12px !important; }
+    }
   </style>
 </head>
 <body style="margin: 0 !important; padding: 0 !important; background-color: ${C.bg} !important; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;" class="body-bg">
@@ -128,7 +133,7 @@ function emailWrapper(content: string): string {
         <!-- Main card -->
         <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="560" style="max-width: 560px; width: 100%; background-color: ${C.surface} !important; border: 1px solid ${C.border}; border-radius: 8px;" class="card-bg">
           <tr>
-            <td style="padding: 32px 28px;">
+            <td style="padding: 32px 28px;" class="card-padding">
               ${content}
             </td>
           </tr>
@@ -208,8 +213,8 @@ function ghostButton(text: string, href: string): string {
 
 function detailRow(label: string, value: string): string {
   return `<tr>
-  <td style="padding: 8px 12px 8px 0; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 14px; color: ${C.textMuted} !important; white-space: nowrap; vertical-align: top;" class="text-muted">${label}</td>
-  <td style="padding: 8px 0; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 600; color: ${C.text} !important; vertical-align: top;" class="text-white">${escapeHtml(value)}</td>
+  <td style="padding: 8px 8px 8px 0; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 13px; color: ${C.textMuted} !important; vertical-align: top; width: 110px;" class="text-muted detail-label">${label}</td>
+  <td style="padding: 8px 0; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 600; color: ${C.text} !important; vertical-align: top; word-break: break-word;" class="text-white">${escapeHtml(value)}</td>
 </tr>`;
 }
 
@@ -259,8 +264,8 @@ function signupCustomerHtml(data: {
           <div style="width: 28px; height: 28px; border-radius: 50%; background-color: ${C.primary} !important; text-align: center; line-height: 28px; font-family: 'Oswald', 'Arial Black', Arial, sans-serif; font-weight: 700; font-size: 13px; color: ${C.primaryDark} !important;">1</div>
         </td>
         <td valign="top" style="padding: 4px 0 16px 0;">
-          <p style="margin: 0 0 2px 0; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 600; color: ${C.text} !important;" class="text-white">We bekijken je aanmelding</p>
-          <p style="margin: 0; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.5; color: ${C.textMuted} !important;" class="text-muted">We nemen binnen 1 werkdag contact met je op.</p>
+          <p style="margin: 0 0 2px 0; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 600; color: ${C.text} !important;" class="text-white">Kom langs bij Fitcity Culemborg</p>
+          <p style="margin: 0; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.5; color: ${C.textMuted} !important;" class="text-muted">Houtweg 8, 4104 AB Culemborg. Je kunt terecht tijdens openingstijden.</p>
         </td>
       </tr>
       <tr>
@@ -268,8 +273,8 @@ function signupCustomerHtml(data: {
           <div style="width: 28px; height: 28px; border-radius: 50%; background-color: ${C.primary} !important; text-align: center; line-height: 28px; font-family: 'Oswald', 'Arial Black', Arial, sans-serif; font-weight: 700; font-size: 13px; color: ${C.primaryDark} !important;">2</div>
         </td>
         <td valign="top" style="padding: 4px 0 16px 0;">
-          <p style="margin: 0 0 2px 0; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 600; color: ${C.text} !important;" class="text-white">Haal je ledenpas op</p>
-          <p style="margin: 0; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.5; color: ${C.textMuted} !important;" class="text-muted">Kom langs bij Fitcity Culemborg, Houtweg 8.</p>
+          <p style="margin: 0 0 2px 0; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 600; color: ${C.text} !important;" class="text-white">Neem mee</p>
+          <p style="margin: 0; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.5; color: ${C.textMuted} !important;" class="text-muted">Inschrijfkosten van &euro;17,00 (pin of contant) en een geldig legitimatiebewijs.</p>
         </td>
       </tr>
       <tr>
@@ -277,8 +282,8 @@ function signupCustomerHtml(data: {
           <div style="width: 28px; height: 28px; border-radius: 50%; background-color: ${C.primary} !important; text-align: center; line-height: 28px; font-family: 'Oswald', 'Arial Black', Arial, sans-serif; font-weight: 700; font-size: 13px; color: ${C.primaryDark} !important;">3</div>
         </td>
         <td valign="top" style="padding: 4px 0 0 0;">
-          <p style="margin: 0 0 2px 0; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 600; color: ${C.text} !important;" class="text-white">Neem mee bij het ophalen</p>
-          <p style="margin: 0; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.5; color: ${C.textMuted} !important;" class="text-muted">Inschrijfkosten van &euro;17,00 (pin of contant) en een geldig legitimatiebewijs. Daarna kun je direct beginnen!</p>
+          <p style="margin: 0 0 2px 0; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 600; color: ${C.text} !important;" class="text-white">Haal je ledenpas op en start!</p>
+          <p style="margin: 0; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.5; color: ${C.textMuted} !important;" class="text-muted">Je ontvangt je pas aan de balie en kunt daarna direct beginnen met trainen.</p>
         </td>
       </tr>
     </table>
@@ -350,7 +355,8 @@ function contactOwnerHtml(data: {
   created_at: string;
 }): string {
   const replySubject = encodeURIComponent(`Re: ${data.onderwerp}`);
-  const mailtoHref = `mailto:${data.email}?subject=${replySubject}`;
+  const replyBody = encodeURIComponent(`\n\n---\nOp ${data.created_at} schreef ${data.naam}:\n\n${data.bericht}`);
+  const mailtoHref = `mailto:${data.email}?subject=${replySubject}&body=${replyBody}`;
 
   const content = `
     ${heading('Nieuw Contactbericht')}

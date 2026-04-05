@@ -3,25 +3,22 @@
    All service, about, contact, FAQ, legal pages
    ========================================= */
 
-/* Inner hero (40vh) */
+/* Inner hero */
 .inner-hero {
   background: var(--color-bg);
-  min-height: 40vh;
-  display: flex;
-  align-items: flex-end;
-  padding: 0 1.5rem 3rem;
+  padding: 0 1.5rem 2rem;
   position: relative;
 }
 
 @media (min-width: 768px) {
-  .inner-hero { padding: 0 2rem 3rem; }
+  .inner-hero { padding: 0 2rem 2.5rem; }
 }
 
 .inner-hero-inner {
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
-  padding-top: 72px; /* header offset */
+  padding-top: 100px; /* header offset */
 }
 
 .inner-hero h1 {
