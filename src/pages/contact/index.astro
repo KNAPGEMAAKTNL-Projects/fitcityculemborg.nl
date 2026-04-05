@@ -98,6 +98,18 @@ import { openingHours } from '../../data/hours';
   <MobileCTA />
 </Layout>
 
+<script>
+  // Pre-select onderwerp from query param (e.g. ?onderwerp=proeftraining)
+  const params = new URLSearchParams(window.location.search);
+  const onderwerp = params.get('onderwerp');
+  if (onderwerp) {
+    const select = document.getElementById('onderwerp') as HTMLSelectElement | null;
+    if (select) {
+      select.value = onderwerp;
+    }
+  }
+</script>
+
 <style>
   @import '../../styles/inner-pages.css';
 

@@ -378,7 +378,7 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
     primaryLabel="WORD NU LID"
     primaryHref="/signup/"
     secondaryLabel="PLAN PROEFTRAINING"
-    secondaryHref="/contact/"
+    secondaryHref="/contact/?onderwerp=proeftraining#contact-form"
   />
 
   <Footer />
@@ -526,12 +526,22 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
   }
 
   .hero-reviews-stars { display: flex; gap: 2px; }
-  .hero-reviews-rating { font-weight: 600; font-size: 1.1rem; color: var(--color-text); }
+  .hero-reviews-stars svg { width: 16px; height: 16px; }
+  .hero-reviews-rating { font-weight: 600; font-size: 0.95rem; color: var(--color-text); }
   .hero-reviews-sep { color: var(--color-separator); }
-  .hero-reviews-count { font-size: 0.875rem; color: var(--color-text-muted); }
+  .hero-reviews-count { font-size: 0.75rem; color: var(--color-text-muted); }
 
   .hero-reviews {
     text-decoration: none;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .hero-reviews { gap: 0.75rem; padding: 0.625rem 1.25rem; }
+    .hero-reviews-stars svg { width: 20px; height: 20px; }
+    .hero-reviews-rating { font-size: 1.1rem; }
+    .hero-reviews-count { font-size: 0.875rem; }
   }
 
   .hero-title {
