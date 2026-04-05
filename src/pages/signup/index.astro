@@ -1460,7 +1460,12 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
       const oldLen = ibanInput.value.length;
       ibanInput.value = formatIBAN(ibanInput.value);
       const newLen = ibanInput.value.length;
-      ibanInput.setSelectionRange(cursorPos + (newLen - oldLen), cursorPos + (newLen - oldLen));
+      let newCursor = cursorPos + (newLen - oldLen);
+      // Skip cursor past auto-inserted spaces
+      if (ibanInput.value[newCursor - 1] === ' ' && newLen > oldLen) {
+        newCursor = Math.min(newCursor, ibanInput.value.length);
+      }
+      ibanInput.setSelectionRange(newCursor, newCursor);
     });
 
     // ===================== EDIT DRAWER =====================

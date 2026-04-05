@@ -42,11 +42,19 @@ export function validateIBAN(iban: string): boolean {
 
 /**
  * Formats an IBAN value for display: strips non-alphanumeric,
- * converts to uppercase, inserts a space every 4 characters.
+ * converts to uppercase, groups in blocks of 4 with spaces.
+ * Keeps a trailing space after complete groups so the user sees
+ * the next group is starting (visual cue to keep typing).
  */
 export function formatIBAN(value: string): string {
   const cleaned = value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
-  return cleaned.replace(/(.{4})/g, '$1 ').trim();
+  if (cleaned.length === 0) return '';
+  const groups = cleaned.match(/.{1,4}/g) || [];
+  const formatted = groups.join(' ');
+  // Add trailing space after a complete group (not at max IBAN length)
+  return cleaned.length % 4 === 0 && cleaned.length < 34
+    ? formatted + ' '
+    : formatted;
 }
 
 /**
