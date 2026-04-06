@@ -176,6 +176,7 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
 
       <!-- Duration toggle -->
       <div class="pricing-toggle" role="tablist" aria-label="Abonnementsduur">
+        <div class="pricing-slider-bg"></div>
         {['jaar', 'halfjaar', 'flex'].map((plan, i) => (
           <button
             role="tab"
@@ -418,7 +419,9 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
 
   <!-- Homepage interactive scripts — re-run after view transitions -->
   <script>
+    let _pricingResizeCleanup: (() => void) | null = null;
     function initHomepage() {
+      if (_pricingResizeCleanup) { _pricingResizeCleanup(); _pricingResizeCleanup = null; }
       // Scroll reveal fallback for Firefox
       if (!CSS.supports('animation-timeline', 'view()')) {
         const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -454,9 +457,20 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
         });
       }
 
-      // Pricing toggle
+      // Pricing toggle with sliding pill
       const toggleBtns = document.querySelectorAll('.pricing-toggle-btn');
       const grids = document.querySelectorAll('[data-pricing-group]');
+
+      function updatePricingSlider() {
+        const slider = document.querySelector('.pricing-slider-bg') as HTMLElement;
+        const activeBtn = document.querySelector('.pricing-toggle-btn.active') as HTMLElement;
+        if (slider && activeBtn) {
+          slider.style.width = `${activeBtn.offsetWidth}px`;
+          slider.style.transform = `translateX(${activeBtn.offsetLeft}px)`;
+        }
+      }
+
+      requestAnimationFrame(updatePricingSlider);
 
       toggleBtns.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -467,11 +481,15 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
           });
           btn.classList.add('active');
           btn.setAttribute('aria-selected', 'true');
+          updatePricingSlider();
           grids.forEach(g => {
             (g as HTMLElement).style.display = (g as HTMLElement).dataset.pricingGroup === plan ? '' : 'none';
           });
         });
       });
+
+      window.addEventListener('resize', updatePricingSlider);
+      _pricingResizeCleanup = () => window.removeEventListener('resize', updatePricingSlider);
     }
 
     initHomepage();
@@ -917,6 +935,20 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
     border-radius: 9999px;
     padding: 4px;
     margin-bottom: 2.5rem;
+    position: relative;
+  }
+
+  .pricing-slider-bg {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: 0;
+    height: calc(100% - 8px);
+    background: var(--color-primary);
+    border-radius: 9999px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 0;
+    pointer-events: none;
   }
 
   .pricing-toggle-btn {
@@ -929,7 +961,7 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
     background: transparent;
     color: var(--color-text-muted);
     min-height: 44px;
-    transition: background 0.2s, color 0.2s;
+    transition: color 0.3s;
     position: relative;
     z-index: 1;
     cursor: pointer;
@@ -938,7 +970,6 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
   }
 
   .pricing-toggle-btn.active {
-    background: var(--color-primary);
     color: var(--color-bg);
   }
 

@@ -1250,6 +1250,7 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
         if (n === step) badge.classList.add('active');
         else if (n < step) badge.classList.add('completed');
       });
+      if (step === 1) requestAnimationFrame(updateSlider);
       if (step >= 2) updateOrderSummary();
       if (step === 3) updateFinalReview();
       window.scrollTo({ top: 0, behavior: 'smooth' });
