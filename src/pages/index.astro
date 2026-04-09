@@ -389,7 +389,13 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
   <script>
     function initVideos() {
       const heroVideo = document.querySelector('.hero-video') as HTMLVideoElement | null;
-      if (heroVideo) heroVideo.play().catch(() => {});
+      if (heroVideo) {
+        // After view transition, the video buffer may be empty — reload then play
+        if (heroVideo.readyState < 2) {
+          heroVideo.load();
+        }
+        heroVideo.play().catch(() => {});
+      }
 
       const vibeVideo = document.querySelector('.vibe-video') as HTMLVideoElement | null;
       if (!vibeVideo) return;
