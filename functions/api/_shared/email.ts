@@ -11,7 +11,7 @@ const FROM_EMAIL = 'Rachid van Fitcity Culemborg <info@fitcityculemborg.nl>';
 const OWNER_EMAIL = 'yannick@knapgemaakt.nl';
 const ADMIN_URL = 'https://fitcityculemborg.nl/admin/';
 const SITE_URL = 'https://fitcityculemborg.nl';
-const LOGO_URL = 'https://fitcityculemborg.nl/images/fitcity-logo.webp';
+const LOGO_URL = 'https://fitcityculemborg.nl/images/fitcity-logo-email.png';
 
 // ── Brand colors (explicit hex, no CSS vars) ────────────────────────────────
 
