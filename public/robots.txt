@@ -1,23 +1,27 @@
-# Allow standard and AI SEARCH crawlers
-User-agent: *
-Allow: /
+# robots.txt — Updated April 2025
+# Strategy: Allow search + AI search bots, block training crawlers
 
+# === SEARCH ENGINES (ALLOW) ===
 User-agent: Googlebot
 Allow: /
 
 User-agent: Bingbot
 Allow: /
 
+User-agent: Yandex
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# === AI SEARCH CRAWLERS (ALLOW) ===
 User-agent: OAI-SearchBot
 Allow: /
 
 User-agent: ChatGPT-User
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
-User-agent: Perplexity-User
 Allow: /
 
 User-agent: Claude-SearchBot
@@ -26,13 +30,13 @@ Allow: /
 User-agent: Claude-User
 Allow: /
 
-User-agent: Applebot
+User-agent: PerplexityBot
 Allow: /
 
-User-agent: DuckDuckBot
+User-agent: Perplexity-User
 Allow: /
 
-# Block AI TRAINING crawlers
+# === AI TRAINING CRAWLERS (BLOCK) ===
 User-agent: GPTBot
 Disallow: /
 
@@ -51,6 +55,9 @@ Disallow: /
 User-agent: Applebot-Extended
 Disallow: /
 
+User-agent: Apple-Extended
+Disallow: /
+
 User-agent: CCBot
 Disallow: /
 
@@ -64,6 +71,9 @@ User-agent: Meta-ExternalAgent
 Disallow: /
 
 User-agent: Meta-ExternalFetcher
+Disallow: /
+
+User-agent: FacebookBot
 Disallow: /
 
 User-agent: Amazonbot
@@ -81,6 +91,18 @@ Disallow: /
 User-agent: AI2Bot-Dolma
 Disallow: /
 
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: ChatGLM-Spider
+Disallow: /
+
+User-agent: DeepSeekBot
+Disallow: /
+
+User-agent: Omgilibot
+Disallow: /
+
 User-agent: Timpibot
 Disallow: /
 
@@ -89,5 +111,11 @@ Disallow: /
 
 User-agent: ImagesiftBot
 Disallow: /
+
+# === DEFAULT ===
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
 
 Sitemap: https://fitcityculemborg.nl/sitemap-index.xml

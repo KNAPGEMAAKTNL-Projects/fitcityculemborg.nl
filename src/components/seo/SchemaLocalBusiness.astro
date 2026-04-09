@@ -1,5 +1,13 @@
 ---
+/**
+ * HealthClub schema in @graph format with attribute-rich data.
+ * Research shows attribute-rich schema = 61.7% AI citation rate
+ * vs generic/minimal = 41.6% (worse than no schema at 59.8%).
+ * Every field matters.
+ */
 import { openingHours } from '../../data/hours';
+
+const siteUrl = 'https://fitcityculemborg.nl';
 
 const hoursSpec = openingHours.flatMap(({ days, times }) => {
   const [open, close] = times.split(' - ').map(t => t.trim());
@@ -19,71 +27,115 @@ const hoursSpec = openingHours.flatMap(({ days, times }) => {
 
 const schema = {
   '@context': 'https://schema.org',
-  '@type': 'HealthClub',
-  '@id': 'https://fitcityculemborg.nl/#organization',
-  name: 'Fitcity Culemborg',
-  url: 'https://fitcityculemborg.nl/',
-  telephone: '+31646872274',
-  email: 'info@fitcityculemborg.nl',
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: 'Houtweg 8',
-    addressLocality: 'Culemborg',
-    postalCode: '4104 AB',
-    addressCountry: 'NL',
-  },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: 51.9559,
-    longitude: 5.2277,
-  },
-  openingHoursSpecification: hoursSpec,
-  priceRange: '$$',
-  currenciesAccepted: 'EUR',
-  paymentAccepted: 'Cash, Debit Card',
-  image: 'https://fitcityculemborg.nl/images/fitcity-logo-email.png',
-  logo: 'https://fitcityculemborg.nl/images/fitcity-logo-email.png',
-  identifier: [
-    {
-      '@type': 'PropertyValue',
-      name: 'KvK-nummer',
-      value: '72342293',
+  '@graph': [{
+    '@type': 'HealthClub',
+    '@id': `${siteUrl}/#healthclub`,
+    name: 'Fitcity Culemborg',
+    description: 'De meest betaalbare sportschool van Culemborg. Fitness, ladies only zone en bokszaktraining. 7 dagen per week open.',
+    url: `${siteUrl}/`,
+    telephone: '+31646872274',
+    email: 'info@fitcityculemborg.nl',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Houtweg 8',
+      addressLocality: 'Culemborg',
+      addressRegion: 'Gelderland',
+      postalCode: '4104 AB',
+      addressCountry: 'NL',
     },
-  ],
-  sameAs: [
-    'https://www.facebook.com/p/Fitcity-Culemborg-100063646716139/',
-    'https://www.instagram.com/fitcityculemborg',
-  ],
-  knowsAbout: [
-    'Fitness',
-    'Bokszaktraining',
-    'Ladies Only Fitness',
-  ],
-  hasOfferCatalog: {
-    '@type': 'OfferCatalog',
-    name: 'Abonnementen',
-    itemListElement: [
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 51.9559,
+      longitude: 5.2277,
+    },
+    openingHoursSpecification: hoursSpec,
+    priceRange: '€€',
+    currenciesAccepted: 'EUR',
+    paymentAccepted: 'iDEAL, PIN, Contant',
+    image: `${siteUrl}/images/fitcity-logo-email.png`,
+    logo: `${siteUrl}/images/fitcity-logo-email.png`,
+    identifier: [
       {
-        '@type': 'Offer',
-        itemOffered: { '@type': 'Service', name: 'Fitness' },
-        url: 'https://fitcityculemborg.nl/fitness/',
+        '@type': 'PropertyValue',
+        propertyID: 'KVK',
+        value: '72342293',
       },
-      {
-        '@type': 'Offer',
-        itemOffered: { '@type': 'Service', name: 'Ladies Only Fitness' },
-        url: 'https://fitcityculemborg.nl/ladies-only/',
-      },
-      {
-        '@type': 'Offer',
-        itemOffered: { '@type': 'Service', name: 'Bokszaktraining' },
-        url: 'https://fitcityculemborg.nl/kickboxing/',
-      },
+      // TODO: Add BTW-nummer — ask client for NL...B01 number
     ],
-  },
-  areaServed: {
-    '@type': 'City',
-    name: 'Culemborg',
-  },
+    sameAs: [
+      'https://www.facebook.com/p/Fitcity-Culemborg-100063646716139/',
+      'https://www.instagram.com/fitcityculemborg',
+    ],
+    parentOrganization: { '@id': `${siteUrl}/#organization` },
+    amenityFeature: [
+      { '@type': 'LocationFeatureSpecification', name: 'Ladies Only zone', value: true },
+      { '@type': 'LocationFeatureSpecification', name: 'Bokszaktraining', value: true },
+      { '@type': 'LocationFeatureSpecification', name: 'Professionele apparatuur', value: true },
+      { '@type': 'LocationFeatureSpecification', name: 'Begeleiding van trainers', value: true },
+      { '@type': 'LocationFeatureSpecification', name: 'Kleedkamers', value: true },
+    ],
+    knowsAbout: [
+      'Fitness',
+      'Bokszaktraining',
+      'Ladies Only Fitness',
+      'Krachttraining',
+      'Cardiotraining',
+    ],
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Abonnementen',
+      itemListElement: [
+        {
+          '@type': 'Offer',
+          itemOffered: { '@type': 'Service', name: 'Smart Deal (Fitness)' },
+          url: `${siteUrl}/fitness/`,
+          priceSpecification: {
+            '@type': 'UnitPriceSpecification',
+            price: '24.50',
+            priceCurrency: 'EUR',
+            valueAddedTaxIncluded: true,
+            referenceQuantity: { '@type': 'QuantitativeValue', value: '1', unitCode: 'MON' },
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: { '@type': 'Service', name: 'Ladies Only Deal' },
+          url: `${siteUrl}/ladies-only/`,
+          priceSpecification: {
+            '@type': 'UnitPriceSpecification',
+            price: '20.50',
+            priceCurrency: 'EUR',
+            valueAddedTaxIncluded: true,
+            referenceQuantity: { '@type': 'QuantitativeValue', value: '1', unitCode: 'MON' },
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: { '@type': 'Service', name: 'Ultimate Fit Deal (Fitness + Bokszaktraining)' },
+          url: `${siteUrl}/kickboxing/`,
+          priceSpecification: {
+            '@type': 'UnitPriceSpecification',
+            price: '37.50',
+            priceCurrency: 'EUR',
+            valueAddedTaxIncluded: true,
+            referenceQuantity: { '@type': 'QuantitativeValue', value: '1', unitCode: 'MON' },
+          },
+        },
+      ],
+    },
+    potentialAction: {
+      '@type': 'ReserveAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${siteUrl}/contact/`,
+      },
+      name: 'Boek een gratis proeftraining',
+    },
+    areaServed: {
+      '@type': 'City',
+      name: 'Culemborg',
+    },
+  }],
 };
 ---
 <script type="application/ld+json" set:html={JSON.stringify(schema)} />

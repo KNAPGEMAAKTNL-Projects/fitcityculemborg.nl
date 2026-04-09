@@ -1,5 +1,6 @@
 ---
 import { ClientRouter } from 'astro:transitions';
+import SiteSchema from '../components/seo/SiteSchema.astro';
 import SchemaLocalBusiness from '../components/seo/SchemaLocalBusiness.astro';
 import '../styles/global.css';
 
@@ -51,7 +52,9 @@ const ogImageURL = new URL(ogImage || '/images/fitcity-logo-email.png', Astro.si
     <!-- Cloudflare Turnstile -->
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 
-    <!-- Schema: LocalBusiness (every page) -->
+    <!-- Schema: WebSite + Organization (every page) -->
+    <SiteSchema />
+    <!-- Schema: HealthClub with rich attributes (every page) -->
     <SchemaLocalBusiness />
 
     <!-- Page transitions -->
