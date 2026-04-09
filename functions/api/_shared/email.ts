@@ -7,11 +7,11 @@
 // ── Constants ────────────────────────────────────────────────────────────────
 
 const RESEND_API = 'https://api.resend.com/emails';
-const FROM_EMAIL = 'Rachid van Fitcity Culemborg <info@knapgemaakt.nl>';
+const FROM_EMAIL = 'Rachid van Fitcity Culemborg <info@fitcityculemborg.nl>';
 const OWNER_EMAIL = 'yannick@knapgemaakt.nl';
-const ADMIN_URL = 'https://fitcityculemborg.knapgemaakt.nl/admin/';
-const SITE_URL = 'https://fitcityculemborg.knapgemaakt.nl';
-const LOGO_URL = 'https://fitcityculemborg.knapgemaakt.nl/images/fitcity-logo.webp';
+const ADMIN_URL = 'https://fitcityculemborg.nl/admin/';
+const SITE_URL = 'https://fitcityculemborg.nl';
+const LOGO_URL = 'https://fitcityculemborg.nl/images/fitcity-logo.webp';
 
 // ── Brand colors (explicit hex, no CSS vars) ────────────────────────────────
 
