@@ -157,8 +157,8 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
         </div>
 
         <div class="vibe-image">
-          <video class="vibe-video" muted loop playsinline preload="metadata" poster="/images/fitness.webp" aria-hidden="true">
-            <source data-src="/images/fitcity-sfeer.mp4" type="video/mp4" />
+          <video class="vibe-video" autoplay muted loop playsinline preload="auto" poster="/images/fitness.webp" aria-hidden="true">
+            <source src="/images/fitcity-sfeer.mp4" type="video/mp4" />
           </video>
         </div>
       </div>
@@ -400,20 +400,15 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
       const vibeVideo = document.querySelector('.vibe-video') as HTMLVideoElement | null;
       if (!vibeVideo) return;
 
+      // After view transition, buffer may be empty — reload and play
+      if (vibeVideo.readyState < 2) vibeVideo.load();
+      vibeVideo.play().catch(() => {});
+
+      // Pause when not visible to save CPU, resume when scrolled back
       const observer = new IntersectionObserver((entries) => {
         for (const entry of entries) {
           const video = entry.target as HTMLVideoElement;
           if (entry.isIntersecting) {
-            // Load source if not yet loaded (initial visit or after view transition)
-            const source = video.querySelector('source[data-src]');
-            if (source) {
-              source.setAttribute('src', source.getAttribute('data-src')!);
-              source.removeAttribute('data-src');
-              video.load();
-            } else if (video.readyState < 2) {
-              // Source already set but buffer empty (view transition re-created DOM)
-              video.load();
-            }
             video.play().catch(() => {});
           } else {
             video.pause();
