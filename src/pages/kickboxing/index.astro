@@ -2,15 +2,28 @@
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import SchemaBreadcrumb from '../../components/seo/SchemaBreadcrumb.astro';
+import SchemaFAQ from '../../components/seo/SchemaFAQ.astro';
+import SchemaService from '../../components/seo/SchemaService.astro';
 import SectionHeading from '../../components/SectionHeading.astro';
 import CtaSection from '../../components/CtaSection.astro';
 import Footer from '../../components/Footer.astro';
 import MobileCTA from '../../components/MobileCTA.astro';
+
+const kickboxingFaqs = [
+  { question: 'Wat heb ik nodig voor mijn eerste bokszaktraining?', answer: 'Sportkleding, een handdoek en water. Bokshandschoenen zijn handig maar niet verplicht bij je eerste keren. Na een paar trainingen weet je vanzelf of je eigen handschoenen wilt kopen.' },
+  { question: 'Kan ik bokszaktraining combineren met fitness?', answer: 'Ja, de Ultimate Fit Deal (€37,50/maand) geeft je onbeperkt fitness en bokszaktraining. Je kunt ook alleen bokszaktraining doen: 1x per week voor €19,95 of onbeperkt voor €26,95, allebei als jaarabonnement.' },
+  { question: 'Komen er ook kickboxlessen?', answer: 'We zijn op zoek naar een kickboxtrainer. Zodra we die gevonden hebben, starten we met kickboxlessen. In de tussentijd kun je terecht bij de bokszaktraining op dinsdag en donderdag om 19:00.' },
+  { question: 'Moet ik van tevoren reserveren?', answer: 'Nee, reserveren is niet nodig. Kom gewoon op tijd en je kunt meedoen. De bokszaktraining is op vaste tijden: dinsdag en donderdag om 19:00. Mocht je de eerste keer willen meekijken, dat kan ook.' },
+];
 ---
 <Layout
   title="Bokszaktraining Culemborg · Training met begeleiding · Fitcity Culemborg"
   description="Bokszaktraining bij Fitcity Culemborg. Train aan de bokszakken op dinsdag en donderdag om 19:00. Vanaf €19,95/maand of incl. fitness €37,50. Je eerste proeftraining is gratis."
 >
+  <SchemaBreadcrumb items={[{ label: 'Bokszaktraining' }]} />
+  <SchemaFAQ faqs={kickboxingFaqs} />
+  <SchemaService name="Bokszaktraining" description="Bokszaktraining met begeleiding van een trainer. Leer technieken, werk aan combinaties en bouw conditie op. Dinsdag en donderdag om 19:00." url="/kickboxing/" priceRange="Vanaf €19,95/maand" />
   <Header />
 
   <section class="inner-hero">

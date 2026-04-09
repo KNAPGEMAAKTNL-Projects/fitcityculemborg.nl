@@ -2,15 +2,28 @@
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import SchemaBreadcrumb from '../../components/seo/SchemaBreadcrumb.astro';
+import SchemaFAQ from '../../components/seo/SchemaFAQ.astro';
+import SchemaService from '../../components/seo/SchemaService.astro';
 import SectionHeading from '../../components/SectionHeading.astro';
 import CtaSection from '../../components/CtaSection.astro';
 import Footer from '../../components/Footer.astro';
 import MobileCTA from '../../components/MobileCTA.astro';
+
+const ladiesFaqs = [
+  { question: 'Is de ladies only zone echt alleen voor vrouwen?', answer: 'Ja, de damesvloer beneden is uitsluitend toegankelijk voor vrouwen. De kleedkamers zijn ook gescheiden. Je traint dus in een ruimte die helemaal voor vrouwen is ingericht.' },
+  { question: 'Mag ik met een Ladies Only abonnement ook boven trainen?', answer: 'Ja. Je Ladies Only abonnement geeft je toegang tot de damesvloer en de volledige gym. Je kunt dus gewoon wisselen wanneer je wilt. Alle apparatuur boven is ook voor jou beschikbaar.' },
+  { question: 'Wat voor apparatuur staat er op de damesvloer?', answer: 'Dezelfde kwaliteit als op de hoofdzaal: cardio- en krachtapparatuur, vrije gewichten en matten. Je kunt hier een complete training doen zonder iets te missen.' },
+  { question: 'Kan ik een proeftraining doen op de damesvloer?', answer: 'Ja, je eerste proefles is altijd gratis. Neem even contact op om een moment af te spreken. Je kunt dan de damesvloer bekijken, de sfeer proeven en de apparatuur uitproberen.' },
+];
 ---
 <Layout
   title="Ladies Only Sportschool Culemborg · Vanaf €20,50 · Fitcity Culemborg"
   description="Ladies only fitness bij Fitcity Culemborg. Eigen trainingsruimte alleen voor vrouwen. Vanaf €20,50/maand incl. volledige gym. Je eerste proefles is altijd gratis."
 >
+  <SchemaBreadcrumb items={[{ label: 'Ladies Only' }]} />
+  <SchemaFAQ faqs={ladiesFaqs} />
+  <SchemaService name="Ladies Only Fitness" description="Eigen trainingsruimte alleen voor vrouwen met volledige apparatuur. Inclusief toegang tot de gehele gym." url="/ladies-only/" priceRange="Vanaf €20,50/maand" />
   <Header />
 
   <section class="inner-hero">

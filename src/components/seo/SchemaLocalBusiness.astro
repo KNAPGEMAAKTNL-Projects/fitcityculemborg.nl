@@ -1,0 +1,89 @@
+---
+import { openingHours } from '../../data/hours';
+
+const hoursSpec = openingHours.flatMap(({ days, times }) => {
+  const [open, close] = times.split(' - ').map(t => t.trim());
+  const dayMap: Record<string, string[]> = {
+    'Ma - Vr': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    'Za': ['Saturday'],
+    'Zo': ['Sunday'],
+  };
+  const matched = dayMap[days] || [];
+  return matched.map(day => ({
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: day,
+    opens: open,
+    closes: close,
+  }));
+});
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'HealthClub',
+  '@id': 'https://fitcityculemborg.nl/#organization',
+  name: 'Fitcity Culemborg',
+  url: 'https://fitcityculemborg.nl/',
+  telephone: '+31646872274',
+  email: 'info@fitcityculemborg.nl',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Houtweg 8',
+    addressLocality: 'Culemborg',
+    postalCode: '4104 AB',
+    addressCountry: 'NL',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 51.9559,
+    longitude: 5.2277,
+  },
+  openingHoursSpecification: hoursSpec,
+  priceRange: '$$',
+  currenciesAccepted: 'EUR',
+  paymentAccepted: 'Cash, Debit Card',
+  image: 'https://fitcityculemborg.nl/images/fitcity-logo-email.png',
+  logo: 'https://fitcityculemborg.nl/images/fitcity-logo-email.png',
+  identifier: [
+    {
+      '@type': 'PropertyValue',
+      name: 'KvK-nummer',
+      value: '72342293',
+    },
+  ],
+  sameAs: [
+    'https://www.facebook.com/p/Fitcity-Culemborg-100063646716139/',
+    'https://www.instagram.com/fitcityculemborg',
+  ],
+  knowsAbout: [
+    'Fitness',
+    'Bokszaktraining',
+    'Ladies Only Fitness',
+  ],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Abonnementen',
+    itemListElement: [
+      {
+        '@type': 'Offer',
+        itemOffered: { '@type': 'Service', name: 'Fitness' },
+        url: 'https://fitcityculemborg.nl/fitness/',
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: { '@type': 'Service', name: 'Ladies Only Fitness' },
+        url: 'https://fitcityculemborg.nl/ladies-only/',
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: { '@type': 'Service', name: 'Bokszaktraining' },
+        url: 'https://fitcityculemborg.nl/kickboxing/',
+      },
+    ],
+  },
+  areaServed: {
+    '@type': 'City',
+    name: 'Culemborg',
+  },
+};
+---
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

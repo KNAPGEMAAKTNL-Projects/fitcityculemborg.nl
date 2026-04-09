@@ -2,15 +2,28 @@
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import SchemaBreadcrumb from '../../components/seo/SchemaBreadcrumb.astro';
+import SchemaFAQ from '../../components/seo/SchemaFAQ.astro';
+import SchemaService from '../../components/seo/SchemaService.astro';
 import SectionHeading from '../../components/SectionHeading.astro';
 import CtaSection from '../../components/CtaSection.astro';
 import Footer from '../../components/Footer.astro';
 import MobileCTA from '../../components/MobileCTA.astro';
+
+const fitnessFaqs = [
+  { question: 'Wat kost fitnessen bij Fitcity Culemborg?', answer: 'De Smart Deal kost €24,50 per maand bij een jaarabonnement. Liever meer flexibiliteit? Dan is de Flex €37,00 per maand, maandelijks opzegbaar. Een dagpas kost €7,00. Bij alle abonnementen betaal je eenmalig €17,00 inschrijfkosten.' },
+  { question: 'Krijg ik begeleiding bij het trainen?', answer: 'Jazeker! De trainers helpen je met een trainingsschema, corrigeren je techniek en denken mee over je doelen.' },
+  { question: 'Welke apparatuur hebben jullie?', answer: 'De fitnessvloer heeft cardio- en krachtapparatuur en vrije gewichten. Alles wordt regelmatig onderhouden en waar nodig vernieuwd.' },
+  { question: 'Kan ik ook bokszaktraining doen?', answer: 'Ja, met de Ultimate Fit Deal (€37,50/maand) heb je onbeperkt fitness en bokszaktraining. Je kunt ook alleen bokszaktraining doen, los van fitness, vanaf €19,95 per maand.' },
+];
 ---
 <Layout
   title="Fitness Culemborg · Onbeperkt vanaf €24,50 · Fitcity Culemborg"
   description="Fitnessen bij Fitcity Culemborg. Onbeperkt trainen vanaf €24,50/maand met professionele apparatuur. Je eerste proefles is altijd gratis."
 >
+  <SchemaBreadcrumb items={[{ label: 'Fitness' }]} />
+  <SchemaFAQ faqs={fitnessFaqs} />
+  <SchemaService name="Fitness" description="Onbeperkt fitnessen met professionele cardio- en krachtapparatuur. Begeleiding van trainers inbegrepen." url="/fitness/" priceRange="Vanaf €24,50/maand" />
   <Header />
 
   <!-- Hero (40vh) -->

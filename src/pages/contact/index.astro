@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import SchemaBreadcrumb from '../../components/seo/SchemaBreadcrumb.astro';
 import ContactForm from '../../components/ContactForm.astro';
 import Footer from '../../components/Footer.astro';
 import MobileCTA from '../../components/MobileCTA.astro';
@@ -11,6 +12,7 @@ import { openingHours } from '../../data/hours';
   title="Contact · Fitcity Culemborg · Openingstijden & Route"
   description="Neem contact op met Fitcity Culemborg. Bel ons, stuur een WhatsApp of vul het formulier in. Openingstijden, adres en route. Binnen 24 uur reactie."
 >
+  <SchemaBreadcrumb items={[{ label: 'Contact' }]} />
   <Header />
 
   <section class="inner-hero">
@@ -26,7 +28,7 @@ import { openingHours } from '../../data/hours';
     </div>
   </section>
 
-  <section class="content-section content-section--alt scroll-fade-up" data-scroll-reveal>
+  <section id="contact-form" class="content-section content-section--alt scroll-fade-up" data-scroll-reveal>
     <div class="content-wide">
       <div class="contact-grid">
         <!-- Form -->

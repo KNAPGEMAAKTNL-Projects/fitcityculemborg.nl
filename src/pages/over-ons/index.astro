@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import SchemaBreadcrumb from '../../components/seo/SchemaBreadcrumb.astro';
 import SectionHeading from '../../components/SectionHeading.astro';
 import CtaSection from '../../components/CtaSection.astro';
 import Footer from '../../components/Footer.astro';
@@ -11,6 +12,7 @@ import MobileCTA from '../../components/MobileCTA.astro';
   title="Over Fitcity Culemborg · De meest betaalbare sportschool"
   description="Fitcity Culemborg: wie we zijn en waarom we doen wat we doen. Lokale sportschool met goede apparatuur, scherpe prijzen en trainers die je naam kennen."
 >
+  <SchemaBreadcrumb items={[{ label: 'Over ons' }]} />
   <Header />
 
   <section class="inner-hero">
