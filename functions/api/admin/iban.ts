@@ -1,5 +1,6 @@
 import type { Env } from '../_shared/types';
 import { decrypt } from '../_shared/encryption';
+import { requireAccessAuth, unauthorizedResponse } from './_auth';
 
 const CORS_HEADERS = {
   'Content-Type': 'application/json',
@@ -15,11 +16,15 @@ function jsonResponse(body: Record<string, unknown>, status = 200): Response {
 /**
  * POST /api/admin/iban/
  * Decrypts a single IBAN for viewing in the admin dashboard.
- * Protected by Cloudflare Zero Trust — no additional auth needed.
+ * Protected by Cloudflare Zero Trust + server-side header verification.
  */
 export const onRequest: PagesFunction<Env> = async (context) => {
   if (context.request.method !== 'POST') {
     return jsonResponse({ error: 'Method not allowed' }, 405);
+  }
+
+  if (!requireAccessAuth(context.request)) {
+    return unauthorizedResponse();
   }
 
   try {

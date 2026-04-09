@@ -37,10 +37,10 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
     // Sanitize all string inputs
     const data = {
-      naam: sanitize(body.naam ?? ''),
-      email: sanitize(body.email ?? '').toLowerCase(),
-      onderwerp: sanitize(body.onderwerp ?? ''),
-      bericht: sanitize(body.bericht ?? ''),
+      naam: sanitize(body.naam ?? '', 100),
+      email: sanitize(body.email ?? '', 255).toLowerCase(),
+      onderwerp: sanitize(body.onderwerp ?? '', 100),
+      bericht: sanitize(body.bericht ?? '', 5000),
       privacy_consent: body.privacy_consent,
     };
 

@@ -20,7 +20,7 @@ import Footer from '../../components/Footer.astro';
 
   <section class="content-section">
     <div class="legal-content">
-      <p><em>Laatst bijgewerkt: 4 april 2026</em></p>
+      <p><em>Laatst bijgewerkt: 9 april 2026</em></p>
 
       <h2>Wie zijn wij</h2>
       <p>Fitcity Culemborg is een sportschool gevestigd in Culemborg.</p>
@@ -53,7 +53,8 @@ import Footer from '../../components/Footer.astro';
         <li>Je geboortedatum</li>
         <li>Je betaalgegevens (IBAN voor automatische incasso)</li>
       </ul>
-      <p>Wij gebruiken deze gegevens voor het uitvoeren van je lidmaatschapsovereenkomst. Betaalgegevens worden veilig verwerkt via onze incassoprovider.</p>
+      <p>Wij gebruiken deze gegevens voor het uitvoeren van je lidmaatschapsovereenkomst. Je IBAN wordt versleuteld opgeslagen met AES-256-GCM-encryptie en is alleen leesbaar door geautoriseerde medewerkers.</p>
+      <p>Bij het aanmelden geef je drie afzonderlijke toestemmingen: voor de verwerking van persoonsgegevens (privacyverklaring), voor de SEPA-incassomachtiging en voor de algemene voorwaarden. Van elke toestemming wordt het tijdstip vastgelegd.</p>
       <p><strong>Grondslag:</strong> uitvoering van een overeenkomst (artikel 6 lid 1 sub b AVG).</p>
       <p><strong>Bewaartermijn:</strong> gedurende je lidmaatschap plus 7 jaar daarna (wettelijke bewaarplicht voor financiele administratie).</p>
 
@@ -67,8 +68,12 @@ import Footer from '../../components/Footer.astro';
       </ul>
       <p>Wij gebruiken geen Google Analytics, geen tracking pixels en geen social media cookies.</p>
 
-      <h3>Spambeveiliging</h3>
-      <p>Ons contactformulier wordt beschermd door <strong>Cloudflare Turnstile</strong>. Dit is een onzichtbare beveiligingscontrole die voorkomt dat bots misbruik maken van het formulier. Turnstile verwerkt minimale technische gegevens en plaatst geen tracking cookies.</p>
+      <h3>Spambeveiliging en misbruikpreventie</h3>
+      <p>Onze formulieren worden beschermd door <strong>Cloudflare Turnstile</strong>. Dit is een onzichtbare beveiligingscontrole die voorkomt dat bots misbruik maken van het formulier. Turnstile verwerkt minimale technische gegevens en plaatst geen tracking cookies.</p>
+      <p>Daarnaast slaan wij een <strong>gehashte versie</strong> van je IP-adres op bij het versturen van formulieren. Dit wordt uitsluitend gebruikt voor het beperken van misbruik (rate limiting). Het originele IP-adres wordt niet opgeslagen en is niet uit de hash te herleiden.</p>
+
+      <h3>Automatische e-mails</h3>
+      <p>Na het versturen van een contactformulier of aanmelding ontvang je automatisch een bevestigingsmail. Daarnaast sturen wij een notificatie naar de eigenaar zodat je bericht of aanmelding wordt verwerkt. Deze e-mails worden verzonden via Resend (zie "Delen met derden").</p>
 
       <h2>Cookies</h2>
       <p>Onze website plaatst <strong>geen cookies</strong>. We gebruiken geen cookiebanner omdat er niets is om toestemming voor te vragen. Je kunt onze website bezoeken zonder dat er iets op je apparaat wordt opgeslagen.</p>
@@ -76,11 +81,10 @@ import Footer from '../../components/Footer.astro';
       <h2>Delen met derden</h2>
       <p>Wij verkopen je gegevens nooit aan derden. Wij delen je gegevens alleen met:</p>
       <ul>
-        <li><strong>Cloudflare:</strong> voor hosting van de website en spambeveiliging (verwerker, Amerikaans bedrijf met EU-opslag)</li>
-        <li><strong>Incassoprovider:</strong> Mollie voor verwerking van lidmaatschapsbetalingen (verwerker)</li>
-        <li><strong>Resend:</strong> voor het versturen van bevestigingsmails bij aanmelding en contactformulier (verwerker, Amerikaans bedrijf met EU-verwerking)</li>
+        <li><strong>Cloudflare:</strong> voor hosting van de website, database-opslag en spambeveiliging. Cloudflare is AVG-conform via het EU Cloud Code of Conduct, ISO 27701-certificering en deelname aan het EU-US Data Privacy Framework. Er is een verwerkersovereenkomst (DPA) afgesloten.</li>
+        <li><strong>Resend:</strong> voor het versturen van bevestigingsmails bij aanmelding en contactformulier. Resend is SOC 2 Type II-gecertificeerd en AVG-conform, met Europese verwerkingsinfrastructuur en AES-256-versleuteling.</li>
       </ul>
-      <p>Met alle partijen hebben wij verwerkersovereenkomsten afgesloten.</p>
+      <p>Betaalgegevens (IBAN) worden niet gedeeld met externe betaaldiensten. Ze worden versleuteld opgeslagen in onze eigen database op Cloudflare-infrastructuur.</p>
 
       <h2>Je rechten</h2>
       <p>Je hebt het recht om:</p>

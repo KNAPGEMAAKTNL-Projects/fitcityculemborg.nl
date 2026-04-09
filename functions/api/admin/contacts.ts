@@ -1,4 +1,5 @@
 import type { Env } from '../_shared/types';
+import { requireAccessAuth, unauthorizedResponse } from './_auth';
 
 const CORS_HEADERS = {
   'Content-Type': 'application/json',
@@ -147,6 +148,10 @@ async function handleDelete(context: EventContext<Env, string, unknown>): Promis
 }
 
 export const onRequest: PagesFunction<Env> = async (context) => {
+  if (!requireAccessAuth(context.request)) {
+    return unauthorizedResponse();
+  }
+
   if (context.request.method === 'GET') {
     return handleGet(context);
   }

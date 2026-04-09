@@ -93,8 +93,8 @@ export function validatePhone(phone: string): boolean {
   return digits.length >= 10 && digits.length <= 12;
 }
 
-export function sanitize(str: string): string {
-  return str.trim().replace(/<[^>]*>/g, '');
+export function sanitize(str: string, maxLength = 1000): string {
+  return str.trim().replace(/<[^>]*>/g, '').slice(0, maxLength);
 }
 
 export async function verifyTurnstile(token: string, secret: string, ip?: string): Promise<boolean> {
