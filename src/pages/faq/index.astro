@@ -2,15 +2,33 @@
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import SchemaBreadcrumb from '../../components/seo/SchemaBreadcrumb.astro';
+import SchemaFAQ from '../../components/seo/SchemaFAQ.astro';
 import SectionHeading from '../../components/SectionHeading.astro';
 import CtaSection from '../../components/CtaSection.astro';
 import Footer from '../../components/Footer.astro';
 import MobileCTA from '../../components/MobileCTA.astro';
+
+const faqData = [
+  { question: 'Wat kost een abonnement bij Fitcity Culemborg?', answer: 'Onbeperkt fitnessen kan vanaf €24,50 per maand met de Smart Deal (jaarabonnement). De Ladies Only Deal start bij €20,50 per maand. Wil je ook bokszaktraining? De Ultimate Fit Deal is €37,50 per maand. Een dagpas kost €7,00 en een proeftraining is gratis. Eenmalig €17,00 inschrijfkosten bij alle abonnementen.' },
+  { question: 'Moet ik inschrijfgeld betalen?', answer: 'Ja, er zijn eenmalig €17,00 inschrijfkosten. Die gelden voor alle abonnementen. Het inschrijfgeld betaal je bij je eerste bezoek. Daarna betaal je alleen je maandelijkse abonnementsprijs via automatische incasso.' },
+  { question: 'Kan ik mijn abonnement opzeggen?', answer: 'Ja. Bij Flex abonnementen (maandelijks) kun je opzeggen met 1 kalendermaand opzegtermijn. Bij jaarcontracten en halfjaarcontracten geldt na afloop van de contractperiode ook een opzegtermijn van 1 maand. Na die periode loopt je abonnement maandelijks door tot je opzegt. Opzeggen kan via e-mail of aan de balie.' },
+  { question: 'Hoe meld ik me aan als lid?', answer: 'Je kunt je aanmelden via de website of aan de balie. Online vul je je gegevens in en kies je een abonnement. De betaling gaat via automatische incasso (SEPA). Liever eerst even langskomen? Plan dan een gratis proeftraining en meld je daarna aan.' },
+  { question: 'Welke apparatuur hebben jullie?', answer: 'De fitnessvloer heeft cardio- en krachtapparatuur, vrije gewichten en functionele trainingsapparatuur. Alles wordt regelmatig onderhouden en waar nodig vernieuwd.' },
+  { question: 'Is er een eigen ruimte voor vrouwen?', answer: 'Ja, we hebben een aparte Ladies Only zone beneden in de sportschool. De damesvloer is volledig ingericht met eigen apparatuur en alleen toegankelijk voor vrouwen. Met een Ladies Only abonnement (vanaf €20,50/maand) heb je ook gewoon toegang tot de rest van de gym.' },
+  { question: 'Krijg ik begeleiding bij het trainen?', answer: 'Jazeker! Er staat altijd personeel klaar dat je helpt met een trainingsschema, je techniek corrigeert of meedenkt over je doelen. Je hoeft het alleen maar te vragen.' },
+  { question: 'Hoe werkt de bokszaktraining?', answer: 'Bij de bokszaktraining train je aan de bokszakken met begeleiding van een trainer. Je leert technieken, werkt aan combinaties en bouwt conditie op. De training is op dinsdag en donderdag om 19:00.' },
+  { question: 'Kan ik bokszaktraining combineren met fitness?', answer: 'Ja, de Ultimate Fit Deal (€37,50/maand) geeft je onbeperkt fitness en bokszaktraining. Je kunt ook alleen bokszaktraining doen, los van fitness: 1x per week voor €19,95 of onbeperkt voor €26,95, allebei als jaarabonnement.' },
+  { question: 'Wat zijn de openingstijden?', answer: 'Maandag t/m vrijdag: 08:30 tot 22:00. Zaterdag: 09:00 tot 16:00. Zondag: 09:30 tot 16:00. We zijn dus 7 dagen per week open. Tijdens feestdagen kunnen de tijden afwijken.' },
+  { question: 'Kan ik gratis komen uitproberen?', answer: 'Ja, je eerste proefles is altijd gratis. Neem even contact op om een moment af te spreken dat jou uitkomt. Je kunt dan de sportschool bekijken, de apparatuur uitproberen en de sfeer proeven.' },
+];
 ---
 <Layout
   title="Veelgestelde vragen · Prijzen & meer · Fitcity Culemborg"
   description="Antwoorden op veelgestelde vragen over Fitcity Culemborg. Prijzen, abonnementen, openingstijden, opzeggen en je eerste proefles is altijd gratis. Alles op een rij."
 >
+  <SchemaBreadcrumb items={[{ label: 'FAQ' }]} />
+  <SchemaFAQ faqs={faqData} />
   <Header />
 
   <section class="inner-hero">

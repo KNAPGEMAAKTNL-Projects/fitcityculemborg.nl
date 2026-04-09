@@ -1,0 +1,29 @@
+---
+interface Props {
+  name: string;
+  description: string;
+  url: string;
+  priceRange?: string;
+}
+
+const { name, description, url, priceRange } = Astro.props;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name,
+  description,
+  url: new URL(url, Astro.site).href,
+  provider: {
+    '@type': 'HealthClub',
+    '@id': 'https://fitcityculemborg.nl/#healthclub',
+    name: 'Fitcity Culemborg',
+  },
+  areaServed: {
+    '@type': 'City',
+    name: 'Culemborg',
+  },
+  ...(priceRange ? { priceRange } : {}),
+};
+---
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

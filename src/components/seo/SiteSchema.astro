@@ -1,0 +1,46 @@
+---
+/**
+ * Site-wide schema: WebSite + Organization in @graph.
+ * Included in Layout.astro — appears on every page.
+ * Separate from SchemaLocalBusiness which adds the HealthClub entity.
+ */
+const siteUrl = 'https://fitcityculemborg.nl';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+      url: siteUrl,
+      name: 'Fitcity Culemborg',
+      publisher: { '@id': `${siteUrl}/#organization` },
+      inLanguage: 'nl-NL',
+    },
+    {
+      '@type': 'Organization',
+      '@id': `${siteUrl}/#organization`,
+      name: 'Fitcity Culemborg',
+      url: siteUrl,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${siteUrl}/images/fitcity-logo-email.png`,
+      },
+      identifier: [
+        {
+          '@type': 'PropertyValue',
+          propertyID: 'KVK',
+          value: '72342293',
+        },
+        // TODO: Add BTW-nummer when available
+        // { '@type': 'PropertyValue', propertyID: 'BTW-id', value: 'NL...B01' },
+      ],
+      sameAs: [
+        'https://www.facebook.com/p/Fitcity-Culemborg-100063646716139/',
+        'https://www.instagram.com/fitcityculemborg',
+      ],
+    },
+  ],
+};
+---
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

@@ -157,8 +157,8 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
         </div>
 
         <div class="vibe-image">
-          <video class="vibe-video" muted loop playsinline preload="none" aria-hidden="true">
-            <source data-src="/images/fitcity-sfeer.mp4" type="video/mp4" />
+          <video class="vibe-video" autoplay muted loop playsinline preload="auto" poster="/images/fitness.webp" aria-hidden="true">
+            <source src="/images/fitcity-sfeer.mp4" type="video/mp4" />
           </video>
         </div>
       </div>
@@ -389,22 +389,26 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
   <script>
     function initVideos() {
       const heroVideo = document.querySelector('.hero-video') as HTMLVideoElement | null;
-      if (heroVideo) heroVideo.play().catch(() => {});
+      if (heroVideo) {
+        // After view transition, the video buffer may be empty — reload then play
+        if (heroVideo.readyState < 2) {
+          heroVideo.load();
+        }
+        heroVideo.play().catch(() => {});
+      }
 
       const vibeVideo = document.querySelector('.vibe-video') as HTMLVideoElement | null;
       if (!vibeVideo) return;
 
+      // After view transition, buffer may be empty — reload and play
+      if (vibeVideo.readyState < 2) vibeVideo.load();
+      vibeVideo.play().catch(() => {});
+
+      // Pause when not visible to save CPU, resume when scrolled back
       const observer = new IntersectionObserver((entries) => {
         for (const entry of entries) {
           const video = entry.target as HTMLVideoElement;
           if (entry.isIntersecting) {
-            // Load source if not yet loaded
-            const source = video.querySelector('source[data-src]');
-            if (source) {
-              source.setAttribute('src', source.getAttribute('data-src')!);
-              source.removeAttribute('data-src');
-              video.load();
-            }
             video.play().catch(() => {});
           } else {
             video.pause();
@@ -785,7 +789,7 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
 
   .service-card--fitness .service-card-title,
   .service-card--kickboxing .service-card-title { color: var(--color-primary); }
-  .service-card--ladies .service-card-title { color: var(--color-text); }
+  .service-card--ladies .service-card-title { color: var(--color-secondary); }
 
   .service-card-desc {
     color: var(--color-text-muted);

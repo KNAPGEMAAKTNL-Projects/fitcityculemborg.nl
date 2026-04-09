@@ -1,14 +1,20 @@
 ---
 import { ClientRouter } from 'astro:transitions';
+import SiteSchema from '../components/seo/SiteSchema.astro';
+import SchemaLocalBusiness from '../components/seo/SchemaLocalBusiness.astro';
 import '../styles/global.css';
 
 interface Props {
   title: string;
   description?: string;
   robots?: string;
+  ogImage?: string;
+  ogType?: string;
 }
 
-const { title, description = '', robots } = Astro.props;
+const { title, description = '', robots, ogImage, ogType = 'website' } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = new URL(ogImage || '/images/fitcity-logo-email.png', Astro.site);
 ---
 <html lang="nl">
   <head>
@@ -17,6 +23,21 @@ const { title, description = '', robots } = Astro.props;
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
     {robots && <meta name="robots" content={robots} />}
+
+    <link rel="canonical" href={canonicalURL.href} />
+
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:url" content={canonicalURL.href} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:locale" content="nl_NL" />
+    <meta property="og:site_name" content="Fitcity Culemborg" />
+    <meta property="og:image" content={ogImageURL.href} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    {description && <meta name="twitter:description" content={description} />}
+    <meta name="twitter:image" content={ogImageURL.href} />
 
     <!-- Google Fonts: preconnect + stylesheet -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -30,6 +51,11 @@ const { title, description = '', robots } = Astro.props;
 
     <!-- Cloudflare Turnstile -->
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+
+    <!-- Schema: WebSite + Organization (every page) -->
+    <SiteSchema />
+    <!-- Schema: HealthClub with rich attributes (every page) -->
+    <SchemaLocalBusiness />
 
     <!-- Page transitions -->
     <ClientRouter />
