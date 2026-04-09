@@ -1,11 +1,59 @@
+# Dependencies & build
 node_modules/
 dist/
+build/
 .astro/
+
+# Environment & secrets
 .env
 .env.*
-.DS_Store
-.playwright-mcp/
 .dev.vars
-.wrangler/
-.claude/
+
+# OS & editor
+.DS_Store
 *.log
+.vscode/
+.idea/
+
+# Local tooling
+.claude/
+.mcp.json
+.impeccable.md
+.playwright-mcp/
+.wrangler/
+
+# SOP process artifacts (Sessions 1-3)
+CLIENT-DATA.md
+COMPETITORS.md
+CONTENT-SOURCE.md
+CREATIVE-DIRECTION.md
+ARCHETYPE-FINAL.md
+BUILD-PLAN.md
+SITEMAP-DRAFT.md
+REDIRECTS-SOURCE.md
+REDIRECTS.md
+REPO-STACK.md
+DESIGN.md
+layout-direction.md
+CONTENT/
+
+# Design references & direction previews
+*-reference.html
+*-direction.html
+color-direction.html
+competitor-reference/
+
+# Raw media & reference material (processed files go in src/assets/)
+media/
+testimonials/
+/*.png
+
+# QA & launch artifacts (Sessions 5-7)
+QA-REPORT.md
+CLIENT-LAUNCH-CHECKLIST.md
+DNS-BACKUP.md
+LAUNCH-LOG.md
+WEEK-1-REPORT.md
+CLIENT-FEEDBACK.md
+MONTH-1-REPORT.md
+client-handoff/
