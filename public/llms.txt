@@ -1,0 +1,29 @@
+# Fitcity Culemborg - Sportschool in Culemborg
+
+> Fitcity Culemborg is een sportschool aan de Houtweg 8 in Culemborg met fitness, bokszaktraining en een ladies only afdeling. Onbeperkt sporten vanaf €20,50 per maand.
+
+## Aanbod
+- [Fitness](https://fitcityculemborg.nl/fitness/): Onbeperkt fitnessen met cardio- en krachtapparatuur. Vanaf €24,50/maand.
+- [Bokszaktraining](https://fitcityculemborg.nl/kickboxing/): Begeleide bokszaktraining op dinsdag en donderdag. Vanaf €19,95/maand.
+- [Ladies Only](https://fitcityculemborg.nl/ladies-only/): Fitness exclusief voor vrouwen in een eigen ruimte. Vanaf €20,50/maand.
+
+## Abonnementen
+- Smart Deal: €24,50/maand (12 maanden)
+- Ladies Only: €20,50/maand (12 maanden)
+- Ultimate Fit Deal: €37,50/maand (12 maanden, fitness + bokszaktraining)
+- Fit Deal: €29,50/maand (6 maanden)
+- Flex: €37,00/maand (maandelijks opzegbaar)
+- Combi Deal: €39,50/maand (12 maanden, 2 personen)
+- Dagpas: €7,00 (eenmalig)
+
+## Informatie
+- [Veelgestelde vragen](https://fitcityculemborg.nl/faq/): Openingstijden, proeftraining, inschrijving
+- [Inschrijven](https://fitcityculemborg.nl/inschrijven/): Direct online aanmelden
+- [Contact](https://fitcityculemborg.nl/contact/): Neem contact op via formulier of WhatsApp
+- [Privacybeleid](https://fitcityculemborg.nl/privacy/): AVG-conform privacybeleid
+
+## Contact
+- Telefoon: +31 6 46872274
+- E-mail: info@fitcityculemborg.nl
+- Adres: Houtweg 8, 4104 AB Culemborg
+- KvK: 72342293
