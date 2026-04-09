@@ -1,12 +1,30 @@
 /**
- * Server-side admin auth placeholder.
- * Authentication is handled by Cloudflare Zero Trust (Access).
- * All /admin and /api/admin routes are protected via Access policies
- * covering fitcityculemborg.nl, pages.dev, and wildcard preview deployments.
+ * Server-side admin auth: verifies the CF_Authorization cookie
+ * set by Cloudflare Access after login at /admin.
+ *
+ * The cookie is domain-scoped (path_cookie_attribute=false) so
+ * it's included in /api/admin/* fetch requests from the browser.
+ * Local dev (no Cloudflare) is allowed through.
  */
 
-export function requireAccessAuth(_request: Request): boolean {
-  return true;
+export function requireAccessAuth(request: Request): boolean {
+  // Local development — no Cloudflare in front
+  if (!request.headers.get('CF-Connecting-IP')) {
+    return true;
+  }
+
+  // Check for CF_Authorization cookie (set after Access login)
+  const cookies = request.headers.get('Cookie') || '';
+  if (cookies.includes('CF_Authorization=')) {
+    return true;
+  }
+
+  // Also accept CF-Access headers if present
+  if (request.headers.get('CF-Access-Authenticated-User-Email')) {
+    return true;
+  }
+
+  return false;
 }
 
 export function unauthorizedResponse(): Response {
