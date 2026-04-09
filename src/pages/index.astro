@@ -157,7 +157,7 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
         </div>
 
         <div class="vibe-image">
-          <video class="vibe-video" muted loop playsinline preload="none" aria-hidden="true">
+          <video class="vibe-video" muted loop playsinline preload="metadata" poster="/images/fitness.webp" aria-hidden="true">
             <source data-src="/images/fitcity-sfeer.mp4" type="video/mp4" />
           </video>
         </div>
@@ -404,11 +404,14 @@ import { pricingPlans, pricingExtras } from '../data/pricing';
         for (const entry of entries) {
           const video = entry.target as HTMLVideoElement;
           if (entry.isIntersecting) {
-            // Load source if not yet loaded
+            // Load source if not yet loaded (initial visit or after view transition)
             const source = video.querySelector('source[data-src]');
             if (source) {
               source.setAttribute('src', source.getAttribute('data-src')!);
               source.removeAttribute('data-src');
+              video.load();
+            } else if (video.readyState < 2) {
+              // Source already set but buffer empty (view transition re-created DOM)
               video.load();
             }
             video.play().catch(() => {});
