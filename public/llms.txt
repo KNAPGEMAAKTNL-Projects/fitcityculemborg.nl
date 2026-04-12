@@ -18,7 +18,7 @@
 
 ## Informatie
 - [Veelgestelde vragen](https://fitcityculemborg.nl/faq/): Openingstijden, proeftraining, inschrijving
-- [Inschrijven](https://fitcityculemborg.nl/inschrijven/): Direct online aanmelden
+- [Inschrijven](https://fitcityculemborg.nl/signup/): Direct online aanmelden
 - [Contact](https://fitcityculemborg.nl/contact/): Neem contact op via formulier of WhatsApp
 - [Privacybeleid](https://fitcityculemborg.nl/privacy/): AVG-conform privacybeleid
 
