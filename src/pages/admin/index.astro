@@ -876,6 +876,18 @@ import Layout from '../../layouts/Layout.astro';
     });
   }
 
+  // ===================== AUTH GATE =====================
+  // If not on the canonical domain, redirect to it so Cloudflare Access
+  // can enforce login. This prevents the admin page from being visible
+  // on www, pages.dev previews, or any other domain variant.
+  const CANONICAL_ADMIN = 'https://fitcityculemborg.nl/admin/';
+
+  function redirectToLogin() {
+    if (window.location.href !== CANONICAL_ADMIN) {
+      window.location.href = CANONICAL_ADMIN;
+    }
+  }
+
   // ===================== DATA LOADING =====================
   async function loadData() {
     try {
@@ -883,6 +895,12 @@ import Layout from '../../layouts/Layout.astro';
         fetch('/api/admin/signups/'),
         fetch('/api/admin/contacts/'),
       ]);
+
+      // If either returns 401, user is not authenticated — redirect to login
+      if (signupsRes.status === 401 || contactsRes.status === 401) {
+        redirectToLogin();
+        return;
+      }
 
       if (signupsRes.ok) {
         const signupsData: SignupsResponse = await signupsRes.json();
