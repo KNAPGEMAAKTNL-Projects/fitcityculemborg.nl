@@ -12,7 +12,11 @@
  * (custom domain, pages.dev, preview deployments).
  */
 
-import type { Env } from '../_shared/types';
+// Cloudflare Access config — hardcoded because Pages Functions
+// env vars are unreliable across deployments. These are not secrets:
+// the team domain is a public URL, the AUD is in every JWT payload.
+const ACCESS_TEAM_DOMAIN = 'summitlabs.cloudflareaccess.com';
+const ACCESS_AUD = 'e76278bc2f4e23c70128a4a01703e31cad2ef17f34c9eeb604ef6a235567544b';
 
 // Cache JWKS keys in memory for the lifetime of the Worker isolate
 let cachedKeys: CryptoKey[] | null = null;
@@ -152,16 +156,9 @@ async function verifyJwt(
  */
 export async function requireAccessAuth(
   request: Request,
-  env: Env,
 ): Promise<string | null> {
-  const teamDomain = env.ACCESS_TEAM_DOMAIN;
-  const expectedAud = env.ACCESS_AUD;
-
-  // If Access env vars are not configured, block all requests
-  if (!teamDomain || !expectedAud) {
-    console.error('ACCESS_TEAM_DOMAIN or ACCESS_AUD not configured');
-    return null;
-  }
+  const teamDomain = ACCESS_TEAM_DOMAIN;
+  const expectedAud = ACCESS_AUD;
 
   // Extract CF_Authorization cookie
   const cookies = request.headers.get('Cookie') || '';

@@ -156,7 +156,7 @@ async function handleDelete(context: EventContext<Env, string, unknown>): Promis
 }
 
 export const onRequest: PagesFunction<Env> = async (context) => {
-  const authedEmail = await requireAccessAuth(context.request, context.env);
+  const authedEmail = await requireAccessAuth(context.request);
   if (!authedEmail) {
     return unauthorizedResponse();
   }

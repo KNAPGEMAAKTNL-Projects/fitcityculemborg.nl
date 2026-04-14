@@ -25,7 +25,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
     return jsonResponse({ error: 'Method not allowed' }, 405);
   }
 
-  const authedEmail = await requireAccessAuth(context.request, context.env);
+  const authedEmail = await requireAccessAuth(context.request);
   if (!authedEmail) {
     return unauthorizedResponse();
   }
