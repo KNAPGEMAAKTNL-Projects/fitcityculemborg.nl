@@ -1219,8 +1219,8 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
   const STORAGE_KEY = 'fitcity-signup-draft';
   const PERSISTED_FIELDS = [
     'plan_slug', 'plan_name', 'plan_price', 'plan_duration',
-    'full_name', 'email', 'phone', 'date_of_birth',
-    'street', 'house_number', 'postcode', 'city',
+    'first_name', 'last_name', 'email', 'phone', 'date_of_birth',
+    'postcode', 'house_number', 'house_number_addition', 'street', 'city',
     'account_holder', 'iban'
   ];
 
@@ -1444,14 +1444,15 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
       set('summary-term', duration);
       set('summary-start', new Date().toLocaleDateString('nl-NL'));
       set('summary-end', end.toLocaleDateString('nl-NL'));
-      set('review-name', get('full_name'));
+      set('review-name', `${get('first_name')} ${get('last_name')}`);
       set('review-email', get('email'));
       set('review-phone', get('phone'));
 
       const dob = get('date_of_birth');
       if (dob !== '—') { const [y, m, d] = dob.split('-'); set('review-dob', `${d}-${m}-${y}`); }
 
-      set('review-address', `${get('street')} ${get('house_number')}`);
+      const addition = get('house_number_addition');
+      set('review-address', `${get('street')} ${get('house_number')}${addition}`);
       set('review-zipcity', `${get('postcode')} ${get('city')}`);
     }
 
@@ -1471,10 +1472,15 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
 
       if (step === 2) {
         const fields: { name: string; validate?: (v: string) => boolean }[] = [
-          { name: 'full_name' }, { name: 'email', validate: validateEmail },
-          { name: 'phone', validate: validatePhone }, { name: 'date_of_birth' },
-          { name: 'street' }, { name: 'house_number' },
-          { name: 'postcode', validate: validatePostcode }, { name: 'city' },
+          { name: 'first_name' },
+          { name: 'last_name' },
+          { name: 'phone', validate: validatePhone },
+          { name: 'email', validate: validateEmail },
+          { name: 'date_of_birth' },
+          { name: 'postcode', validate: validatePostcode },
+          { name: 'house_number' },
+          { name: 'street' },
+          { name: 'city' },
         ];
         for (const field of fields) {
           const el = form.elements.namedItem(field.name) as HTMLInputElement;
@@ -1483,6 +1489,16 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
           let fieldValid = val !== '';
           if (fieldValid && field.validate) fieldValid = field.validate(val);
           if (!fieldValid) { setFieldError(field.name, true); valid = false; }
+        }
+
+        // Email confirm validation
+        const emailEl = form.elements.namedItem('email') as HTMLInputElement;
+        const confirmEl = form.elements.namedItem('email_confirm') as HTMLInputElement;
+        if (emailEl && confirmEl) {
+          if (!confirmEl.value.trim() || confirmEl.value.trim().toLowerCase() !== emailEl.value.trim().toLowerCase()) {
+            setFieldError('email_confirm', true);
+            valid = false;
+          }
         }
       }
 
@@ -1498,7 +1514,8 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
 
     // Blur + input validation
     const blurValidators: Record<string, (el: HTMLInputElement) => boolean> = {
-      full_name: (el) => el.value.trim() !== '',
+      first_name: (el) => el.value.trim() !== '',
+      last_name: (el) => el.value.trim() !== '',
       email: (el) => el.value.trim() !== '' && validateEmail(el.value),
       phone: (el) => el.value.trim() !== '' && validatePhone(el.value),
       date_of_birth: (el) => el.value !== '',
@@ -1516,6 +1533,19 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
       el.addEventListener('blur', () => { if (el.value.trim() !== '') setFieldError(name, !validator(el)); });
       el.addEventListener('input', () => setFieldError(name, false));
     });
+
+    // Email confirm — validate on blur only, clear error on input
+    const emailConfirmEl = form.elements.namedItem('email_confirm') as HTMLInputElement | null;
+    const emailMainEl = form.elements.namedItem('email') as HTMLInputElement | null;
+    emailConfirmEl?.addEventListener('blur', () => {
+      if (emailConfirmEl.value.trim() !== '') {
+        const match = emailConfirmEl.value.trim().toLowerCase() === emailMainEl?.value.trim().toLowerCase();
+        setFieldError('email_confirm', !match);
+      }
+    });
+    emailConfirmEl?.addEventListener('input', () => setFieldError('email_confirm', false));
+    // If user changes the main email after confirming, clear confirm error
+    emailMainEl?.addEventListener('input', () => setFieldError('email_confirm', false));
 
     // ===================== AUTO-FORMAT =====================
     const postcodeInput = document.getElementById('postcode') as HTMLInputElement | null;
@@ -1538,12 +1568,68 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
       ibanInput.setSelectionRange(newCursor, newCursor);
     });
 
+    // ===================== PDOK POSTCODE AUTO-FILL =====================
+    let pdokTimeout: ReturnType<typeof setTimeout> | null = null;
+
+    async function lookupAddress(postcode: string, houseNumber: string, streetTarget: HTMLInputElement, cityTarget: HTMLInputElement) {
+      const pc = postcode.replace(/\s+/g, '').toUpperCase();
+      if (!/^\d{4}[A-Z]{2}$/.test(pc) || !houseNumber.trim()) return;
+
+      try {
+        const url = `https://api.pdok.nl/bzk/locatieserver/search/v3_1/free?q=postcode:${pc}+and+huisnummer:${encodeURIComponent(houseNumber.trim())}&rows=1&fl=straatnaam,woonplaatsnaam`;
+        const res = await fetch(url);
+        if (!res.ok) return;
+        const json = await res.json();
+        if (json.response?.numFound > 0) {
+          const doc = json.response.docs[0];
+          if (doc.straatnaam) streetTarget.value = doc.straatnaam;
+          if (doc.woonplaatsnaam) cityTarget.value = doc.woonplaatsnaam;
+          saveToStorage();
+        }
+      } catch {
+        // Silent fallback — user fills fields manually
+      }
+    }
+
+    function setupPdokLookup(postcodeId: string, houseNumberId: string, streetId: string, cityId: string) {
+      const pcEl = document.getElementById(postcodeId) as HTMLInputElement | null;
+      const hnEl = document.getElementById(houseNumberId) as HTMLInputElement | null;
+      const stEl = document.getElementById(streetId) as HTMLInputElement | null;
+      const ctEl = document.getElementById(cityId) as HTMLInputElement | null;
+      if (!pcEl || !hnEl || !stEl || !ctEl) return;
+
+      const trigger = () => {
+        if (pdokTimeout) clearTimeout(pdokTimeout);
+        pdokTimeout = setTimeout(() => lookupAddress(pcEl.value, hnEl.value, stEl, ctEl), 500);
+      };
+
+      pcEl.addEventListener('input', trigger);
+      hnEl.addEventListener('input', trigger);
+    }
+
+    // Main form auto-fill
+    setupPdokLookup('postcode', 'house_number', 'street', 'city');
+    // Drawer auto-fill
+    setupPdokLookup('drawer-postcode', 'drawer-house_number', 'drawer-street', 'drawer-city');
+
     // ===================== EDIT DRAWER =====================
     const drawer = document.getElementById('edit-drawer');
     const drawerOverlay = document.getElementById('drawer-overlay');
     const drawerFieldMap: Record<string, Record<string, string>> = {
-      personal: { 'drawer-full_name': 'full_name', 'drawer-email': 'email', 'drawer-phone': 'phone', 'drawer-date_of_birth': 'date_of_birth' },
-      address: { 'drawer-street': 'street', 'drawer-house_number': 'house_number', 'drawer-postcode': 'postcode', 'drawer-city': 'city' },
+      personal: {
+        'drawer-first_name': 'first_name',
+        'drawer-last_name': 'last_name',
+        'drawer-phone': 'phone',
+        'drawer-email': 'email',
+        'drawer-date_of_birth': 'date_of_birth',
+      },
+      address: {
+        'drawer-postcode': 'postcode',
+        'drawer-house_number': 'house_number',
+        'drawer-house_number_addition': 'house_number_addition',
+        'drawer-street': 'street',
+        'drawer-city': 'city',
+      },
     };
     let activeDrawerSection = 'personal';
 
@@ -1618,6 +1704,7 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
         data.privacy_consent = (form.elements.namedItem('privacy_consent') as HTMLInputElement).checked;
         data.terms_consent = (form.elements.namedItem('terms_consent') as HTMLInputElement).checked;
         data.sepa_consent = (form.elements.namedItem('sepa_consent') as HTMLInputElement).checked;
+        data.marketing_consent = (form.elements.namedItem('marketing_consent') as HTMLInputElement)?.checked ?? false;
         data.cf_turnstile_response = signupTurnstileToken;
 
         const response = await fetch('/api/signup/', {
