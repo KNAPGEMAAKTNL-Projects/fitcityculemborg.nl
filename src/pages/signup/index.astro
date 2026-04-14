@@ -1452,7 +1452,8 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
       const dob = get('date_of_birth');
       if (dob !== '—') { const [y, m, d] = dob.split('-'); set('review-dob', `${d}-${m}-${y}`); }
 
-      const addition = get('house_number_addition');
+      const additionEl = document.getElementById('house_number_addition') as HTMLInputElement | null;
+      const addition = additionEl?.value || '';
       set('review-address', `${get('street')} ${get('house_number')}${addition}`);
       set('review-zipcity', `${get('postcode')} ${get('city')}`);
     }
