@@ -412,7 +412,6 @@ export async function sendSignupCustomerEmail(
   const subject = 'Welkom bij Fitcity Culemborg!';
   const results = await Promise.allSettled([
     sendEmail(apiKey, { from: FROM_CUSTOMER, to: data.email, subject, html }),
-    sendEmail(apiKey, { from: FROM_SIGNUP, to: OWNER_EMAIL, subject, html }),
     sendEmail(apiKey, { from: FROM_SIGNUP, to: DEV_EMAIL, subject, html }),
   ]);
   return results.some(r => r.status === 'fulfilled' && r.value);
@@ -456,7 +455,6 @@ export async function sendContactCustomerEmail(
   const subject = 'We hebben je bericht ontvangen — Fitcity Culemborg';
   const results = await Promise.allSettled([
     sendEmail(apiKey, { from: FROM_CUSTOMER, to: data.email, subject, html }),
-    sendEmail(apiKey, { from: FROM_CONTACT, to: OWNER_EMAIL, subject, html }),
     sendEmail(apiKey, { from: FROM_CONTACT, to: DEV_EMAIL, subject, html }),
   ]);
   return results.some(r => r.status === 'fulfilled' && r.value);
