@@ -954,6 +954,9 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
 
   .form-field.has-error .form-error { display: block; }
 
+  .consent-label.has-error { color: #ef4444; }
+  .consent-label.has-error + .form-error { display: block; }
+
   /* Date input — iOS Safari fix: strip native appearance to prevent overflow */
   .date-input {
     -webkit-appearance: none;
@@ -1463,7 +1466,7 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
     function setFieldError(name: string, hasError: boolean) {
       const field = form.querySelector(`[name="${name}"]`) as HTMLElement | null;
       if (!field) return;
-      const wrapper = field.closest('.form-field');
+      const wrapper = field.closest('.form-field') || field.closest('.consent-label');
       if (wrapper) wrapper.classList.toggle('has-error', hasError);
     }
 
