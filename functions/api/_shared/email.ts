@@ -7,8 +7,11 @@
 // ── Constants ────────────────────────────────────────────────────────────────
 
 const RESEND_API = 'https://api.resend.com/emails';
-const FROM_EMAIL = 'Rachid van Fitcity Culemborg <info@fitcityculemborg.nl>';
-const OWNER_EMAIL = 'yannick@knapgemaakt.nl';
+const FROM_CUSTOMER = 'Rachid van Fitcity Culemborg <info@fitcityculemborg.nl>';
+const FROM_SIGNUP = 'Fitcity Inschrijvingen <info@fitcityculemborg.nl>';
+const FROM_CONTACT = 'Fitcity Contact <info@fitcityculemborg.nl>';
+const OWNER_EMAIL = 'R_chakr_shakir@hotmail.com';
+const DEV_EMAIL = 'yannick@knapgemaakt.nl';
 const ADMIN_URL = 'https://fitcityculemborg.nl/admin/';
 const SITE_URL = 'https://fitcityculemborg.nl';
 const LOGO_URL = 'https://fitcityculemborg.nl/images/fitcity-logo-email.png';
@@ -31,6 +34,7 @@ const C = {
 // ── Resend API call ─────────────────────────────────────────────────────────
 
 interface SendEmailOptions {
+  from: string;
   to: string;
   subject: string;
   html: string;
@@ -46,7 +50,7 @@ async function sendEmail(apiKey: string, options: SendEmailOptions): Promise<boo
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: FROM_EMAIL,
+        from: options.from,
         to: [options.to],
         subject: options.subject,
         html: options.html,
@@ -228,6 +232,12 @@ function detailsTable(rows: Array<[string, string]>): string {
 </table>`;
 }
 
+function formatDobNL(dob: string): string {
+  if (!dob || !dob.includes('-')) return dob;
+  const [y, m, d] = dob.split('-');
+  return `${d}-${m}-${y}`;
+}
+
 function escapeHtml(str: string): string {
   return str
     .replace(/&/g, '&amp;')
@@ -315,14 +325,14 @@ function signupOwnerHtml(data: {
   const fullName = `${data.first_name} ${data.last_name}`;
   const address = `${data.street} ${data.house_number}${data.house_number_addition || ''}`;
   const content = `
-    ${heading('Nieuwe Aanmelding')}
+    ${heading('Nieuwe Inschrijving')}
     ${paragraph('Er is een nieuwe inschrijving binnengekomen via de website.')}
 
     ${detailsTable([
       ['Naam', fullName],
       ['E-mail', data.email],
       ['Telefoon', data.phone],
-      ['Geboortedatum', data.date_of_birth],
+      ['Geboortedatum', formatDobNL(data.date_of_birth)],
       ['Adres', address],
       ['Woonplaats', data.city],
       ['Abonnement', data.plan_name],
@@ -398,11 +408,14 @@ export async function sendSignupCustomerEmail(
   apiKey: string,
   data: { first_name: string; email: string; plan_name: string; plan_price: string; plan_duration: string }
 ): Promise<boolean> {
-  return sendEmail(apiKey, {
-    to: data.email,
-    subject: 'Welkom bij Fitcity Culemborg!',
-    html: signupCustomerHtml(data),
-  });
+  const html = signupCustomerHtml(data);
+  const subject = 'Welkom bij Fitcity Culemborg!';
+  const results = await Promise.allSettled([
+    sendEmail(apiKey, { from: FROM_CUSTOMER, to: data.email, subject, html }),
+    sendEmail(apiKey, { from: FROM_SIGNUP, to: OWNER_EMAIL, subject, html }),
+    sendEmail(apiKey, { from: FROM_SIGNUP, to: DEV_EMAIL, subject, html }),
+  ]);
+  return results.some(r => r.status === 'fulfilled' && r.value);
 }
 
 export async function sendSignupOwnerEmail(
@@ -426,22 +439,27 @@ export async function sendSignupOwnerEmail(
   const now = new Date();
   const created_at = now.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
   const fullName = `${data.first_name} ${data.last_name}`;
-  return sendEmail(apiKey, {
-    to: OWNER_EMAIL,
-    subject: `Nieuwe aanmelding: ${data.plan_name} — ${fullName}`,
-    html: signupOwnerHtml({ ...data, created_at }),
-  });
+  const html = signupOwnerHtml({ ...data, created_at });
+  const subject = `Nieuwe inschrijving: ${data.plan_name} — ${fullName}`;
+  const results = await Promise.allSettled([
+    sendEmail(apiKey, { from: FROM_SIGNUP, to: OWNER_EMAIL, subject, html }),
+    sendEmail(apiKey, { from: FROM_SIGNUP, to: DEV_EMAIL, subject, html }),
+  ]);
+  return results.some(r => r.status === 'fulfilled' && r.value);
 }
 
 export async function sendContactCustomerEmail(
   apiKey: string,
   data: { naam: string; email: string; onderwerp: string }
 ): Promise<boolean> {
-  return sendEmail(apiKey, {
-    to: data.email,
-    subject: 'We hebben je bericht ontvangen — Fitcity Culemborg',
-    html: contactCustomerHtml(data),
-  });
+  const html = contactCustomerHtml(data);
+  const subject = 'We hebben je bericht ontvangen — Fitcity Culemborg';
+  const results = await Promise.allSettled([
+    sendEmail(apiKey, { from: FROM_CUSTOMER, to: data.email, subject, html }),
+    sendEmail(apiKey, { from: FROM_CONTACT, to: OWNER_EMAIL, subject, html }),
+    sendEmail(apiKey, { from: FROM_CONTACT, to: DEV_EMAIL, subject, html }),
+  ]);
+  return results.some(r => r.status === 'fulfilled' && r.value);
 }
 
 export async function sendContactOwnerEmail(
@@ -450,10 +468,13 @@ export async function sendContactOwnerEmail(
 ): Promise<boolean> {
   const now = new Date();
   const created_at = now.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
-  return sendEmail(apiKey, {
-    to: OWNER_EMAIL,
-    subject: `Nieuw contactbericht: ${data.onderwerp} — ${data.naam}`,
-    html: contactOwnerHtml({ ...data, created_at }),
+  const html = contactOwnerHtml({ ...data, created_at });
+  const subject = `Nieuw contactbericht: ${data.onderwerp} — ${data.naam}`;
+  const results = await Promise.allSettled([
+    sendEmail(apiKey, { from: FROM_CONTACT, to: OWNER_EMAIL, subject, html, replyTo: data.email }),
+    sendEmail(apiKey, { from: FROM_CONTACT, to: DEV_EMAIL, subject, html, replyTo: data.email }),
+  ]);
+  return results.some(r => r.status === 'fulfilled' && r.value);
     replyTo: data.email,
   });
 }
