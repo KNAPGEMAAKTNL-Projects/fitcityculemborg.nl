@@ -1243,8 +1243,7 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
       container.innerHTML = '';
       turnstile.render(container, {
         sitekey: TURNSTILE_SITE_KEY,
-        size: 'invisible',
-        appearance: 'interaction-only',
+        theme: 'dark',
         callback: (token: string) => { signupTurnstileToken = token; },
         'expired-callback': () => { signupTurnstileToken = ''; },
       });
