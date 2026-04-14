@@ -60,12 +60,14 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       plan_name: plan.name,
       plan_price: plan.price,
       plan_duration: plan.duration,
-      full_name: sanitize(body.full_name ?? '', 100),
+      first_name: sanitize(body.first_name ?? '', 100),
+      last_name: sanitize(body.last_name ?? '', 100),
       email: sanitize(body.email ?? '', 255).toLowerCase(),
       phone: sanitize(body.phone ?? '', 20),
       date_of_birth: sanitize(body.date_of_birth ?? '', 10),
       street: sanitize(body.street ?? '', 200),
       house_number: sanitize(body.house_number ?? '', 20),
+      house_number_addition: sanitize(body.house_number_addition ?? '', 20),
       postcode: sanitize(body.postcode ?? '', 10),
       city: sanitize(body.city ?? '', 100),
       iban: sanitize(body.iban ?? '', 34),
@@ -73,11 +75,13 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       privacy_consent: body.privacy_consent,
       sepa_consent: body.sepa_consent,
       terms_consent: body.terms_consent,
+      marketing_consent: body.marketing_consent ?? false,
     };
 
     // Validate required fields are non-empty
     const requiredStringFields: Array<[string, string]> = [
-      [data.full_name, 'full_name'],
+      [data.first_name, 'first_name'],
+      [data.last_name, 'last_name'],
       [data.email, 'email'],
       [data.phone, 'phone'],
       [data.date_of_birth, 'date_of_birth'],
@@ -188,28 +192,33 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     // Consent timestamps
     const consentTimestamp = new Date().toISOString();
 
+    // Marketing consent timestamp (only set if opted in)
+    const marketingConsentAt = data.marketing_consent ? consentTimestamp : null;
+
     // Insert into D1
     await context.env.DB.prepare(
       `INSERT INTO signups (
         plan_slug, plan_name, plan_price, plan_duration,
-        full_name, email, phone, date_of_birth,
-        street, house_number, postcode, city,
+        first_name, last_name, email, phone, date_of_birth,
+        street, house_number, house_number_addition, postcode, city,
         iban_encrypted, iban_masked, account_holder,
         privacy_consent_at, sepa_consent_at, terms_consent_at,
-        ip_hash
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+        marketing_consent_at, ip_hash
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     )
       .bind(
         data.plan_slug,
         data.plan_name,
         data.plan_price,
         data.plan_duration,
-        data.full_name,
+        data.first_name,
+        data.last_name,
         data.email,
         data.phone,
         data.date_of_birth,
         data.street,
         data.house_number,
+        data.house_number_addition || null,
         data.postcode,
         data.city,
         ibanEncrypted,
@@ -218,6 +227,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         consentTimestamp,
         consentTimestamp,
         consentTimestamp,
+        marketingConsentAt,
         ipHash
       )
       .run();
@@ -227,21 +237,26 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       context.waitUntil(
         Promise.allSettled([
           sendSignupCustomerEmail(context.env.RESEND_API_KEY, {
-            full_name: data.full_name,
+            first_name: data.first_name,
             email: data.email,
             plan_name: data.plan_name,
             plan_price: data.plan_price,
             plan_duration: data.plan_duration,
           }),
           sendSignupOwnerEmail(context.env.RESEND_API_KEY, {
-            full_name: data.full_name,
+            first_name: data.first_name,
+            last_name: data.last_name,
             email: data.email,
             phone: data.phone,
             plan_name: data.plan_name,
             plan_price: data.plan_price,
             plan_duration: data.plan_duration,
             date_of_birth: data.date_of_birth,
+            street: data.street,
+            house_number: data.house_number,
+            house_number_addition: data.house_number_addition,
             city: data.city,
+            marketing_consent: data.marketing_consent,
           }),
         ])
       );

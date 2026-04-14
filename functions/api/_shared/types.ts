@@ -12,12 +12,14 @@ export interface SignupRequest {
   plan_name: string;
   plan_price: string;
   plan_duration: string;
-  full_name: string;
+  first_name: string;
+  last_name: string;
   email: string;
   phone: string;
   date_of_birth: string;
   street: string;
   house_number: string;
+  house_number_addition?: string;
   postcode: string;
   city: string;
   iban: string;
@@ -25,6 +27,7 @@ export interface SignupRequest {
   privacy_consent: boolean;
   sepa_consent: boolean;
   terms_consent: boolean;
+  marketing_consent?: boolean;
   honeypot?: string;
   cf_turnstile_response?: string;
 }
