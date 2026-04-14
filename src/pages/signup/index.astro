@@ -242,12 +242,12 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
 
             <div class="form-field">
               <label for="house_number">Huisnummer <span class="required">*</span></label>
-              <input type="text" id="house_number" name="house_number" required />
+              <input type="text" id="house_number" name="house_number" required inputmode="numeric" />
               <p class="form-error" data-error="house_number">Dit veld is verplicht.</p>
             </div>
 
             <div class="form-field">
-              <label for="house_number_addition">Huisnummer toevoeging</label>
+              <label for="house_number_addition">Huisnummer toevoeging <span class="optional-hint">(optioneel)</span></label>
               <input type="text" id="house_number_addition" name="house_number_addition" placeholder="bijv. A, 3-hoog" />
             </div>
 
@@ -920,6 +920,7 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
   }
 
   .required { color: var(--color-primary); }
+  .optional-hint { color: var(--color-text-muted); font-weight: 400; font-size: 0.8rem; }
 
   .form-field input,
   .form-field select,
@@ -1242,7 +1243,7 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
       container.innerHTML = '';
       turnstile.render(container, {
         sitekey: TURNSTILE_SITE_KEY,
-        theme: 'dark',
+        size: 'invisible',
         callback: (token: string) => { signupTurnstileToken = token; },
         'expired-callback': () => { signupTurnstileToken = ''; },
       });
