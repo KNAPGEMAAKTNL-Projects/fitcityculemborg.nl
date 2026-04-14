@@ -3,6 +3,8 @@ export interface Env {
   ENCRYPTION_SECRET: string;
   RESEND_API_KEY: string;
   TURNSTILE_SECRET_KEY: string;
+  ACCESS_TEAM_DOMAIN: string;
+  ACCESS_AUD: string;
 }
 
 export interface SignupRequest {
