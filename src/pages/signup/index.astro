@@ -1693,11 +1693,7 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
       errorMsg?.setAttribute('hidden', '');
       if (!validateStep(3)) return;
 
-      // Check Turnstile token
-      if (!signupTurnstileToken) {
-        errorMsg?.removeAttribute('hidden');
-        return;
-      }
+      // Turnstile token — send even if empty (backend decides whether to enforce)
 
       submitBtn.classList.add('is-loading');
       try {
