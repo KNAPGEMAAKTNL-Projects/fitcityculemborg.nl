@@ -193,17 +193,18 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
 
           <h2 class="step-title step-title--left">2. Jouw gegevens</h2>
 
+          <h3 class="form-section-title">Persoonlijke gegevens</h3>
           <div class="form-fields">
             <div class="form-field">
-              <label for="full_name">Volledige naam <span class="required">*</span></label>
-              <input type="text" id="full_name" name="full_name" required autocomplete="name" />
-              <p class="form-error" data-error="full_name">Dit veld is verplicht.</p>
+              <label for="first_name">Voornaam <span class="required">*</span></label>
+              <input type="text" id="first_name" name="first_name" required autocomplete="given-name" />
+              <p class="form-error" data-error="first_name">Dit veld is verplicht.</p>
             </div>
 
             <div class="form-field">
-              <label for="email">E-mail <span class="required">*</span></label>
-              <input type="email" id="email" name="email" required autocomplete="email" />
-              <p class="form-error" data-error="email">Vul een geldig e-mailadres in.</p>
+              <label for="last_name">Achternaam <span class="required">*</span></label>
+              <input type="text" id="last_name" name="last_name" required autocomplete="family-name" />
+              <p class="form-error" data-error="last_name">Dit veld is verplicht.</p>
             </div>
 
             <div class="form-field">
@@ -213,36 +214,62 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
             </div>
 
             <div class="form-field">
+              <label for="email">E-mail <span class="required">*</span></label>
+              <input type="email" id="email" name="email" required autocomplete="email" />
+              <p class="form-error" data-error="email">Vul een geldig e-mailadres in.</p>
+            </div>
+
+            <div class="form-field">
+              <label for="email_confirm">Bevestig e-mail <span class="required">*</span></label>
+              <input type="email" id="email_confirm" name="email_confirm" required autocomplete="off" />
+              <p class="form-error" data-error="email_confirm">E-mailadressen komen niet overeen.</p>
+            </div>
+
+            <div class="form-field">
               <label for="date_of_birth">Geboortedatum <span class="required">*</span></label>
               <input type="date" id="date_of_birth" name="date_of_birth" required class="date-input" />
               <p class="form-error" data-error="date_of_birth">Vul een geldige datum in.</p>
             </div>
+          </div>
 
-            <div class="form-row">
-              <div class="form-field form-field--2-3">
-                <label for="street">Straat <span class="required">*</span></label>
-                <input type="text" id="street" name="street" required autocomplete="street-address" />
-                <p class="form-error" data-error="street">Dit veld is verplicht.</p>
-              </div>
-              <div class="form-field form-field--1-3">
-                <label for="house_number">Huisnummer <span class="required">*</span></label>
-                <input type="text" id="house_number" name="house_number" required />
-                <p class="form-error" data-error="house_number">Verplicht</p>
-              </div>
+          <h3 class="form-section-title">Adresgegevens</h3>
+          <div class="form-fields">
+            <div class="form-field">
+              <label for="postcode">Postcode <span class="required">*</span></label>
+              <input type="text" id="postcode" name="postcode" required placeholder="1234 AB" autocomplete="postal-code" />
+              <p class="form-error" data-error="postcode">Ongeldige postcode (1234 AB).</p>
             </div>
 
-            <div class="form-row">
-              <div class="form-field form-field--2-5">
-                <label for="postcode">Postcode <span class="required">*</span></label>
-                <input type="text" id="postcode" name="postcode" required placeholder="1234 AB" autocomplete="postal-code" />
-                <p class="form-error" data-error="postcode">Ongeldige postcode (1234 AB).</p>
-              </div>
-              <div class="form-field form-field--3-5">
-                <label for="city">Plaats <span class="required">*</span></label>
-                <input type="text" id="city" name="city" required autocomplete="address-level2" />
-                <p class="form-error" data-error="city">Dit veld is verplicht.</p>
-              </div>
+            <div class="form-field">
+              <label for="house_number">Huisnummer <span class="required">*</span></label>
+              <input type="text" id="house_number" name="house_number" required inputmode="numeric" />
+              <p class="form-error" data-error="house_number">Dit veld is verplicht.</p>
             </div>
+
+            <div class="form-field">
+              <label for="house_number_addition">Huisnummer toevoeging <span class="optional-hint">(optioneel)</span></label>
+              <input type="text" id="house_number_addition" name="house_number_addition" placeholder="bijv. A, 3-hoog" />
+            </div>
+
+            <div class="form-field">
+              <label for="street">Straatnaam <span class="required">*</span></label>
+              <input type="text" id="street" name="street" required autocomplete="street-address" />
+              <p class="form-error" data-error="street">Dit veld is verplicht.</p>
+            </div>
+
+            <div class="form-field">
+              <label for="city">Stad <span class="required">*</span></label>
+              <input type="text" id="city" name="city" required autocomplete="address-level2" />
+              <p class="form-error" data-error="city">Dit veld is verplicht.</p>
+            </div>
+          </div>
+
+          <h3 class="form-section-title">Communicatie</h3>
+          <div class="form-fields">
+            <label class="consent-label">
+              <input type="checkbox" name="marketing_consent" id="marketing_consent" />
+              <span>Ja, Fitcity Culemborg mag mij informatie sturen over openingstijden, updates en aanbiedingen.</span>
+            </label>
           </div>
 
           <button type="button" class="btn-primary-full" id="btn-to-step3">NAAR AFRONDEN</button>
@@ -373,16 +400,20 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
       <div class="drawer-body">
         <div id="drawer-section-personal" class="drawer-fields">
           <div class="form-field">
-            <label>Volledige naam</label>
-            <input type="text" id="drawer-full_name" />
+            <label>Voornaam</label>
+            <input type="text" id="drawer-first_name" />
           </div>
           <div class="form-field">
-            <label>E-mail</label>
-            <input type="email" id="drawer-email" />
+            <label>Achternaam</label>
+            <input type="text" id="drawer-last_name" />
           </div>
           <div class="form-field">
             <label>Telefoon</label>
             <input type="tel" id="drawer-phone" />
+          </div>
+          <div class="form-field">
+            <label>E-mail</label>
+            <input type="email" id="drawer-email" />
           </div>
           <div class="form-field">
             <label>Geboortedatum</label>
@@ -390,25 +421,25 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
           </div>
         </div>
         <div id="drawer-section-address" class="drawer-fields" style="display:none;">
-          <div class="form-row">
-            <div class="form-field form-field--2-3">
-              <label>Straat</label>
-              <input type="text" id="drawer-street" />
-            </div>
-            <div class="form-field form-field--1-3">
-              <label>Huisnummer</label>
-              <input type="text" id="drawer-house_number" />
-            </div>
+          <div class="form-field">
+            <label>Postcode</label>
+            <input type="text" id="drawer-postcode" />
           </div>
-          <div class="form-row">
-            <div class="form-field form-field--2-5">
-              <label>Postcode</label>
-              <input type="text" id="drawer-postcode" />
-            </div>
-            <div class="form-field form-field--3-5">
-              <label>Plaats</label>
-              <input type="text" id="drawer-city" />
-            </div>
+          <div class="form-field">
+            <label>Huisnummer</label>
+            <input type="text" id="drawer-house_number" />
+          </div>
+          <div class="form-field">
+            <label>Huisnummer toevoeging</label>
+            <input type="text" id="drawer-house_number_addition" />
+          </div>
+          <div class="form-field">
+            <label>Straatnaam</label>
+            <input type="text" id="drawer-street" />
+          </div>
+          <div class="form-field">
+            <label>Stad</label>
+            <input type="text" id="drawer-city" />
           </div>
         </div>
       </div>
@@ -575,6 +606,21 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
     color: var(--color-text-muted);
     margin-top: -1.5rem;
     margin-bottom: 2rem;
+  }
+
+  .form-section-title {
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    margin-top: 2rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .form-section-title:first-of-type {
+    margin-top: 0;
   }
 
   /* ===================== DURATION TOGGLE (animated slider) ===================== */
@@ -861,6 +907,8 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
   .form-field {
     display: flex;
     flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
   }
 
   .form-field label {
@@ -872,6 +920,7 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
   }
 
   .required { color: var(--color-primary); }
+  .optional-hint { color: var(--color-text-muted); font-weight: 400; font-size: 0.8rem; }
 
   .form-field input,
   .form-field select,
@@ -905,13 +954,16 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
 
   .form-field.has-error .form-error { display: block; }
 
-  .form-row { display: flex; gap: 1rem; }
-  .form-field--2-3 { flex: 2; }
-  .form-field--1-3 { flex: 1; }
-  .form-field--2-5 { flex: 2; }
-  .form-field--3-5 { flex: 3; }
+  .consent-label.has-error { color: #ef4444; }
+  .consent-label.has-error + .form-error { display: block; }
 
-  /* Date input styling */
+  /* Date input — iOS Safari fix: strip native appearance to prevent overflow */
+  .date-input {
+    -webkit-appearance: none;
+    appearance: none;
+    max-width: 100%;
+    overflow: hidden;
+  }
   .date-input::-webkit-calendar-picker-indicator { cursor: pointer; opacity: 1; filter: invert(0.7); }
   .date-input::-webkit-date-and-time-value { text-align: left; }
 
@@ -1171,8 +1223,8 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
   const STORAGE_KEY = 'fitcity-signup-draft';
   const PERSISTED_FIELDS = [
     'plan_slug', 'plan_name', 'plan_price', 'plan_duration',
-    'full_name', 'email', 'phone', 'date_of_birth',
-    'street', 'house_number', 'postcode', 'city',
+    'first_name', 'last_name', 'email', 'phone', 'date_of_birth',
+    'postcode', 'house_number', 'house_number_addition', 'street', 'city',
     'account_holder', 'iban'
   ];
 
@@ -1194,14 +1246,12 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
       container.innerHTML = '';
       turnstile.render(container, {
         sitekey: TURNSTILE_SITE_KEY,
-        theme: 'dark',
+        size: 'invisible',
+        appearance: 'interaction-only',
         callback: (token: string) => { signupTurnstileToken = token; },
         'expired-callback': () => { signupTurnstileToken = ''; },
       });
     }
-    const signupTurnstileCheck = setInterval(() => {
-      if (typeof turnstile !== 'undefined') { clearInterval(signupTurnstileCheck); renderSignupTurnstile(); }
-    }, 200);
     const successMsg = document.getElementById('form-success') as HTMLElement;
     const errorMsg = document.getElementById('form-error') as HTMLElement;
 
@@ -1252,7 +1302,7 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
       });
       if (step === 1) requestAnimationFrame(updateSlider);
       if (step >= 2) updateOrderSummary();
-      if (step === 3) updateFinalReview();
+      if (step === 3) { updateFinalReview(); renderSignupTurnstile(); }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -1396,14 +1446,16 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
       set('summary-term', duration);
       set('summary-start', new Date().toLocaleDateString('nl-NL'));
       set('summary-end', end.toLocaleDateString('nl-NL'));
-      set('review-name', get('full_name'));
+      set('review-name', `${get('first_name')} ${get('last_name')}`);
       set('review-email', get('email'));
       set('review-phone', get('phone'));
 
       const dob = get('date_of_birth');
       if (dob !== '—') { const [y, m, d] = dob.split('-'); set('review-dob', `${d}-${m}-${y}`); }
 
-      set('review-address', `${get('street')} ${get('house_number')}`);
+      const additionEl = document.getElementById('house_number_addition') as HTMLInputElement | null;
+      const addition = additionEl?.value || '';
+      set('review-address', `${get('street')} ${get('house_number')}${addition}`);
       set('review-zipcity', `${get('postcode')} ${get('city')}`);
     }
 
@@ -1411,7 +1463,7 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
     function setFieldError(name: string, hasError: boolean) {
       const field = form.querySelector(`[name="${name}"]`) as HTMLElement | null;
       if (!field) return;
-      const wrapper = field.closest('.form-field');
+      const wrapper = field.closest('.form-field') || field.closest('.consent-label');
       if (wrapper) wrapper.classList.toggle('has-error', hasError);
     }
 
@@ -1423,10 +1475,15 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
 
       if (step === 2) {
         const fields: { name: string; validate?: (v: string) => boolean }[] = [
-          { name: 'full_name' }, { name: 'email', validate: validateEmail },
-          { name: 'phone', validate: validatePhone }, { name: 'date_of_birth' },
-          { name: 'street' }, { name: 'house_number' },
-          { name: 'postcode', validate: validatePostcode }, { name: 'city' },
+          { name: 'first_name' },
+          { name: 'last_name' },
+          { name: 'phone', validate: validatePhone },
+          { name: 'email', validate: validateEmail },
+          { name: 'date_of_birth' },
+          { name: 'postcode', validate: validatePostcode },
+          { name: 'house_number' },
+          { name: 'street' },
+          { name: 'city' },
         ];
         for (const field of fields) {
           const el = form.elements.namedItem(field.name) as HTMLInputElement;
@@ -1435,6 +1492,16 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
           let fieldValid = val !== '';
           if (fieldValid && field.validate) fieldValid = field.validate(val);
           if (!fieldValid) { setFieldError(field.name, true); valid = false; }
+        }
+
+        // Email confirm validation
+        const emailEl = form.elements.namedItem('email') as HTMLInputElement;
+        const confirmEl = form.elements.namedItem('email_confirm') as HTMLInputElement;
+        if (emailEl && confirmEl) {
+          if (!confirmEl.value.trim() || confirmEl.value.trim().toLowerCase() !== emailEl.value.trim().toLowerCase()) {
+            setFieldError('email_confirm', true);
+            valid = false;
+          }
         }
       }
 
@@ -1450,7 +1517,8 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
 
     // Blur + input validation
     const blurValidators: Record<string, (el: HTMLInputElement) => boolean> = {
-      full_name: (el) => el.value.trim() !== '',
+      first_name: (el) => el.value.trim() !== '',
+      last_name: (el) => el.value.trim() !== '',
       email: (el) => el.value.trim() !== '' && validateEmail(el.value),
       phone: (el) => el.value.trim() !== '' && validatePhone(el.value),
       date_of_birth: (el) => el.value !== '',
@@ -1468,6 +1536,19 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
       el.addEventListener('blur', () => { if (el.value.trim() !== '') setFieldError(name, !validator(el)); });
       el.addEventListener('input', () => setFieldError(name, false));
     });
+
+    // Email confirm — validate on blur only, clear error on input
+    const emailConfirmEl = form.elements.namedItem('email_confirm') as HTMLInputElement | null;
+    const emailMainEl = form.elements.namedItem('email') as HTMLInputElement | null;
+    emailConfirmEl?.addEventListener('blur', () => {
+      if (emailConfirmEl.value.trim() !== '') {
+        const match = emailConfirmEl.value.trim().toLowerCase() === emailMainEl?.value.trim().toLowerCase();
+        setFieldError('email_confirm', !match);
+      }
+    });
+    emailConfirmEl?.addEventListener('input', () => setFieldError('email_confirm', false));
+    // If user changes the main email after confirming, clear confirm error
+    emailMainEl?.addEventListener('input', () => setFieldError('email_confirm', false));
 
     // ===================== AUTO-FORMAT =====================
     const postcodeInput = document.getElementById('postcode') as HTMLInputElement | null;
@@ -1490,12 +1571,68 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
       ibanInput.setSelectionRange(newCursor, newCursor);
     });
 
+    // ===================== PDOK POSTCODE AUTO-FILL =====================
+    let pdokTimeout: ReturnType<typeof setTimeout> | null = null;
+
+    async function lookupAddress(postcode: string, houseNumber: string, streetTarget: HTMLInputElement, cityTarget: HTMLInputElement) {
+      const pc = postcode.replace(/\s+/g, '').toUpperCase();
+      if (!/^\d{4}[A-Z]{2}$/.test(pc) || !houseNumber.trim()) return;
+
+      try {
+        const url = `https://api.pdok.nl/bzk/locatieserver/search/v3_1/free?q=postcode:${pc}+and+huisnummer:${encodeURIComponent(houseNumber.trim())}&rows=1&fl=straatnaam,woonplaatsnaam`;
+        const res = await fetch(url);
+        if (!res.ok) return;
+        const json = await res.json();
+        if (json.response?.numFound > 0) {
+          const doc = json.response.docs[0];
+          if (doc.straatnaam) streetTarget.value = doc.straatnaam;
+          if (doc.woonplaatsnaam) cityTarget.value = doc.woonplaatsnaam;
+          saveToStorage();
+        }
+      } catch {
+        // Silent fallback — user fills fields manually
+      }
+    }
+
+    function setupPdokLookup(postcodeId: string, houseNumberId: string, streetId: string, cityId: string) {
+      const pcEl = document.getElementById(postcodeId) as HTMLInputElement | null;
+      const hnEl = document.getElementById(houseNumberId) as HTMLInputElement | null;
+      const stEl = document.getElementById(streetId) as HTMLInputElement | null;
+      const ctEl = document.getElementById(cityId) as HTMLInputElement | null;
+      if (!pcEl || !hnEl || !stEl || !ctEl) return;
+
+      const trigger = () => {
+        if (pdokTimeout) clearTimeout(pdokTimeout);
+        pdokTimeout = setTimeout(() => lookupAddress(pcEl.value, hnEl.value, stEl, ctEl), 500);
+      };
+
+      pcEl.addEventListener('input', trigger);
+      hnEl.addEventListener('input', trigger);
+    }
+
+    // Main form auto-fill
+    setupPdokLookup('postcode', 'house_number', 'street', 'city');
+    // Drawer auto-fill
+    setupPdokLookup('drawer-postcode', 'drawer-house_number', 'drawer-street', 'drawer-city');
+
     // ===================== EDIT DRAWER =====================
     const drawer = document.getElementById('edit-drawer');
     const drawerOverlay = document.getElementById('drawer-overlay');
     const drawerFieldMap: Record<string, Record<string, string>> = {
-      personal: { 'drawer-full_name': 'full_name', 'drawer-email': 'email', 'drawer-phone': 'phone', 'drawer-date_of_birth': 'date_of_birth' },
-      address: { 'drawer-street': 'street', 'drawer-house_number': 'house_number', 'drawer-postcode': 'postcode', 'drawer-city': 'city' },
+      personal: {
+        'drawer-first_name': 'first_name',
+        'drawer-last_name': 'last_name',
+        'drawer-phone': 'phone',
+        'drawer-email': 'email',
+        'drawer-date_of_birth': 'date_of_birth',
+      },
+      address: {
+        'drawer-postcode': 'postcode',
+        'drawer-house_number': 'house_number',
+        'drawer-house_number_addition': 'house_number_addition',
+        'drawer-street': 'street',
+        'drawer-city': 'city',
+      },
     };
     let activeDrawerSection = 'personal';
 
@@ -1553,11 +1690,7 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
       errorMsg?.setAttribute('hidden', '');
       if (!validateStep(3)) return;
 
-      // Check Turnstile token
-      if (!signupTurnstileToken) {
-        errorMsg?.removeAttribute('hidden');
-        return;
-      }
+      // Turnstile token — send even if empty (backend decides whether to enforce)
 
       submitBtn.classList.add('is-loading');
       try {
@@ -1570,6 +1703,7 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
         data.privacy_consent = (form.elements.namedItem('privacy_consent') as HTMLInputElement).checked;
         data.terms_consent = (form.elements.namedItem('terms_consent') as HTMLInputElement).checked;
         data.sepa_consent = (form.elements.namedItem('sepa_consent') as HTMLInputElement).checked;
+        data.marketing_consent = (form.elements.namedItem('marketing_consent') as HTMLInputElement)?.checked ?? false;
         data.cf_turnstile_response = signupTurnstileToken;
 
         const response = await fetch('/api/signup/', {
