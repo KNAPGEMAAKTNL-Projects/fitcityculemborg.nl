@@ -35,10 +35,10 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       return jsonResponse({ success: true });
     }
 
-    // Turnstile verification — skip if token is empty (ad blockers may prevent it)
+    // Turnstile verification
     const clientIP = context.request.headers.get('CF-Connecting-IP') || 'unknown';
     const turnstileToken = body.cf_turnstile_response ?? '';
-    if (turnstileToken && !await verifyTurnstile(turnstileToken, context.env.TURNSTILE_SECRET_KEY, clientIP)) {
+    if (!turnstileToken || !await verifyTurnstile(turnstileToken, context.env.TURNSTILE_SECRET_KEY, clientIP)) {
       return jsonResponse({ error: 'Verificatie mislukt. Vernieuw de pagina en probeer het opnieuw.' }, 403);
     }
 

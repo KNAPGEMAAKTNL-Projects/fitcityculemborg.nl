@@ -1252,9 +1252,6 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
         'expired-callback': () => { signupTurnstileToken = ''; },
       });
     }
-    const signupTurnstileCheck = setInterval(() => {
-      if (typeof turnstile !== 'undefined') { clearInterval(signupTurnstileCheck); renderSignupTurnstile(); }
-    }, 200);
     const successMsg = document.getElementById('form-success') as HTMLElement;
     const errorMsg = document.getElementById('form-error') as HTMLElement;
 
@@ -1305,7 +1302,7 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
       });
       if (step === 1) requestAnimationFrame(updateSlider);
       if (step >= 2) updateOrderSummary();
-      if (step === 3) updateFinalReview();
+      if (step === 3) { updateFinalReview(); renderSignupTurnstile(); }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
