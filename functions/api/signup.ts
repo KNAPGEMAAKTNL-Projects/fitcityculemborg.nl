@@ -196,21 +196,24 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     const marketingConsentAt = data.marketing_consent ? consentTimestamp : null;
 
     // Insert into D1
+    // full_name is kept for backwards compatibility (NOT NULL constraint)
+    const fullName = `${data.first_name} ${data.last_name}`;
     await context.env.DB.prepare(
       `INSERT INTO signups (
         plan_slug, plan_name, plan_price, plan_duration,
-        first_name, last_name, email, phone, date_of_birth,
+        full_name, first_name, last_name, email, phone, date_of_birth,
         street, house_number, house_number_addition, postcode, city,
         iban_encrypted, iban_masked, account_holder,
         privacy_consent_at, sepa_consent_at, terms_consent_at,
         marketing_consent_at, ip_hash
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     )
       .bind(
         data.plan_slug,
         data.plan_name,
         data.plan_price,
         data.plan_duration,
+        fullName,
         data.first_name,
         data.last_name,
         data.email,
