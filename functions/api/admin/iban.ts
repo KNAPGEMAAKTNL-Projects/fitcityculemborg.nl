@@ -1,15 +1,17 @@
 import type { Env } from '../_shared/types';
 import { decrypt } from '../_shared/encryption';
-import { requireAccessAuth, unauthorizedResponse } from './_auth';
+import { requireAccessAuth, unauthorizedResponse, forbiddenResponse, checkCsrf } from './_auth';
 
-const CORS_HEADERS = {
+const SECURE_HEADERS = {
   'Content-Type': 'application/json',
+  'Cache-Control': 'no-store',
+  'X-Content-Type-Options': 'nosniff',
 };
 
 function jsonResponse(body: Record<string, unknown>, status = 200): Response {
   return new Response(JSON.stringify(body), {
     status,
-    headers: CORS_HEADERS,
+    headers: SECURE_HEADERS,
   });
 }
 
@@ -23,8 +25,13 @@ export const onRequest: PagesFunction<Env> = async (context) => {
     return jsonResponse({ error: 'Method not allowed' }, 405);
   }
 
-  if (!requireAccessAuth(context.request)) {
+  const authedEmail = await requireAccessAuth(context.request, context.env);
+  if (!authedEmail) {
     return unauthorizedResponse();
+  }
+
+  if (!checkCsrf(context.request)) {
+    return forbiddenResponse();
   }
 
   try {

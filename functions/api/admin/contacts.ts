@@ -1,8 +1,10 @@
 import type { Env } from '../_shared/types';
-import { requireAccessAuth, unauthorizedResponse } from './_auth';
+import { requireAccessAuth, unauthorizedResponse, forbiddenResponse, checkCsrf } from './_auth';
 
-const CORS_HEADERS = {
+const SECURE_HEADERS = {
   'Content-Type': 'application/json',
+  'Cache-Control': 'no-store',
+  'X-Content-Type-Options': 'nosniff',
 };
 
 const VALID_STATUSES = ['new', 'replied', 'closed'] as const;
@@ -10,7 +12,7 @@ const VALID_STATUSES = ['new', 'replied', 'closed'] as const;
 function jsonResponse(body: Record<string, unknown>, status = 200): Response {
   return new Response(JSON.stringify(body), {
     status,
-    headers: CORS_HEADERS,
+    headers: SECURE_HEADERS,
   });
 }
 
@@ -148,8 +150,13 @@ async function handleDelete(context: EventContext<Env, string, unknown>): Promis
 }
 
 export const onRequest: PagesFunction<Env> = async (context) => {
-  if (!requireAccessAuth(context.request)) {
+  const authedEmail = await requireAccessAuth(context.request, context.env);
+  if (!authedEmail) {
     return unauthorizedResponse();
+  }
+
+  if (!checkCsrf(context.request)) {
+    return forbiddenResponse();
   }
 
   if (context.request.method === 'GET') {
@@ -166,6 +173,6 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
   return new Response(JSON.stringify({ error: 'Method not allowed' }), {
     status: 405,
-    headers: CORS_HEADERS,
+    headers: SECURE_HEADERS,
   });
 };
