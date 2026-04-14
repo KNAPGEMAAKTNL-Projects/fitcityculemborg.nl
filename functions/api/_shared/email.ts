@@ -473,6 +473,4 @@ export async function sendContactOwnerEmail(
     sendEmail(apiKey, { from: FROM_CONTACT, to: DEV_EMAIL, subject, html, replyTo: data.email }),
   ]);
   return results.some(r => r.status === 'fulfilled' && r.value);
-    replyTo: data.email,
-  });
 }
