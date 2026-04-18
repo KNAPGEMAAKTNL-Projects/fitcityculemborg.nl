@@ -1,0 +1,16 @@
+{
+  "name": "fitcity-archive-prune",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Cron worker that prunes signups_archive and contacts_archive rows older than 12 months.",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev --test-scheduled",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241218.0",
+    "typescript": "^5.6.3",
+    "wrangler": "^3.95.0"
+  }
+}

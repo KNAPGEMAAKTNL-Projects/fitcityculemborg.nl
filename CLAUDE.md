@@ -20,6 +20,11 @@ During builds, reference both — homepage-reference.html for layout intent, DES
 ## Skills
 Activate `frontend-design` for any HTML generation tasks (design previews, homepage reference, component prototyping).
 
+## Database (D1) Rules
+- Admin "delete" is soft-delete to `*_archive` tables, pruned by the `cron-worker/` Worker after 12 months. See `ARCHIVE.md`.
+- Any migration that `ALTER`s `signups` or `contacts` MUST include a paired `ALTER TABLE <name>_archive ADD COLUMN ...` in the same migration file. Archive columns are always nullable.
+- The admin DELETE handlers in `functions/api/admin/{signups,contacts}.ts` use explicit column lists; adding a new column to a live table requires updating the matching INSERT-SELECT in the handler.
+
 ## Critical Rules
 - All internal links MUST end with trailing slash (Astro trailingSlash: "always")
 - All text in Dutch unless specified otherwise

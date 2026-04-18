@@ -138,9 +138,25 @@ async function handleDelete(context: EventContext<Env, string, unknown>): Promis
       return jsonResponse({ error: 'Bericht niet gevonden.' }, 404);
     }
 
-    await context.env.DB.prepare('DELETE FROM contacts WHERE id = ?')
-      .bind(body.id)
-      .run();
+    const insertSql = `INSERT INTO contacts_archive (
+      original_id, name, email, subject, message,
+      privacy_consent_at, status, ip_hash, created_at,
+      archived_reason
+    ) SELECT
+      id, name, email, subject, message,
+      privacy_consent_at, status, ip_hash, created_at,
+      'admin_delete'
+    FROM contacts WHERE id = ?`;
+
+    const results = await context.env.DB.batch([
+      context.env.DB.prepare(insertSql).bind(body.id),
+      context.env.DB.prepare('DELETE FROM contacts WHERE id = ?').bind(body.id),
+    ]);
+
+    if (results[0].meta.changes !== 1 || results[1].meta.changes !== 1) {
+      console.error('Archive move anomaly', { id: body.id, results });
+      return jsonResponse({ error: 'Serverfout bij archiveren van bericht.' }, 500);
+    }
 
     return jsonResponse({ success: true });
   } catch (err) {
