@@ -3,6 +3,19 @@ import Layout from '../../../layouts/Layout.astro';
 import Header from '../../../components/Header.astro';
 import Breadcrumb from '../../../components/Breadcrumb.astro';
 import Footer from '../../../components/Footer.astro';
+import { pricingPlans, signupExtras, type PlanType } from '../../../data/pricing';
+
+// Build a slug -> PlanType map at build time so the success page can tailor
+// its "wat nu?" steps without adding a third source of plan truth.
+const planTypeMap: Record<string, PlanType> = {};
+for (const group of Object.values(pricingPlans)) {
+  for (const p of group) {
+    if (!p.unavailable) planTypeMap[p.slug] = p.type;
+  }
+}
+for (const e of signupExtras) {
+  planTypeMap[e.slug] = e.type;
+}
 ---
 <Layout
   title="Inschrijving Ontvangen · Fitcity Culemborg"
@@ -43,16 +56,16 @@ import Footer from '../../../components/Footer.astro';
         <div class="next-step-card">
           <div class="step-number">2</div>
           <div class="step-content">
-            <h3>Haal je ledenpas op</h3>
-            <p>Kom langs bij Fitcity Culemborg (Houtweg 8, Culemborg) om je ledenpas op te halen.</p>
+            <h3 id="step2-title">Haal je ledenpas op</h3>
+            <p id="step2-body">Kom langs bij Fitcity Culemborg (Houtweg 8, Culemborg) om je ledenpas op te halen.</p>
           </div>
         </div>
 
         <div class="next-step-card">
           <div class="step-number">3</div>
           <div class="step-content">
-            <h3>Start met trainen</h3>
-            <p>Bij het ophalen betaal je de eenmalige inschrijfkosten van €17,00 en toon je een geldig legitimatiebewijs. Daarna kun je direct beginnen!</p>
+            <h3 id="step3-title">Start met trainen</h3>
+            <p id="step3-body">Bij het ophalen betaal je de eenmalige inschrijfkosten van €17,00 en toon je een geldig legitimatiebewijs. Daarna kun je direct beginnen!</p>
           </div>
         </div>
       </div>
@@ -72,6 +85,41 @@ import Footer from '../../../components/Footer.astro';
 
   <Footer />
 </Layout>
+
+<script is:inline define:vars={{ planTypeMap }}>
+  // The default (no ?plan= or unknown slug) already matches the 'subscription'
+  // copy hardcoded above, so we only rewrite when the plan is non-subscription.
+  (() => {
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get('plan');
+    if (!slug) return;
+    const type = planTypeMap[slug];
+    if (!type || type === 'subscription') return;
+
+    const copy = {
+      'prepaid-pass': {
+        step2Title: 'Haal je ledenpas op',
+        step2Body: 'Kom langs bij Fitcity Culemborg (Houtweg 8, Culemborg) om je ledenpas op te halen.',
+        step3Title: 'Start met trainen',
+        step3Body: 'Bij het ophalen betaal je €116,00 (€99,00 Quick Deal + €17,00 inschrijfkosten) en toon je een geldig legitimatiebewijs. Daarna kun je 3 maanden onbeperkt trainen!',
+      },
+      'day-pass': {
+        step2Title: 'Kom langs bij Fitcity Culemborg',
+        step2Body: 'Houtweg 8, Culemborg. Je kunt terecht tijdens openingstijden, geen afspraak nodig.',
+        step3Title: 'Start direct met trainen',
+        step3Body: 'Aan de balie betaal je €7,00 voor je dagpas en toon je een geldig legitimatiebewijs. Daarna kun je meteen sporten, geen ledenpas nodig.',
+      },
+    };
+
+    const c = copy[type];
+    if (!c) return;
+    const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+    set('step2-title', c.step2Title);
+    set('step2-body', c.step2Body);
+    set('step3-title', c.step3Title);
+    set('step3-body', c.step3Body);
+  })();
+</script>
 
 <style>
   @import '../../../styles/inner-pages.css';

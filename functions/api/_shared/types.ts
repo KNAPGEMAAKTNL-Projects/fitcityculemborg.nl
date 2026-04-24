@@ -22,10 +22,10 @@ export interface SignupRequest {
   house_number_addition?: string;
   postcode: string;
   city: string;
-  iban: string;
-  account_holder: string;
+  iban?: string;
+  account_holder?: string;
   privacy_consent: boolean;
-  sepa_consent: boolean;
+  sepa_consent?: boolean;
   terms_consent: boolean;
   marketing_consent?: boolean;
   honeypot?: string;

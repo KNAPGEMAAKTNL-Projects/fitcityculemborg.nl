@@ -4,6 +4,8 @@
  * iOS dark mode prevention via color-scheme meta + explicit !important colors.
  */
 
+import type { PlanType } from './validation';
+
 // ── Constants ────────────────────────────────────────────────────────────────
 
 const RESEND_API = 'https://api.resend.com/emails';
@@ -248,13 +250,42 @@ function escapeHtml(str: string): string {
 
 // ── Email templates ─────────────────────────────────────────────────────────
 
+// Per-plan-type copy for the customer confirmation email.
+// Kept next to the template so all Dutch wording for signup outcomes lives in one place.
+const NEEM_MEE_COPY: Record<PlanType, string> = {
+  'subscription':
+    'Inschrijfkosten van &euro;17,00 (pin of contant) en een geldig legitimatiebewijs.',
+  'prepaid-pass':
+    'Totaalbedrag van &euro;116,00 (&euro;99,00 Quick Deal + &euro;17,00 inschrijfkosten) in pin of contant, en een geldig legitimatiebewijs.',
+  'day-pass':
+    '&euro;7,00 voor je dagpas (pin of contant) en een geldig legitimatiebewijs.',
+};
+
+const STEP_THREE_COPY: Record<PlanType, { title: string; body: string }> = {
+  'subscription': {
+    title: 'Haal je ledenpas op en start!',
+    body: 'Je ontvangt je pas aan de balie en kunt daarna direct beginnen met trainen.',
+  },
+  'prepaid-pass': {
+    title: 'Haal je ledenpas op en start!',
+    body: 'Je ontvangt je pas aan de balie en kunt 3 maanden onbeperkt trainen.',
+  },
+  'day-pass': {
+    title: 'Start direct met trainen!',
+    body: 'Je krijgt toegang voor vandaag, geen ledenpas nodig.',
+  },
+};
+
 // 1. Signup — Customer confirmation
 function signupCustomerHtml(data: {
   first_name: string;
   plan_name: string;
   plan_price: string;
   plan_duration: string;
+  plan_type: PlanType;
 }): string {
+  const neemMee = NEEM_MEE_COPY[data.plan_type];
+  const stepThree = STEP_THREE_COPY[data.plan_type];
   const content = `
     ${heading('Welkom bij Fitcity Culemborg')}
     ${greeting(data.first_name)}
@@ -284,7 +315,7 @@ function signupCustomerHtml(data: {
         </td>
         <td valign="top" style="padding: 4px 0 16px 0;">
           <p style="margin: 0 0 2px 0; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 600; color: ${C.text} !important;" class="text-white">Neem mee</p>
-          <p style="margin: 0; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.5; color: ${C.textMuted} !important;" class="text-muted">Inschrijfkosten van &euro;17,00 (pin of contant) en een geldig legitimatiebewijs.</p>
+          <p style="margin: 0; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.5; color: ${C.textMuted} !important;" class="text-muted">${neemMee}</p>
         </td>
       </tr>
       <tr>
@@ -292,8 +323,8 @@ function signupCustomerHtml(data: {
           <div style="width: 28px; height: 28px; border-radius: 50%; background-color: ${C.primary} !important; text-align: center; line-height: 28px; font-family: 'Oswald', 'Arial Black', Arial, sans-serif; font-weight: 700; font-size: 13px; color: ${C.primaryDark} !important;">3</div>
         </td>
         <td valign="top" style="padding: 4px 0 0 0;">
-          <p style="margin: 0 0 2px 0; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 600; color: ${C.text} !important;" class="text-white">Haal je ledenpas op en start!</p>
-          <p style="margin: 0; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.5; color: ${C.textMuted} !important;" class="text-muted">Je ontvangt je pas aan de balie en kunt daarna direct beginnen met trainen.</p>
+          <p style="margin: 0 0 2px 0; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 600; color: ${C.text} !important;" class="text-white">${stepThree.title}</p>
+          <p style="margin: 0; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.5; color: ${C.textMuted} !important;" class="text-muted">${stepThree.body}</p>
         </td>
       </tr>
     </table>
@@ -305,6 +336,14 @@ function signupCustomerHtml(data: {
   return emailWrapper(content);
 }
 
+// Amount the owner should collect at the desk on the first visit.
+// Plain "€" because this string flows through detailRow -> escapeHtml.
+const DESK_PAYMENT_LABEL: Record<PlanType, string> = {
+  'subscription': '€17,00 (inschrijfkosten)',
+  'prepaid-pass': '€116,00 (€99,00 Quick Deal + €17,00 inschrijfkosten)',
+  'day-pass': '€7,00 (dagpas)',
+};
+
 // 2. Signup — Owner notification
 function signupOwnerHtml(data: {
   first_name: string;
@@ -314,6 +353,7 @@ function signupOwnerHtml(data: {
   plan_name: string;
   plan_price: string;
   plan_duration: string;
+  plan_type: PlanType;
   date_of_birth: string;
   street: string;
   house_number: string;
@@ -338,6 +378,7 @@ function signupOwnerHtml(data: {
       ['Abonnement', data.plan_name],
       ['Prijs', data.plan_price],
       ['Looptijd', data.plan_duration],
+      ['Betaling bij balie', DESK_PAYMENT_LABEL[data.plan_type]],
       ['Marketing', data.marketing_consent ? 'Ja' : 'Nee'],
       ['Datum', data.created_at],
     ])}
@@ -406,7 +447,7 @@ function contactOwnerHtml(data: {
 
 export async function sendSignupCustomerEmail(
   apiKey: string,
-  data: { first_name: string; email: string; plan_name: string; plan_price: string; plan_duration: string }
+  data: { first_name: string; email: string; plan_name: string; plan_price: string; plan_duration: string; plan_type: PlanType }
 ): Promise<boolean> {
   const html = signupCustomerHtml(data);
   const subject = 'Welkom bij Fitcity Culemborg!';
@@ -427,6 +468,7 @@ export async function sendSignupOwnerEmail(
     plan_name: string;
     plan_price: string;
     plan_duration: string;
+    plan_type: PlanType;
     date_of_birth: string;
     street: string;
     house_number: string;

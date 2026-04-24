@@ -53,13 +53,17 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
     // Look up canonical plan details server-side — never trust client-sent prices
     const plan = getPlanDetails(planSlug)!;
+    const requiresSepa = plan.type === 'subscription';
 
-    // Sanitize all string inputs
+    // Sanitize all string inputs. IBAN / account_holder / sepa_consent only
+    // collected for subscription plans; defensively null-out for others even
+    // if the client sent them, so non-SEPA plans never persist SEPA data.
     const data = {
       plan_slug: planSlug,
       plan_name: plan.name,
       plan_price: plan.price,
       plan_duration: plan.duration,
+      plan_type: plan.type,
       first_name: sanitize(body.first_name ?? '', 100),
       last_name: sanitize(body.last_name ?? '', 100),
       email: sanitize(body.email ?? '', 255).toLowerCase(),
@@ -70,10 +74,10 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       house_number_addition: sanitize(body.house_number_addition ?? '', 20),
       postcode: sanitize(body.postcode ?? '', 10),
       city: sanitize(body.city ?? '', 100),
-      iban: sanitize(body.iban ?? '', 34),
-      account_holder: sanitize(body.account_holder ?? '', 100),
+      iban: requiresSepa ? sanitize(body.iban ?? '', 34) : '',
+      account_holder: requiresSepa ? sanitize(body.account_holder ?? '', 100) : '',
       privacy_consent: body.privacy_consent,
-      sepa_consent: body.sepa_consent,
+      sepa_consent: requiresSepa ? body.sepa_consent : false,
       terms_consent: body.terms_consent,
       marketing_consent: body.marketing_consent ?? false,
     };
@@ -89,9 +93,13 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       [data.house_number, 'house_number'],
       [data.postcode, 'postcode'],
       [data.city, 'city'],
-      [data.iban, 'iban'],
-      [data.account_holder, 'account_holder'],
     ];
+    if (requiresSepa) {
+      requiredStringFields.push(
+        [data.iban, 'iban'],
+        [data.account_holder, 'account_holder'],
+      );
+    }
 
     for (const [value, field] of requiredStringFields) {
       if (!value) {
@@ -135,16 +143,20 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       );
     }
 
-    // Validate IBAN
-    if (!validateIBAN(data.iban)) {
+    // Validate IBAN (subscription plans only)
+    if (requiresSepa && !validateIBAN(data.iban)) {
       return jsonResponse(
         { error: 'Ongeldig IBAN-nummer.', field: 'iban' },
         400
       );
     }
 
-    // Validate all three consents
-    if (!data.privacy_consent || !data.sepa_consent || !data.terms_consent) {
+    // Validate consents. SEPA only required for subscriptions.
+    const consentsOk =
+      data.privacy_consent &&
+      data.terms_consent &&
+      (!requiresSepa || data.sepa_consent);
+    if (!consentsOk) {
       return jsonResponse(
         { error: 'Alle toestemmingen zijn verplicht.' },
         400
@@ -185,12 +197,16 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       );
     }
 
-    // Encrypt IBAN and generate masked version
-    const ibanEncrypted = await encrypt(data.iban, context.env.ENCRYPTION_SECRET);
-    const ibanMasked = maskIBAN(data.iban);
+    // Encrypt IBAN (subscription plans only). Non-SEPA plans store NULL.
+    const ibanEncrypted = requiresSepa
+      ? await encrypt(data.iban, context.env.ENCRYPTION_SECRET)
+      : null;
+    const ibanMasked = requiresSepa ? maskIBAN(data.iban) : null;
+    const accountHolder = requiresSepa ? data.account_holder : null;
 
     // Consent timestamps
     const consentTimestamp = new Date().toISOString();
+    const sepaConsentAt = requiresSepa ? consentTimestamp : null;
 
     // Marketing consent timestamp (only set if opted in)
     const marketingConsentAt = data.marketing_consent ? consentTimestamp : null;
@@ -226,9 +242,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         data.city,
         ibanEncrypted,
         ibanMasked,
-        data.account_holder,
+        accountHolder,
         consentTimestamp,
-        consentTimestamp,
+        sepaConsentAt,
         consentTimestamp,
         marketingConsentAt,
         ipHash
@@ -245,6 +261,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
             plan_name: data.plan_name,
             plan_price: data.plan_price,
             plan_duration: data.plan_duration,
+            plan_type: data.plan_type,
           }),
           sendSignupOwnerEmail(context.env.RESEND_API_KEY, {
             first_name: data.first_name,
@@ -254,6 +271,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
             plan_name: data.plan_name,
             plan_price: data.plan_price,
             plan_duration: data.plan_duration,
+            plan_type: data.plan_type,
             date_of_birth: data.date_of_birth,
             street: data.street,
             house_number: data.house_number,
