@@ -1221,8 +1221,9 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
   import { TURNSTILE_SITE_KEY } from '../../config/turnstile';
 
   const STORAGE_KEY = 'fitcity-signup-draft';
+  // Plan fields are intentionally NOT persisted — a returning visitor should
+  // always re-pick their membership, not inherit a stale selection.
   const PERSISTED_FIELDS = [
-    'plan_slug', 'plan_name', 'plan_price', 'plan_duration',
     'first_name', 'last_name', 'email', 'phone', 'date_of_birth',
     'postcode', 'house_number', 'house_number_addition', 'street', 'city',
     'account_holder', 'iban'
