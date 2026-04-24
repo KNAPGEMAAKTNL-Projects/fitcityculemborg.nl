@@ -1,3 +1,7 @@
+export type PlanType = 'subscription' | 'prepaid-pass' | 'day-pass';
+
+export const INSCHRIJFKOSTEN_DISPLAY = '€17,00';
+
 export interface PricingPlan {
   name: string;
   slug: string;
@@ -10,6 +14,7 @@ export interface PricingPlan {
   cta: string;
   href: string;
   unavailable?: string;
+  type: PlanType;
 }
 
 export interface PricingExtra {
@@ -27,6 +32,7 @@ export interface SignupExtra {
   duration: string;
   note: string;
   accent: 'primary' | 'secondary';
+  type: PlanType;
 }
 
 export const pricingPlans: Record<string, PricingPlan[]> = {
@@ -42,6 +48,7 @@ export const pricingPlans: Record<string, PricingPlan[]> = {
       accent: 'primary',
       cta: 'KIES SMART DEAL',
       href: '/signup/?plan=smart-deal',
+      type: 'subscription',
     },
     {
       name: 'Ladies Only',
@@ -53,6 +60,7 @@ export const pricingPlans: Record<string, PricingPlan[]> = {
       accent: 'secondary',
       cta: 'KIES LADIES ONLY',
       href: '/signup/?plan=ladies-only',
+      type: 'subscription',
     },
     {
       name: 'Ultimate Fit Deal',
@@ -64,6 +72,7 @@ export const pricingPlans: Record<string, PricingPlan[]> = {
       accent: 'primary',
       cta: 'KIES ULTIMATE FIT',
       href: '/signup/?plan=ultimate-fit',
+      type: 'subscription',
     },
   ],
   halfjaar: [
@@ -77,6 +86,7 @@ export const pricingPlans: Record<string, PricingPlan[]> = {
       accent: 'primary',
       cta: 'KIES FIT DEAL',
       href: '/signup/?plan=fit-deal',
+      type: 'subscription',
     },
     {
       name: 'Ladies Halfjaar',
@@ -88,6 +98,7 @@ export const pricingPlans: Record<string, PricingPlan[]> = {
       accent: 'secondary',
       cta: 'KIES LADIES HALFJAAR',
       href: '/signup/?plan=ladies-halfjaar',
+      type: 'subscription',
     },
     {
       name: 'Ultimate Fit Deal',
@@ -100,6 +111,7 @@ export const pricingPlans: Record<string, PricingPlan[]> = {
       cta: '',
       href: '',
       unavailable: 'Ultimate Fit is alleen beschikbaar als jaarabonnement.',
+      type: 'subscription',
     },
   ],
   flex: [
@@ -113,6 +125,7 @@ export const pricingPlans: Record<string, PricingPlan[]> = {
       accent: 'primary',
       cta: 'KIES FLEX',
       href: '/signup/?plan=flex',
+      type: 'subscription',
     },
     {
       name: 'Ladies Flex',
@@ -124,6 +137,7 @@ export const pricingPlans: Record<string, PricingPlan[]> = {
       accent: 'secondary',
       cta: 'KIES LADIES FLEX',
       href: '/signup/?plan=ladies-flex',
+      type: 'subscription',
     },
     {
       name: 'Ultimate Fit Deal',
@@ -136,6 +150,7 @@ export const pricingPlans: Record<string, PricingPlan[]> = {
       cta: '',
       href: '',
       unavailable: 'Ultimate Fit is alleen beschikbaar als jaarabonnement.',
+      type: 'subscription',
     },
   ],
 };
@@ -156,6 +171,7 @@ export const signupExtras: SignupExtra[] = [
     duration: '12 maanden',
     note: 'Onbeperkt sporten voor 2 personen',
     accent: 'primary',
+    type: 'subscription',
   },
   {
     name: 'Quick Deal',
@@ -165,6 +181,7 @@ export const signupExtras: SignupExtra[] = [
     duration: '3 maanden',
     note: 'Onbeperkt sporten voor 3 maanden',
     accent: 'primary',
+    type: 'prepaid-pass',
   },
   {
     name: 'Bokszaktraining 1x p/w',
@@ -174,6 +191,7 @@ export const signupExtras: SignupExtra[] = [
     duration: '12 maanden',
     note: '1 bokszaktraining per week, 12 maanden',
     accent: 'primary',
+    type: 'subscription',
   },
   {
     name: 'Bokszaktraining Unlimited',
@@ -183,6 +201,7 @@ export const signupExtras: SignupExtra[] = [
     duration: '12 maanden',
     note: 'Onbeperkt bokszaktraining, 12 maanden',
     accent: 'primary',
+    type: 'subscription',
   },
   {
     name: 'Dagpas',
@@ -192,5 +211,6 @@ export const signupExtras: SignupExtra[] = [
     duration: 'Eenmalig',
     note: 'Toegang voor 1 dag',
     accent: 'primary',
+    type: 'day-pass',
   },
 ];

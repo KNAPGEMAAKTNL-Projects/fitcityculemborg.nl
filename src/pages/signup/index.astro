@@ -82,6 +82,7 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
                   data-name={plan.name}
                   data-price={plan.price}
                   data-duration={plan.duration}
+                  data-type={plan.type}
                 >
                   {plan.badge && <span class="pricing-badge">{plan.badge}</span>}
 
@@ -123,6 +124,7 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
                 data-name={extra.name}
                 data-price={extra.price}
                 data-duration={extra.duration}
+                data-type={extra.type}
               >
                 <div class="signup-extra-info">
                   <span class="signup-extra-name">{extra.name}</span>
@@ -148,7 +150,7 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
                 <h3 id="float-name">Lidmaatschap</h3>
                 <div class="order-summary-price-row">
                   <span class="order-summary-price" id="float-price">€—</span>
-                  <span class="order-summary-period">/ maand</span>
+                  <span class="order-summary-period" id="float-period">/ maand</span>
                 </div>
               </div>
               <svg class="order-summary-chevron" id="toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
@@ -170,7 +172,7 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
                     <span>Startdatum:</span>
                     <span id="detail-start">—</span>
                   </div>
-                  <div class="order-summary-line">
+                  <div class="order-summary-line" id="detail-end-row">
                     <span>Einddatum:</span>
                     <span id="detail-end">—</span>
                   </div>
@@ -182,7 +184,11 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
                   <span class="order-summary-highlight" id="now-total">€17,00</span>
                 </div>
                 <div class="order-summary-sub">
-                  <div class="order-summary-line">
+                  <div class="order-summary-line" id="now-plan-line" hidden>
+                    <span id="now-plan-label">—</span>
+                    <span id="now-plan-amount">—</span>
+                  </div>
+                  <div class="order-summary-line" id="now-inschrijf-line">
                     <span>Inschrijfkosten</span>
                     <span>€17,00</span>
                   </div>
@@ -293,14 +299,15 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
               <div class="summary-details">
                 <div class="summary-line"><span>Looptijd:</span><span id="summary-term">—</span></div>
                 <div class="summary-line"><span>Startdatum:</span><span id="summary-start">—</span></div>
-                <div class="summary-line"><span>Einddatum:</span><span id="summary-end">—</span></div>
+                <div class="summary-line" id="summary-end-row"><span>Einddatum:</span><span id="summary-end">—</span></div>
               </div>
             </div>
             <div class="summary-card">
               <h3>Betaal bij eerste bezoek</h3>
               <div class="summary-details">
-                <div class="summary-line"><span>Inschrijfkosten</span><span>€17,00</span></div>
-                <div class="summary-line summary-line--total"><span>Totaal</span><span>€17,00</span></div>
+                <div class="summary-line" id="desk-plan-line" hidden><span id="desk-plan-label">—</span><span id="desk-plan-amount">—</span></div>
+                <div class="summary-line" id="desk-inschrijf-line"><span>Inschrijfkosten</span><span>€17,00</span></div>
+                <div class="summary-line summary-line--total"><span>Totaal</span><span id="desk-total">€17,00</span></div>
               </div>
             </div>
           </div>
@@ -1229,6 +1236,20 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
     'account_holder', 'iban'
   ];
 
+  // Fixed desk-paid inschrijfkosten for any plan that gets a ledenpas.
+  const INSCHRIJFKOSTEN_EUR = 17.00;
+  type PlanType = 'subscription' | 'prepaid-pass' | 'day-pass';
+
+  // "€24,50" -> 24.5 ; tolerates "€99,00" / "€ 7,00" / "€7".
+  function parseEuro(str: string): number {
+    const m = str.match(/€\s*(\d+)(?:,(\d+))?/);
+    if (!m) return 0;
+    return parseInt(m[1], 10) + (m[2] ? parseInt(m[2].padEnd(2, '0').slice(0, 2), 10) / 100 : 0);
+  }
+  function formatEuro(n: number): string {
+    return '€' + n.toFixed(2).replace('.', ',');
+  }
+
   function initSignupPage() {
     const form = document.getElementById('signup-form') as HTMLFormElement;
     if (!form) return;
@@ -1257,6 +1278,28 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
     const errorMsg = document.getElementById('form-error') as HTMLElement;
 
     let currentStep = 1;
+    let currentPlanType: PlanType = 'subscription';
+
+    // Hide the IBAN section + clear persisted IBAN/SEPA state when the selected
+    // plan does not require SEPA. Non-subscription plans pay in full at the desk.
+    function updateIbanVisibility() {
+      const ibanSection = document.querySelector('.iban-section') as HTMLElement | null;
+      if (!ibanSection) return;
+      const show = currentPlanType === 'subscription';
+      ibanSection.style.display = show ? '' : 'none';
+      if (!show) {
+        const accEl = form.elements.namedItem('account_holder') as HTMLInputElement | null;
+        const ibanEl = form.elements.namedItem('iban') as HTMLInputElement | null;
+        const sepaEl = form.elements.namedItem('sepa_consent') as HTMLInputElement | null;
+        if (accEl) accEl.value = '';
+        if (ibanEl) ibanEl.value = '';
+        if (sepaEl) sepaEl.checked = false;
+        setFieldError('account_holder', false);
+        setFieldError('iban', false);
+        setFieldError('sepa_consent', false);
+        saveToStorage();
+      }
+    }
 
     // ===================== LOCALSTORAGE =====================
     function saveToStorage() {
@@ -1358,6 +1401,8 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
       (document.getElementById('plan_name') as HTMLInputElement).value = el.dataset.name || '';
       (document.getElementById('plan_price') as HTMLInputElement).value = el.dataset.price || '';
       (document.getElementById('plan_duration') as HTMLInputElement).value = el.dataset.duration || '';
+      currentPlanType = (el.dataset.type as PlanType) || 'subscription';
+      updateIbanVisibility();
       saveToStorage();
       goToStep(2);
     }
@@ -1394,6 +1439,8 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
       (document.getElementById('plan_name') as HTMLInputElement).value = card.dataset.name || '';
       (document.getElementById('plan_price') as HTMLInputElement).value = card.dataset.price || '';
       (document.getElementById('plan_duration') as HTMLInputElement).value = card.dataset.duration || '';
+      currentPlanType = (card.dataset.type as PlanType) || 'subscription';
+      updateIbanVisibility();
       saveToStorage();
       goToStep(2);
       return true;
@@ -1419,34 +1466,90 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
       const price = (document.getElementById('plan_price') as HTMLInputElement).value;
       const duration = (document.getElementById('plan_duration') as HTMLInputElement).value;
       const start = new Date();
-      const end = calcEndDate(duration);
+      const priceVal = parseEuro(price);
 
       const set = (id: string, val: string) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+      const toggle = (id: string, show: boolean) => {
+        const el = document.getElementById(id);
+        if (el) el.hidden = !show;
+      };
+
       set('float-name', name);
       set('float-price', price);
+      set('float-period', currentPlanType === 'subscription' ? '/ maand' : 'eenmalig');
       set('detail-price-head', price);
       set('detail-name', name);
       set('detail-price-row', price);
       set('detail-term-row', duration);
       set('detail-start', start.toLocaleDateString('nl-NL'));
-      set('detail-end', end.toLocaleDateString('nl-NL'));
+
+      // "BETAAL BIJ EERSTE BEZOEK" and the Einddatum row depend on plan type:
+      // subscription → €17 inschrijf only; plan itself is SEPA monthly.
+      // prepaid-pass → plan price + €17 inschrijf (both at desk), fixed end date.
+      // day-pass    → plan price only (no inschrijf, no end date).
+      if (currentPlanType === 'day-pass') {
+        toggle('detail-end-row', false);
+        toggle('now-inschrijf-line', false);
+        toggle('now-plan-line', true);
+        set('now-plan-label', name);
+        set('now-plan-amount', price);
+        set('now-total', formatEuro(priceVal));
+      } else if (currentPlanType === 'prepaid-pass') {
+        toggle('detail-end-row', true);
+        set('detail-end', calcEndDate(duration).toLocaleDateString('nl-NL'));
+        toggle('now-inschrijf-line', true);
+        toggle('now-plan-line', true);
+        set('now-plan-label', name);
+        set('now-plan-amount', price);
+        set('now-total', formatEuro(priceVal + INSCHRIJFKOSTEN_EUR));
+      } else {
+        toggle('detail-end-row', true);
+        set('detail-end', calcEndDate(duration).toLocaleDateString('nl-NL'));
+        toggle('now-inschrijf-line', true);
+        toggle('now-plan-line', false);
+        set('now-total', formatEuro(INSCHRIJFKOSTEN_EUR));
+      }
     }
 
     // ===================== FINAL REVIEW =====================
     function updateFinalReview() {
       const get = (id: string) => (document.getElementById(id) as HTMLInputElement)?.value || '—';
       const set = (id: string, val: string) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+      const toggle = (id: string, show: boolean) => { const el = document.getElementById(id); if (el) el.hidden = !show; };
 
       const name = get('plan_name');
       const price = get('plan_price');
       const duration = get('plan_duration');
-      const end = calcEndDate(duration);
+      const priceVal = parseEuro(price);
 
       set('summary-name', name);
-      set('summary-price', `${price} / maand`);
+      set('summary-price', currentPlanType === 'subscription' ? `${price} / maand` : `${price} eenmalig`);
       set('summary-term', duration);
       set('summary-start', new Date().toLocaleDateString('nl-NL'));
-      set('summary-end', end.toLocaleDateString('nl-NL'));
+
+      if (currentPlanType === 'day-pass') {
+        toggle('summary-end-row', false);
+        toggle('desk-plan-line', true);
+        toggle('desk-inschrijf-line', false);
+        set('desk-plan-label', name);
+        set('desk-plan-amount', price);
+        set('desk-total', formatEuro(priceVal));
+      } else if (currentPlanType === 'prepaid-pass') {
+        toggle('summary-end-row', true);
+        set('summary-end', calcEndDate(duration).toLocaleDateString('nl-NL'));
+        toggle('desk-plan-line', true);
+        toggle('desk-inschrijf-line', true);
+        set('desk-plan-label', name);
+        set('desk-plan-amount', price);
+        set('desk-total', formatEuro(priceVal + INSCHRIJFKOSTEN_EUR));
+      } else {
+        toggle('summary-end-row', true);
+        set('summary-end', calcEndDate(duration).toLocaleDateString('nl-NL'));
+        toggle('desk-plan-line', false);
+        toggle('desk-inschrijf-line', true);
+        set('desk-total', formatEuro(INSCHRIJFKOSTEN_EUR));
+      }
+
       set('review-name', `${get('first_name')} ${get('last_name')}`);
       set('review-email', get('email'));
       set('review-phone', get('phone'));
@@ -1507,9 +1610,11 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
       }
 
       if (step === 3) {
-        if (!(form.elements.namedItem('account_holder') as HTMLInputElement).value.trim()) { setFieldError('account_holder', true); valid = false; }
-        if (!validateIBAN((form.elements.namedItem('iban') as HTMLInputElement).value)) { setFieldError('iban', true); valid = false; }
-        if (!(form.elements.namedItem('sepa_consent') as HTMLInputElement).checked) { setFieldError('sepa_consent', true); valid = false; }
+        if (currentPlanType === 'subscription') {
+          if (!(form.elements.namedItem('account_holder') as HTMLInputElement).value.trim()) { setFieldError('account_holder', true); valid = false; }
+          if (!validateIBAN((form.elements.namedItem('iban') as HTMLInputElement).value)) { setFieldError('iban', true); valid = false; }
+          if (!(form.elements.namedItem('sepa_consent') as HTMLInputElement).checked) { setFieldError('sepa_consent', true); valid = false; }
+        }
         if (!(form.elements.namedItem('privacy_consent') as HTMLInputElement).checked) { setFieldError('privacy_consent', true); valid = false; }
       }
 
@@ -1697,15 +1802,24 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
       try {
         const data: Record<string, unknown> = {};
         for (const name of PERSISTED_FIELDS) {
+          // Skip IBAN fields for non-subscription plans — they pay at desk.
+          // The backend nulls these out regardless, but this keeps the payload honest.
+          if (currentPlanType !== 'subscription' && (name === 'iban' || name === 'account_holder')) continue;
           const el = form.elements.namedItem(name) as HTMLInputElement;
           if (el) data[name] = el.value;
         }
         data.honeypot = (form.elements.namedItem('website') as HTMLInputElement)?.value || '';
         data.privacy_consent = (form.elements.namedItem('privacy_consent') as HTMLInputElement).checked;
         data.terms_consent = (form.elements.namedItem('terms_consent') as HTMLInputElement).checked;
-        data.sepa_consent = (form.elements.namedItem('sepa_consent') as HTMLInputElement).checked;
+        data.sepa_consent = currentPlanType === 'subscription'
+          ? (form.elements.namedItem('sepa_consent') as HTMLInputElement).checked
+          : false;
         data.marketing_consent = (form.elements.namedItem('marketing_consent') as HTMLInputElement)?.checked ?? false;
         data.cf_turnstile_response = signupTurnstileToken;
+        data.plan_slug = (document.getElementById('plan_slug') as HTMLInputElement).value;
+        data.plan_name = (document.getElementById('plan_name') as HTMLInputElement).value;
+        data.plan_price = (document.getElementById('plan_price') as HTMLInputElement).value;
+        data.plan_duration = (document.getElementById('plan_duration') as HTMLInputElement).value;
 
         const response = await fetch('/api/signup/', {
           method: 'POST',
@@ -1716,7 +1830,8 @@ import { pricingPlans, signupExtras } from '../../data/pricing';
         if (response.ok) {
           clearStorage();
           successMsg?.removeAttribute('hidden');
-          setTimeout(() => { window.location.href = '/signup/success/'; }, 1500);
+          const slug = data.plan_slug as string;
+          setTimeout(() => { window.location.href = `/signup/success/?plan=${encodeURIComponent(slug)}`; }, 1500);
         } else {
           const result = await response.json().catch(() => null);
           if (result?.field) setFieldError(result.field, true);

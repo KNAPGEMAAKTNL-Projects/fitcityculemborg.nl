@@ -45,10 +45,15 @@ export const onRequest: PagesFunction<Env> = async (context) => {
       'SELECT iban_encrypted FROM signups WHERE id = ?'
     )
       .bind(body.id)
-      .first<{ iban_encrypted: string }>();
+      .first<{ iban_encrypted: string | null }>();
 
     if (!row) {
       return jsonResponse({ error: 'Inschrijving niet gevonden.' }, 404);
+    }
+
+    // Non-SEPA plans (Dagpas, Quick Deal) store NULL here.
+    if (!row.iban_encrypted) {
+      return jsonResponse({ error: 'Geen IBAN voor deze inschrijving.' }, 404);
     }
 
     const iban = await decrypt(row.iban_encrypted, context.env.ENCRYPTION_SECRET);

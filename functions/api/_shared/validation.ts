@@ -1,22 +1,27 @@
+export type PlanType = 'subscription' | 'prepaid-pass' | 'day-pass';
+
+export const INSCHRIJFKOSTEN_DISPLAY = '€17,00';
+
 interface PlanDetails {
   name: string;
   price: string;
   duration: string;
+  type: PlanType;
 }
 
 const PLAN_CATALOG: Record<string, PlanDetails> = {
-  'smart-deal': { name: 'Smart Deal', price: '€24,50', duration: '12 maanden' },
-  'ladies-only': { name: 'Ladies Only', price: '€20,50', duration: '12 maanden' },
-  'ultimate-fit': { name: 'Ultimate Fit Deal', price: '€37,50', duration: '12 maanden' },
-  'fit-deal': { name: 'Fit Deal', price: '€29,50', duration: '6 maanden' },
-  'ladies-halfjaar': { name: 'Ladies Halfjaar', price: '€25,50', duration: '6 maanden' },
-  'flex': { name: 'Flex', price: '€37,00', duration: 'Maandelijks opzegbaar' },
-  'ladies-flex': { name: 'Ladies Flex', price: '€32,00', duration: 'Maandelijks opzegbaar' },
-  'combi-deal': { name: 'Combi Deal', price: '€39,50', duration: '12 maanden' },
-  'quick-deal': { name: 'Quick Deal', price: '€99,00', duration: '3 maanden' },
-  'kb-1x': { name: 'Bokszaktraining 1x p/w', price: '€19,95', duration: '12 maanden' },
-  'kb-unlimited': { name: 'Bokszaktraining Unlimited', price: '€26,95', duration: '12 maanden' },
-  'dagpas': { name: 'Dagpas', price: '€7,00', duration: 'Eenmalig' },
+  'smart-deal': { name: 'Smart Deal', price: '€24,50', duration: '12 maanden', type: 'subscription' },
+  'ladies-only': { name: 'Ladies Only', price: '€20,50', duration: '12 maanden', type: 'subscription' },
+  'ultimate-fit': { name: 'Ultimate Fit Deal', price: '€37,50', duration: '12 maanden', type: 'subscription' },
+  'fit-deal': { name: 'Fit Deal', price: '€29,50', duration: '6 maanden', type: 'subscription' },
+  'ladies-halfjaar': { name: 'Ladies Halfjaar', price: '€25,50', duration: '6 maanden', type: 'subscription' },
+  'flex': { name: 'Flex', price: '€37,00', duration: 'Maandelijks opzegbaar', type: 'subscription' },
+  'ladies-flex': { name: 'Ladies Flex', price: '€32,00', duration: 'Maandelijks opzegbaar', type: 'subscription' },
+  'combi-deal': { name: 'Combi Deal', price: '€39,50', duration: '12 maanden', type: 'subscription' },
+  'quick-deal': { name: 'Quick Deal', price: '€99,00', duration: '3 maanden', type: 'prepaid-pass' },
+  'kb-1x': { name: 'Bokszaktraining 1x p/w', price: '€19,95', duration: '12 maanden', type: 'subscription' },
+  'kb-unlimited': { name: 'Bokszaktraining Unlimited', price: '€26,95', duration: '12 maanden', type: 'subscription' },
+  'dagpas': { name: 'Dagpas', price: '€7,00', duration: 'Eenmalig', type: 'day-pass' },
 };
 
 const VALID_PLAN_SLUGS = Object.keys(PLAN_CATALOG);
@@ -123,6 +128,10 @@ export function isValidPlanSlug(slug: string): boolean {
 
 export function getPlanDetails(slug: string): PlanDetails | null {
   return PLAN_CATALOG[slug] ?? null;
+}
+
+export function getPlanType(slug: string): PlanType | null {
+  return PLAN_CATALOG[slug]?.type ?? null;
 }
 
 export function isValidSubject(subject: string): boolean {

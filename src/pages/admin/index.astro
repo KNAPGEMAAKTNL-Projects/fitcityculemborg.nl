@@ -594,12 +594,20 @@ import Layout from '../../layouts/Layout.astro';
     house_number: string;
     postcode: string;
     city: string;
+    plan_slug: string;
     plan_name: string;
     plan_price: string;
     plan_duration: string;
-    account_holder: string;
-    iban_masked: string;
+    account_holder: string | null;
+    iban_masked: string | null;
   }
+
+  // Non-SEPA plans store NULL in iban_masked; show what to collect at the desk instead.
+  // Keep keyed by slug -- simpler than importing pricing.ts into this client script.
+  const PLAN_DESK_LABEL: Record<string, string> = {
+    'dagpas': '€7,00 (dagpas)',
+    'quick-deal': '€116,00 (€99,00 Quick Deal + €17,00 inschrijfkosten)',
+  };
 
   interface Contact {
     id: number;
@@ -772,20 +780,25 @@ import Layout from '../../layouts/Layout.astro';
               ${detailRow('Looptijd', s.plan_duration)}
             </div>
             <div class="detail-group">
-              <h4>Betaling</h4>
-              ${detailRow('Rekeninghouder', s.account_holder)}
-              <div class="detail-row">
-                <span class="detail-label">IBAN</span>
-                <span class="detail-value" style="font-family: monospace;">
-                  <span id="iban-${s.id}">${escapeHtml(s.iban_masked)}</span>
-                  <button class="iban-toggle" data-id="${s.id}" onclick="handleIbanToggle(this)" title="IBAN tonen">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                      <circle cx="12" cy="12" r="3"/>
-                    </svg>
-                  </button>
-                </span>
-              </div>
+              ${s.iban_masked ? `
+                <h4>Betaling</h4>
+                ${detailRow('Rekeninghouder', s.account_holder || '')}
+                <div class="detail-row">
+                  <span class="detail-label">IBAN</span>
+                  <span class="detail-value" style="font-family: monospace;">
+                    <span id="iban-${s.id}">${escapeHtml(s.iban_masked)}</span>
+                    <button class="iban-toggle" data-id="${s.id}" onclick="handleIbanToggle(this)" title="IBAN tonen">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                      </svg>
+                    </button>
+                  </span>
+                </div>
+              ` : `
+                <h4>Betaling bij balie</h4>
+                ${detailRow('Te innen', PLAN_DESK_LABEL[s.plan_slug] || '—')}
+              `}
             </div>
             <div style="grid-column: 1 / -1;">
               <button class="btn-delete" onclick="handleDelete('signup', ${s.id}, '${escapeHtml(s.full_name).replace(/'/g, "\\'")}')">
