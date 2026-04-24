@@ -62,5 +62,26 @@ const ogImageURL = new URL(ogImage || '/images/fitcity-logo-email.png', Astro.si
   </head>
   <body>
     <slot />
+
+    {/* Re-decode Cloudflare email obfuscation after View Transition navigations */}
+    <script>
+      function decodeCfEmails() {
+        document.querySelectorAll('.__cf_email__').forEach((el) => {
+          const encoded = el.getAttribute('data-cfemail');
+          if (!encoded) return;
+          const key = parseInt(encoded.substr(0, 2), 16);
+          let decoded = '';
+          for (let i = 2; i < encoded.length; i += 2) {
+            decoded += String.fromCharCode(parseInt(encoded.substr(i, 2), 16) ^ key);
+          }
+          el.textContent = decoded;
+          const link = el.closest('a');
+          if (link && link.href.includes('/cdn-cgi/l/email-protection')) {
+            link.href = 'mailto:' + decoded;
+          }
+        });
+      }
+      document.addEventListener('astro:page-load', decodeCfEmails);
+    </script>
   </body>
 </html>
