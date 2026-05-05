@@ -615,6 +615,7 @@ import Layout from '../../layouts/Layout.astro';
     created_at: string;
     name: string;
     email: string;
+    phone: string | null;
     subject: string;
     message: string;
   }
@@ -848,6 +849,7 @@ import Layout from '../../layouts/Layout.astro';
             <div class="detail-group">
               <h4>Contactgegevens</h4>
               ${detailRow('Email', `<a href="mailto:${escapeHtml(c.email)}">${escapeHtml(c.email)}</a>`, true)}
+              ${detailRow('Telefoon', c.phone ? `<a href="tel:${escapeHtml(c.phone)}">${escapeHtml(c.phone)}</a>` : '<span style="color: var(--color-text-muted);">geen</span>', true)}
             </div>
             <div class="detail-group">
               <h4>Bericht</h4>
