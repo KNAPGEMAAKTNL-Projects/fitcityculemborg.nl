@@ -139,11 +139,11 @@ async function handleDelete(context: EventContext<Env, string, unknown>): Promis
     }
 
     const insertSql = `INSERT INTO contacts_archive (
-      original_id, name, email, subject, message,
+      original_id, name, email, phone, subject, message,
       privacy_consent_at, status, ip_hash, created_at,
       archived_reason
     ) SELECT
-      id, name, email, subject, message,
+      id, name, email, phone, subject, message,
       privacy_consent_at, status, ip_hash, created_at,
       'admin_delete'
     FROM contacts WHERE id = ?`;

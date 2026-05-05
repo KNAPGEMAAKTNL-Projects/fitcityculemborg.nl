@@ -410,6 +410,7 @@ function contactCustomerHtml(data: {
 function contactOwnerHtml(data: {
   naam: string;
   email: string;
+  phone: string;
   onderwerp: string;
   bericht: string;
   created_at: string;
@@ -425,6 +426,7 @@ function contactOwnerHtml(data: {
     ${detailsTable([
       ['Naam', data.naam],
       ['E-mail', data.email],
+      ['Telefoon', data.phone],
       ['Onderwerp', data.onderwerp],
       ['Datum', data.created_at],
     ])}
@@ -504,7 +506,7 @@ export async function sendContactCustomerEmail(
 
 export async function sendContactOwnerEmail(
   apiKey: string,
-  data: { naam: string; email: string; onderwerp: string; bericht: string }
+  data: { naam: string; email: string; phone: string; onderwerp: string; bericht: string }
 ): Promise<boolean> {
   const now = new Date();
   const created_at = now.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });

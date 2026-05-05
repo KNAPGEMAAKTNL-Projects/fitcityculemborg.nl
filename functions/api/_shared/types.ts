@@ -35,6 +35,7 @@ export interface SignupRequest {
 export interface ContactRequest {
   naam: string;
   email: string;
+  phone: string;
   onderwerp: string;
   bericht: string;
   privacy_consent: boolean;

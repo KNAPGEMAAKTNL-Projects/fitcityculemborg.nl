@@ -2,6 +2,7 @@ import type { Env, ContactRequest } from './_shared/types';
 import {
   sanitize,
   validateEmail,
+  validatePhone,
   isValidSubject,
   verifyTurnstile,
   hashIP,
@@ -39,6 +40,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     const data = {
       naam: sanitize(body.naam ?? '', 100),
       email: sanitize(body.email ?? '', 255).toLowerCase(),
+      phone: sanitize(body.phone ?? '', 20),
       onderwerp: sanitize(body.onderwerp ?? '', 100),
       bericht: sanitize(body.bericht ?? '', 5000),
       privacy_consent: body.privacy_consent,
@@ -48,6 +50,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     const requiredFields: Array<[string, string]> = [
       [data.naam, 'naam'],
       [data.email, 'email'],
+      [data.phone, 'phone'],
       [data.onderwerp, 'onderwerp'],
       [data.bericht, 'bericht'],
     ];
@@ -65,6 +68,14 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     if (!validateEmail(data.email)) {
       return jsonResponse(
         { error: 'Ongeldig e-mailadres.', field: 'email' },
+        400
+      );
+    }
+
+    // Validate phone
+    if (!validatePhone(data.phone)) {
+      return jsonResponse(
+        { error: 'Ongeldig telefoonnummer.', field: 'phone' },
         400
       );
     }
@@ -106,12 +117,13 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
     // Insert into D1
     await context.env.DB.prepare(
-      `INSERT INTO contacts (name, email, subject, message, privacy_consent_at, ip_hash)
-       VALUES (?, ?, ?, ?, ?, ?)`
+      `INSERT INTO contacts (name, email, phone, subject, message, privacy_consent_at, ip_hash)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`
     )
       .bind(
         data.naam,
         data.email,
+        data.phone,
         data.onderwerp,
         data.bericht,
         consentTimestamp,
@@ -131,6 +143,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
           sendContactOwnerEmail(context.env.RESEND_API_KEY, {
             naam: data.naam,
             email: data.email,
+            phone: data.phone,
             onderwerp: data.onderwerp,
             bericht: data.bericht,
           }),

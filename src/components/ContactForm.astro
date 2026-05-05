@@ -16,6 +16,12 @@
   </div>
 
   <div class="form-field">
+    <label for="phone">Je telefoonnummer</label>
+    <input type="tel" id="phone" name="phone" required autocomplete="tel" inputmode="tel" maxlength="20" placeholder="06-12345678" />
+    <span class="form-error" data-error="phone">Vul een geldig telefoonnummer in</span>
+  </div>
+
+  <div class="form-field">
     <label for="onderwerp">Waar gaat je vraag over?</label>
     <select id="onderwerp" name="onderwerp" required>
       <option value="" disabled selected>Kies een onderwerp</option>
@@ -273,7 +279,7 @@
 
       // Validate
       let valid = true;
-      const fields = ['naam', 'email', 'onderwerp', 'bericht', 'privacy'];
+      const fields = ['naam', 'email', 'phone', 'onderwerp', 'bericht', 'privacy'];
       for (const name of fields) {
         const el = form.elements.namedItem(name) as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
         if (!el) continue;
@@ -283,6 +289,9 @@
           fieldValid = (el as HTMLInputElement).checked;
         } else if (el.type === 'email') {
           fieldValid = el.value.trim() !== '' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value);
+        } else if (name === 'phone') {
+          const digits = el.value.replace(/\D/g, '');
+          fieldValid = digits.length >= 10 && digits.length <= 12;
         } else if (el.tagName === 'SELECT') {
           fieldValid = el.value !== '';
         } else {
@@ -309,6 +318,7 @@
         const data = {
           naam: (form.elements.namedItem('naam') as HTMLInputElement).value,
           email: (form.elements.namedItem('email') as HTMLInputElement).value,
+          phone: (form.elements.namedItem('phone') as HTMLInputElement).value,
           onderwerp: (form.elements.namedItem('onderwerp') as HTMLSelectElement).value,
           bericht: (form.elements.namedItem('bericht') as HTMLTextAreaElement).value,
           privacy_consent: (form.elements.namedItem('privacy') as HTMLInputElement).checked,
