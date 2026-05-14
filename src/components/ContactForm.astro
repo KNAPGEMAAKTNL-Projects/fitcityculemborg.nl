@@ -245,7 +245,6 @@
     container.innerHTML = '';
     turnstile.render(container, {
       sitekey: TURNSTILE_SITE_KEY,
-      size: 'invisible',
       appearance: 'interaction-only',
       callback: (token: string) => { contactTurnstileToken = token; },
       'expired-callback': () => { contactTurnstileToken = ''; },
