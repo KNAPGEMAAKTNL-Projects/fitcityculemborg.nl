@@ -12,7 +12,8 @@ const siteUrl = 'https://fitcityculemborg.nl';
 const hoursSpec = openingHours.flatMap(({ days, times }) => {
   const [open, close] = times.split(' - ').map(t => t.trim());
   const dayMap: Record<string, string[]> = {
-    'Ma - Vr': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    'Ma - Do': ['Monday', 'Tuesday', 'Wednesday', 'Thursday'],
+    'Vr': ['Friday'],
     'Za': ['Saturday'],
     'Zo': ['Sunday'],
   };
